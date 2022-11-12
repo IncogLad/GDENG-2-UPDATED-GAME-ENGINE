@@ -190,6 +190,7 @@
       <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
     </ClCompile>
     <ClCompile Include="RasterizerState.cpp" />
+    <ClCompile Include="WireframeView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -326,6 +327,7 @@
     </ClInclude>
     <ClInclude Include="resource1.h" />
     <ClInclude Include="RasterizerState.h" />
+    <ClInclude Include="WireframeView.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">
