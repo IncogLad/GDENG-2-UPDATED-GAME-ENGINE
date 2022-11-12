@@ -28,6 +28,7 @@ public:
 	const String GAME_VIEW = "GAME_VIEW";
 	const String PERSPECTIVE_VIEW = "PERSPECTIVE_VIEW";
 	const String TOPDOWN_VIEW = "TOPDOWN_VIEW";
+	const String WIREFRAME_VIEW = "WIREFRAME_VIEW";
 };
 
 
@@ -64,5 +65,6 @@ private:
 	friend class GameView;
 	friend class PerspectiveView;
 	friend class TopdownView;
+	friend class WireframeView;
 };
 

@@ -12,6 +12,7 @@
 #include "MenuToolBar.h"
 #include "PerspectiveView.h"
 #include "TopdownView.h"
+#include "WireframeView.h"
 
 UISystem* UISystem::sharedInstance = nullptr;
 
@@ -78,6 +79,10 @@ void UISystem::initImGUI(HWND hwnd)
     TopdownView* topdown_view = new TopdownView();
     uiTable[uiNames.TOPDOWN_VIEW] = topdown_view;
     uiList.push_back(topdown_view);
+
+    WireframeView* wireframe_view = new WireframeView();
+    uiTable[uiNames.WIREFRAME_VIEW] = wireframe_view;
+    uiList.push_back(wireframe_view);
 
 }
 

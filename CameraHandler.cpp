@@ -1,5 +1,7 @@
 #include "CameraHandler.h"
+
 #include "EngineTime.h"
+
 
 CameraHandler* CameraHandler::sharedInstance = nullptr;
 
@@ -46,6 +48,7 @@ void CameraHandler::destroy()
 void CameraHandler::update()
 {
 	this->currentCamera->update(EngineTime::getDeltaTime());
+	
 }
 
 void CameraHandler::setInitCamera()

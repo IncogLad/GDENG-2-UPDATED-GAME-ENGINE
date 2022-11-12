@@ -189,8 +189,12 @@
     <ClCompile Include="TextureManager.cpp">
       <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
     </ClCompile>
-    <ClCompile Include="RasterizerState.cpp" />
-    <ClCompile Include="WireframeView.cpp" />
+    <ClCompile Include="WireframeView.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="RasterizerState.cpp">
+      <Filter>GameEngine\GraphicsEngine\RenderManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -326,8 +330,12 @@
       <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
     </ClInclude>
     <ClInclude Include="resource1.h" />
-    <ClInclude Include="RasterizerState.h" />
-    <ClInclude Include="WireframeView.h" />
+    <ClInclude Include="WireframeView.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="RasterizerState.h">
+      <Filter>GameEngine\GraphicsEngine\RenderManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">

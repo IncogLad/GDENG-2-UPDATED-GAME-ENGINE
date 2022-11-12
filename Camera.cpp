@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "AppWindow.h"
+#include "DeviceContext.h"
 #include "EngineTime.h"
 #include "InputSystem.h"
 
@@ -15,27 +16,32 @@ void Camera::initialize(std::string name)
 {
 	AGameObject::initialize(name);
 	InputSystem::get()->addListener(this);
+	m_rs = GraphicsEngine::getInstance()->createRasterizer_state(false);
+
 	this->worldCam.setTranslation(Vector3D(0, 0, 0));
+
 	//init base on camera type
 	if (this->name == "TOPDOWN_CAMERA")
 	{
 		this->m_rot_y = 0.f;
-		this->m_rot_x = 1.45f;
-		this->worldCam.setTranslation(Vector3D(0, 20, 0));
+		this->m_rot_x = 1.57f;
+		this->worldCam.setTranslation(Vector3D(0, 10, 0));
 	}
 	else if (this->name == "PERSPECTIVE_CAMERA")
 	{
-		this->worldCam.setTranslation(Vector3D(0, 0, -2));
-	}
-	else if (this->name == "WIREFRAME_CAMERA")
-	{
-		this->worldCam.setTranslation(Vector3D(0, 0, -2));
+		this->m_rot_y = 0.79f;
+		this->m_rot_x = 0.79f;
+		this->worldCam.setTranslation(Vector3D(-3, 5, -2));
 	}
 	else if (this->name == "SCENE_CAMERA")
 	{
-		this->worldCam.setTranslation(Vector3D(0, 0, -2));
+		this->worldCam.setTranslation(Vector3D(0, 2, -8));
 	}
-
+	else if (this->name == "WIREFRAME_CAMERA")
+	{
+		m_rs = GraphicsEngine::getInstance()->createRasterizer_state(true);
+		this->worldCam.setTranslation(Vector3D(0, 2, -8));
+	}
 
 	//this->worldCam.setIdentity();
 	
@@ -124,6 +130,16 @@ void Camera::onKeyDown(int key)
 	{
 		this->m_upward = -1.0f;
 		std::cout << "E pressed" << std::endl;
+	}
+	else if (key == '1')
+	{
+		if (name == "PERSPECTIVE_CAMERA")
+			perspectiveMode = true;
+	}
+	else if (key == '2')
+	{
+		if (name == "PERSPECTIVE_CAMERA")
+			perspectiveMode = false;
 	}
 }
 

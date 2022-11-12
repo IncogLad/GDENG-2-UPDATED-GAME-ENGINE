@@ -138,6 +138,17 @@ void MenuToolBar::drawUI()
                     UISystem::getInstance()->uiTable["TOPDOWN_VIEW"]->open = true;
                 }
             }
+            if (ImGui::MenuItem("Wireframe View"))
+            {
+                if (UISystem::getInstance()->uiTable["WIREFRAME_VIEW"]->open == true)
+                {
+                    UISystem::getInstance()->uiTable["WIREFRAME_VIEW"]->open = false;
+                }
+                else
+                {
+                    UISystem::getInstance()->uiTable["WIREFRAME_VIEW"]->open = true;
+                }
+            }
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Tools"))

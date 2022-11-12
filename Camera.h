@@ -3,6 +3,7 @@
 #include "ConstantBuffer.h"
 #include "InputListener.h"
 #include "Matrix4x4.h"
+#include "RasterizerState.h"
 
 class Camera : public AGameObject, public InputListener
 {
@@ -39,8 +40,13 @@ public:
 	float m_forward = 0.0f;
 	float m_rightward = 0.0f;
 	float m_upward = 0.0f;
-private:
 
+	bool perspectiveMode = true;
+
+	RasterizerState* m_rs;
+
+private:
+	
 	Matrix4x4 worldCam;
 	Vector3D camPos;
 
