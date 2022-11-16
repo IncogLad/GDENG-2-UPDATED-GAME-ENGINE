@@ -12,10 +12,12 @@ class ConstantBuffer;
 class VertexShader;
 class PixelShader;
 class IndexBuffer;
+class MeshVertexBuffer;
 class UISystem;
 class RenderTexture;
 class Texture;
 class TextureManager;
+class MeshManager;
 class RasterizerState;
 
 class GraphicsEngine
@@ -33,6 +35,7 @@ public:
 	SwapChain* createSwapChain();
 	DeviceContext* getImmediateDeviceContext();
 	VertexBuffer* createVertexBuffer();
+	MeshVertexBuffer* createMeshVertexBuffer();
 	ConstantBuffer* createConstantBuffer();
 	IndexBuffer* createIndexBuffer();
 	VertexShader* createVertexShader(const void* shader_byte_code, size_t byte_code_size);
@@ -57,6 +60,8 @@ public:
 	std::unordered_map<String, RenderTexture*> getRenderTextureTable();
 
 	TextureManager* getTextureManager();
+	MeshManager* getMeshManager();
+	void getVertexMeshLayoutShaderByteCodeAndSize(void** byte_code, size_t* size);
 public:
 	static GraphicsEngine* getInstance();
 
@@ -85,11 +90,16 @@ private:
 	ID3D11PixelShader* m_ps = nullptr;
 
 	TextureManager* m_tex_manager = nullptr;
+	MeshManager* m_mesh_manager = nullptr;
+
+	unsigned char m_mesh_layout_byte_code[1024];
+	size_t m_mesh_layout_size = 0;
 private:
 	friend class SwapChain;
 	friend class VertexBuffer;
 	friend class ConstantBuffer;
 	friend class VertexShader;
+	friend class MeshVertexBuffer;
 	friend class PixelShader;
 	friend class IndexBuffer;
 	friend class UISystem;
@@ -97,5 +107,6 @@ private:
 	friend class Texture;
 	friend class TextureManager;
 	friend class RasterizerState;
+	friend class MeshManager;
 
 };

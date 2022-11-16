@@ -316,7 +316,7 @@ void Cube::updatePosition()
 	//VIEW MATRIX
 	cc.m_view.setIdentity();
 	cc.m_view = CameraHandler::getInstance()->getCurrentCameraViewMatrix();
-	std::cout << CameraHandler::getInstance()->getCurrentCamera()->getName() << std::endl;
+	//std::cout << CameraHandler::getInstance()->getCurrentCamera()->getName() << std::endl;
 	
 	//PROJ MATRIX
 	int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);

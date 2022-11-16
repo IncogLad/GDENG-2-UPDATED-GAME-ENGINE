@@ -109,13 +109,13 @@ void AppWindow::onUpdate()
 	
 	//////////////RENDER EVERY VIEW TO TEXTURE///////////////////
 	for (auto const& tempRT : GraphicsEngine::getInstance()->getRenderTextureList()) {
-		std::cout << GraphicsEngine::getInstance()->getCurrentRenderedTexture()->getName() << std::endl;
+		//std::cout << GraphicsEngine::getInstance()->getCurrentRenderedTexture()->getName() << std::endl;
 		GraphicsEngine::getInstance()->setCurrentRenderTexture(tempRT);
 		
 		CameraHandler::getInstance()->setCurrentCamera(tempRT->getName());
 		GraphicsEngine::getInstance()->RenderToTexture(this->m_swap_chain);
 
-		//Render Everything
+		//Draw Everything
 		for (auto const& i : Renderer::getInstance()->getQuadList()) {
 			i->draw(m_vs, m_ps);
 		}

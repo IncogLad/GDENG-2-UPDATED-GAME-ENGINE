@@ -2,6 +2,7 @@
 #include "SwapChain.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
+#include "MeshVertexBuffer.h"
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
@@ -12,6 +13,7 @@
 #include "RenderTexture.h"
 #include "TextureManager.h"
 #include "RasterizerState.h"
+#include "MeshManager.h"
 
 GraphicsEngine* GraphicsEngine::sharedInstance = nullptr;
 
@@ -77,6 +79,16 @@ bool GraphicsEngine::init()
 
 	m_tex_manager = new TextureManager();
 
+
+	m_mesh_manager = new MeshManager();
+
+	void* shader_byte_code = nullptr;
+	size_t size_shader = 0;
+	compileVertexShader(L"VertexMeshLayoutShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
+	::memcpy(m_mesh_layout_byte_code, shader_byte_code, size_shader);
+	m_mesh_layout_size = size_shader;
+	releaseCompiledShader();
+
 	return true;
 }
 
@@ -122,6 +134,11 @@ DeviceContext* GraphicsEngine::getImmediateDeviceContext()
 VertexBuffer* GraphicsEngine::createVertexBuffer()
 {
 	return new VertexBuffer();
+}
+
+MeshVertexBuffer* GraphicsEngine::createMeshVertexBuffer()
+{
+	return new MeshVertexBuffer();
 }
 
 ConstantBuffer* GraphicsEngine::createConstantBuffer()
@@ -269,6 +286,7 @@ void GraphicsEngine::RenderToTexture(SwapChain* swap_chain)
 
 void GraphicsEngine::SetBackBufferRenderTarget(SwapChain* swap_chain)
 {
+	// Set render target back to the swap chain's
 	sharedInstance->m_imm_context->OMSetRenderTargets(1, &swap_chain->m_rtv, swap_chain->getDepthStencilView());
 }
 
@@ -300,4 +318,15 @@ std::unordered_map<String, RenderTexture*> GraphicsEngine::getRenderTextureTable
 TextureManager* GraphicsEngine::getTextureManager()
 {
 	return this->m_tex_manager;
+}
+
+MeshManager* GraphicsEngine::getMeshManager()
+{
+	return m_mesh_manager;
+}
+
+void GraphicsEngine::getVertexMeshLayoutShaderByteCodeAndSize(void** byte_code, size_t* size)
+{
+	*byte_code = m_mesh_layout_byte_code;
+	*size = m_mesh_layout_size;
 }
