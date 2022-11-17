@@ -73,6 +73,9 @@
     <Filter Include="GameEngine\GraphicsEngine\ResourceManager\MeshManager">
       <UniqueIdentifier>{a3e6ad7f-ae81-4504-a21d-b80ae6e0dcdc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\ShaderLibrary">
+      <UniqueIdentifier>{74f65433-b483-47a2-96b5-bb455c0a5b2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -206,6 +209,9 @@
     </ClCompile>
     <ClCompile Include="MeshVertexBuffer.cpp">
       <Filter>GameEngine\GraphicsEngine\VertexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderLibrary.cpp">
+      <Filter>GameEngine\GraphicsEngine\ShaderLibrary</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -362,6 +368,9 @@
     </ClInclude>
     <ClInclude Include="MeshVertexBuffer.h">
       <Filter>GameEngine\GraphicsEngine\VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderLibrary.h">
+      <Filter>GameEngine\GraphicsEngine\ShaderLibrary</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
