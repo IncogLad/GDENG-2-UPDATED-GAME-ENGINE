@@ -213,6 +213,12 @@
     <ClCompile Include="ShaderLibrary.cpp">
       <Filter>GameEngine\GraphicsEngine\ShaderLibrary</Filter>
     </ClCompile>
+    <ClCompile Include="InspectorWindow.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneEditor.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -371,6 +377,12 @@
     </ClInclude>
     <ClInclude Include="ShaderLibrary.h">
       <Filter>GameEngine\GraphicsEngine\ShaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="InspectorWindow.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneEditor.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
