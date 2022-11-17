@@ -107,7 +107,7 @@ bool GraphicsEngine::release()
 
 	m_imm_device_context->release();
 	delete m_tex_manager;
-
+	delete m_mesh_manager;
 	m_d3d_device->Release();
 
 	
