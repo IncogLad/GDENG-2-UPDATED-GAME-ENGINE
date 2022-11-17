@@ -81,6 +81,17 @@ void GameObjectManager::initializeMesh()
 	mesh->initialize("teapot");
 	meshList.push_back(mesh);
 	meshTable["teapot"] = mesh;
+
+	/*Mesh* mesh1 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\armadillo.obj");
+	mesh1->initialize("armadillo");
+	meshList.push_back(mesh1);
+	meshTable["armadillo"] = mesh1;*/
+
+	/*
+	Mesh* mesh2 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\bunny.obj");
+	mesh2->initialize("bunny");
+	meshList.push_back(mesh2);
+	meshTable["bunny"] = mesh2;*/
 }
 
 std::list<Mesh*> GameObjectManager::getMeshList()
