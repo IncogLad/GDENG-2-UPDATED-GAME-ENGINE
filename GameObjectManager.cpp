@@ -1,21 +1,22 @@
-#include "Renderer.h"
+#include "GameObjectManager.h"
 #include "AppWindow.h"
+#include "MeshManager.h"
 #include "SwapChain.h"
 
 
-Renderer* Renderer::sharedInstance = nullptr;
+GameObjectManager* GameObjectManager::sharedInstance = nullptr;
 
-Renderer* Renderer::getInstance()
+GameObjectManager* GameObjectManager::getInstance()
 {
     return sharedInstance;
 }   
 
-void Renderer::initialize()
+void GameObjectManager::initialize()
 {
-    sharedInstance = new Renderer();
+    sharedInstance = new GameObjectManager();
 }
 
-void Renderer::destroy()
+void GameObjectManager::destroy()
 {
 	if (sharedInstance != NULL)
 	{
@@ -24,53 +25,84 @@ void Renderer::destroy()
     
 }
 
-void Renderer::initializeQuads(std::string name, void* shader_byte_code, size_t size_shader)
+void GameObjectManager::initializeQuads(std::string name)
 {
 	Quads* tempQuad = new Quads();
 	tempQuad->initialize(name);
-	tempQuad->initBuffers(shader_byte_code, size_shader);
+	tempQuad->initBuffers();
 	insertQuads(tempQuad);
+	quadTable[name] = tempQuad;
 }
 
-void Renderer::initializeQuadsAnim(std::string name, void* shader_byte_code, size_t size_shader)
+void GameObjectManager::initializeQuadsAnim(std::string name)
 {
 	Quads* tempQuad = new Quads();
 	tempQuad->initialize(name);
-	tempQuad->initAnimBuffers(shader_byte_code, size_shader);
+	tempQuad->initAnimBuffers();
 	insertQuads(tempQuad);
+	quadTable[name] = tempQuad;
 }
 
-void Renderer::initializeQuadConst()
+void GameObjectManager::initializeQuadConst()
 {
 	for (auto const& i : sharedInstance->getQuadList()) {
 		i->initConstBuffers();
 	}
 }
 
-void Renderer::insertQuads(Quads* quad)
+void GameObjectManager::insertQuads(Quads* quad)
 {
 	quadList.push_front(quad);
 }
 
-void Renderer::releaseQuads()
+void GameObjectManager::releaseQuads()
 {
 
 }
 
-std::list<Quads*> Renderer::getQuadList()
+std::list<Quads*> GameObjectManager::getQuadList()
 {
 	return quadList;
 }
 
-void Renderer::initializeCube(std::string name, void* shader_byte_code, size_t size_shader, int num = 0)
+Quads* GameObjectManager::getQuadByName(std::string name)
+{
+	return quadTable[name];
+}
+
+Cube* GameObjectManager::getCubeByName(std::string name)
+{
+	return cubeTable[name];
+}
+
+void GameObjectManager::initializeMesh()
+{
+	Mesh* mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\teapot.obj");
+	mesh->initialize("teapot");
+	meshList.push_back(mesh);
+	meshTable["teapot"] = mesh;
+}
+
+std::list<Mesh*> GameObjectManager::getMeshList()
+{
+	return meshList;
+}
+
+Mesh* GameObjectManager::getMeshByName(std::string name)
+{
+	return meshTable[name];
+}
+
+void GameObjectManager::initializeCube(std::string name, int num = 0)
 {
 	Cube* cube = new Cube();
 	cube->initialize(name);
-	cube->initBuffers(shader_byte_code, size_shader, num);
+	cube->initBuffers(num);
 	insertCube(cube);
+	cubeTable[name] = cube;
 }
 
-void Renderer::initializeCubeConst()
+void GameObjectManager::initializeCubeConst()
 {
 	int num = 0;
 	/*float p_secondLevel = 0.85f;
@@ -159,26 +191,26 @@ void Renderer::initializeCubeConst()
 	}
 }
 
-void Renderer::insertCube(Cube* cube)
+void GameObjectManager::insertCube(Cube* cube)
 {
 	cubeList.push_front(cube);
 }
 
-void Renderer::releaseCubes()
+void GameObjectManager::releaseCubes()
 {
 }
 
-std::list<Cube*> Renderer::getCubeList()
+std::list<Cube*> GameObjectManager::getCubeList()
 {
 	return cubeList;
 }
 
-Renderer::Renderer()
+GameObjectManager::GameObjectManager()
 {
 
 }
 
-Renderer::~Renderer()
+GameObjectManager::~GameObjectManager()
 {
 
 }

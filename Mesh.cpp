@@ -6,8 +6,13 @@
 #include <locale>
 #include <codecvt>
 
+#include "AppWindow.h"
+#include "CameraHandler.h"
 #include "GraphicsEngine.h"
 #include "VertexMesh.h"
+#include "DeviceContext.h"
+#include "ShaderLibrary.h"
+#include "TextureManager.h"
 
 Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 {
@@ -71,11 +76,114 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 	m_index_buffer = GraphicsEngine::getInstance()->createIndexBuffer();
 	m_index_buffer->load(&list_indices[0], (UINT)list_indices.size());
 
+	cc.m_angle = 0.0f;
+	m_cb = GraphicsEngine::getInstance()->createConstantBuffer();
+	m_cb->load(&cc, sizeof(constant));
+
+	brick_tex = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(L"Assets\\Textures\\brick.png");
 }
 
 
 Mesh::~Mesh()
 {
+}
+
+void Mesh::initialize(std::string name)
+{
+	AGameObject::initialize(name);
+	this->name = name;
+}
+
+void Mesh::destroy()
+{
+	AGameObject::destroy();
+}
+
+void Mesh::draw()
+{
+	ShaderNames shader_names;
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setRenderConfig
+	(
+		ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME),
+		ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME)
+	);
+
+	updateTransforms();
+
+	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexShader(ShaderLibrary::getInstance()->getVertexShader(shader_names.TEXTURED_VERTEX_SHADER_NAME));
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME));
+
+
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getVertexShader(shader_names.TEXTURED_VERTEX_SHADER_NAME), m_cb);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), m_cb);
+
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPSTexture(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), brick_tex);
+
+	//SET THE VERTICES OF THE TRIANGLE TO DRAW
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexBuffer(m_vertex_buffer);
+
+	//SET THE INDECES OF THE TRIANGLE TO DRAW
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setIndexBuffer(m_index_buffer);
+
+	// FINALLY DRAW THE TRIANGLE
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->drawIndexedTriangleList(m_index_buffer->getSizeIndexList(), 0, 0);
+
+}
+
+void Mesh::updateTransforms()
+{
+	//WORLD MATRIX
+	cc.m_world.setIdentity();
+	Matrix4x4 allMatrix; allMatrix.setIdentity();
+
+	Matrix4x4 translationMatrix; translationMatrix.setIdentity(); translationMatrix.setTranslation(this->getLocalPosition());
+	Matrix4x4 scaleMatrix; scaleMatrix.setIdentity(); scaleMatrix.setScale(this->getLocalScale());
+
+	
+	//std::cout << localRotation.m_z << std::endl;
+
+	Matrix4x4 w_zMatrix; w_zMatrix.setIdentity();
+	w_zMatrix.setRotationZ(getLocalRotation().m_z);
+	allMatrix *= w_zMatrix;
+
+	Matrix4x4 w_xMatrix; w_xMatrix.setIdentity();
+	w_xMatrix.setRotationX(rotation.m_x);
+	allMatrix *= w_xMatrix;
+
+	Matrix4x4 w_yMatrix; w_yMatrix.setIdentity();
+	w_yMatrix.setRotationY(rotation.m_y);
+	allMatrix *= w_yMatrix;
+
+	//scaleMatrix *= rotMatrix;
+	allMatrix *= scaleMatrix;
+	allMatrix *= translationMatrix;
+	cc.m_world = allMatrix;
+
+	//VIEW MATRIX
+	cc.m_view.setIdentity();
+	cc.m_view = CameraHandler::getInstance()->getCurrentCameraViewMatrix();
+	//std::cout << CameraHandler::getInstance()->getCurrentCamera()->getName() << std::endl;
+
+	//PROJ MATRIX
+	int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
+	int height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
+
+	if (CameraHandler::getInstance()->getCurrentCamera()->perspectiveMode)
+	{
+		cc.m_proj.setPerspectiveFovLH(1.57, ((float)width / (float)height), 0.1f, 1000.0f);
+	}
+	else
+	{
+		cc.m_proj.setOrthoLH(1.57f, ((float)width / (float)height), 0.1f, 1000.0f);
+	}
+	//cc.m_proj.setOrthoLH(1.57f, ((float)width / (float)height), 0.1f, 1000.0f);
+	//cc.m_proj.setPerspectiveFovLH(1.57, ((float)width / (float)height), 0.1f, 1000.0f);
+
+	//std::cout << getLocalPosition().m_x << ", " << getLocalPosition().m_y << ", " << getLocalPosition().m_z << std::endl;
+
+	m_cb->update(GraphicsEngine::getInstance()->getImmediateDeviceContext(), &cc);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setRasterizerState(CameraHandler::getInstance()->getCurrentCamera()->m_rs);
 }
 
 const VertexBuffer* Mesh::getVertexBuffer()

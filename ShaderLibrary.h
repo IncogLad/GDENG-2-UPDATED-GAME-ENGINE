@@ -39,7 +39,7 @@ public:
 	static void initialize();
 	static void destroy();
 
-	void requestVertexShaderData(String vertexShaderName, void** shaderByteCode, size_t sizeShader);
+	void requestVertexShaderData(String vertexShaderName, void** shaderByteCode, size_t* sizeShader);
 	VertexShader* getVertexShader(String vertexShaderName);
 	PixelShader* getPixelShader(String pixelShaderName);
 

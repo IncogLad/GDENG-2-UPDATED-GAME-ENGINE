@@ -44,7 +44,7 @@ public:
 	virtual void initialize(std::string name);
 	virtual void destroy();
 
-	virtual void draw(VertexShader* m_vs, PixelShader* m_ps) ;
+	virtual void draw();
 
 	void setPosition(float x, float y, float z);
 	void setPosition(Vector3D pos);
@@ -57,6 +57,8 @@ public:
 	void setRotation(float x, float y, float z);
 	void setRotation(Vector3D rot);
 	Vector3D getLocalRotation();
+
+	std::string getName();
 
 private:
 

@@ -26,14 +26,16 @@ public:
 	void setViewportSize(UINT width, UINT height);
 
 	void setRasterizerState(RasterizerState* rasterizerState);
-	void setTexture(VertexShader* vertex_shader, Texture* texture);
-	void setTexture(PixelShader* pixel_shader, Texture* texture);
+	void setVSTexture(VertexShader* vertex_shader, Texture* texture);
+	void setPSTexture(PixelShader* pixel_shader, Texture* texture);
 
 	void setVertexShader(VertexShader* vertex_shader);
 	void setPixelShader(PixelShader* pixel_shader);
 
 	void setConstantBuffer(VertexShader* vertex_shader, ConstantBuffer* buffer);
 	void setConstantBuffer(PixelShader* pixel_shader, ConstantBuffer* buffer);
+
+	void setRenderConfig(VertexShader* vs, PixelShader* ps);
 
 	bool release();
 	~DeviceContext();

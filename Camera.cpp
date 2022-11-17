@@ -54,7 +54,7 @@ void Camera::destroy()
 	AGameObject::destroy();
 }
 
-void Camera::draw(VertexShader* m_vs, PixelShader* m_ps)
+void Camera::draw()
 {
 
 }

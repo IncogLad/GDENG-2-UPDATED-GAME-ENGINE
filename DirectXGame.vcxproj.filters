@@ -108,7 +108,7 @@
     <ClCompile Include="ConstantBuffer.cpp">
       <Filter>GameEngine\GraphicsEngine\ConstantBuffer</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
+    <ClCompile Include="GameObjectManager.cpp">
       <Filter>GameEngine\GraphicsEngine\RenderManager</Filter>
     </ClCompile>
     <ClCompile Include="AGameObject.cpp">
@@ -248,7 +248,7 @@
     <ClInclude Include="ConstantBuffer.h">
       <Filter>GameEngine\GraphicsEngine\ConstantBuffer</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
+    <ClInclude Include="GameObjectManager.h">
       <Filter>GameEngine\GraphicsEngine\RenderManager</Filter>
     </ClInclude>
     <ClInclude Include="AGameObject.h">

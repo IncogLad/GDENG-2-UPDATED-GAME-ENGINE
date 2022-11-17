@@ -7,6 +7,7 @@
 #include "PixelShader.h"
 #include "CameraHandler.h"
 #include "RenderTexture.h"
+#include "ShaderLibrary.h"
 #include "TextureManager.h"
 #include "UISystem.h"
 
@@ -45,58 +46,32 @@ void AppWindow::onCreate()
 	Window::onCreate();
 	InputSystem::get()->addListener(this);
 	GraphicsEngine::getInstance()->initialize();
-	CameraHandler::getInstance()->initialize();
 	
-	UISystem::getInstance()->initialize();
-	UISystem::getInstance()->initImGUI(this->m_hwnd);
+	CameraHandler::initialize();
+	
+	UISystem::initialize();
 
-	
+	UISystem::getInstance()->initImGUI(this->m_hwnd);
 
 	m_swap_chain = GraphicsEngine::getInstance()->createSwapChain();
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
-
+	//ShaderLibrary::initialize();
 	
-	Renderer::initialize();
+	GameObjectManager::initialize();
+	ShaderLibrary::initialize();
 
 	GraphicsEngine::getInstance()->createRenderTexture(rc.right - rc.left, rc.bottom - rc.top);
+	
+	GameObjectManager::getInstance()->initializeCube("cube0", 0);
+	GameObjectManager::getInstance()->initializeCube("cube1", 0);
+	GameObjectManager::getInstance()->initializeCube("cube2", 0);
 
-	void* shader_byte_code = nullptr;
-	size_t size_shader = 0;
-	//GraphicsEngine::getInstance()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
-	GraphicsEngine::getInstance()->compileVertexShader(L"VertexShaderAnim.hlsl", "vsmain", &shader_byte_code, &size_shader);
-
-	m_vs = GraphicsEngine::getInstance()->createVertexShader(shader_byte_code, size_shader);
-
-	//Renderer::getInstance()->initializeQuadsAnim("1", shader_byte_code, size_shader);
-	//Renderer::getInstance()->initializeQuadsAnim(list_anim2, shader_byte_code, size_shader);
-	//Renderer::getInstance()->initializeQuadsAnim(list_anim3, shader_byte_code, size_shader);
-	//Renderer::getInstance()->initializeQuads(list2, shader_byte_code, size_shader);
-	//Renderer::getInstance()->initializeQuads(list3, shader_byte_code, size_shader);
-	Renderer::getInstance()->initializeCube("cube0", shader_byte_code, size_shader, 0);
-	Renderer::getInstance()->initializeCube("cube1", shader_byte_code, size_shader, 0);
-	Renderer::getInstance()->initializeCube("cube2", shader_byte_code, size_shader, 0);
-
-	Renderer::getInstance()->initializeCube("plane", shader_byte_code, size_shader, 1);
-	/*for (int i = 0; i < 15; i++)
-	{
-		Renderer::getInstance()->initializeCube("card" + i, shader_byte_code, size_shader, 1);
-	}*/
-
-	/*for (int i = 0; i < 50; i++)
-	{
-		Renderer::getInstance()->initializeCube("0", shader_byte_code, size_shader, 0);
-	}*/
-
-	GraphicsEngine::getInstance()->releaseCompiledShader();
-
-	//GraphicsEngine::getInstance()->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
-	GraphicsEngine::getInstance()->compilePixelShader(L"PixelShaderAnim.hlsl", "psmain", &shader_byte_code, &size_shader);
-	m_ps = GraphicsEngine::getInstance()->createPixelShader(shader_byte_code, size_shader);
-	GraphicsEngine::getInstance()->releaseCompiledShader();
-
-	Renderer::getInstance()->initializeQuadConst();
-	Renderer::getInstance()->initializeCubeConst();
+	GameObjectManager::getInstance()->initializeCube("plane", 1);
+	GameObjectManager::getInstance()->initializeMesh();
+	
+	GameObjectManager::getInstance()->initializeQuadConst();
+	GameObjectManager::getInstance()->initializeCubeConst();
 	
 
 }
@@ -116,13 +91,20 @@ void AppWindow::onUpdate()
 		GraphicsEngine::getInstance()->RenderToTexture(this->m_swap_chain);
 
 		//Draw Everything
-		for (auto const& i : Renderer::getInstance()->getQuadList()) {
-			i->draw(m_vs, m_ps);
+		for (auto const& i : GameObjectManager::getInstance()->getQuadList()) {
+			i->draw();
 		}
 
-		for (auto const& i : Renderer::getInstance()->getCubeList()) {
-			i->draw(m_vs, m_ps);
+		for (auto const& i : GameObjectManager::getInstance()->getCubeList()) {
+			std::cout << i->getName() << std::endl;
+			i->draw();
 		}
+
+		for (auto const& i : GameObjectManager::getInstance()->getMeshList()) {
+			std::cout<<i->getName() << std::endl;
+			i->draw();
+		}
+
 
 		CameraHandler::getInstance()->update();
 	}
@@ -149,8 +131,7 @@ void AppWindow::onDestroy()
 {
 	Window::onDestroy();
 	m_swap_chain->release();
-	m_vs->release();
-	m_ps->release();
+	ShaderLibrary::destroy();
 	GraphicsEngine::getInstance()->release();
 	UISystem::getInstance()->destroy();
 
@@ -215,20 +196,16 @@ void AppWindow::onMouseMove(const Point& mouse_pos)
 
 void AppWindow::onLeftMouseDown(const Point& mouse_pos)
 {
-	move_cube = 1.0f;
 }
 
 void AppWindow::onLeftMouseUp(const Point& mouse_pos)
 {
-	move_cube = 0.0f;
 }
 
 void AppWindow::onRightMouseDown(const Point& mouse_pos)
 {
-	move_cube = -1.0f;
 }
 
 void AppWindow::onRightMouseUp(const Point& mouse_pos)
 {
-	move_cube = 0.0f;
 }

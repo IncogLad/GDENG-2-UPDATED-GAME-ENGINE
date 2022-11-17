@@ -2,10 +2,11 @@
 
 #include "AppWindow.h"
 #include "EngineTime.h"
-#include "Renderer.h"
+#include "GameObjectManager.h"
 #include "DeviceContext.h"
 #include "ConstantBuffer.h"
 #include "CameraHandler.h"
+#include "ShaderLibrary.h"
 #include "VertexBuffer.h"
 
 
@@ -27,8 +28,13 @@ void Quads::destroy()
 	AGameObject::destroy();
 }
 
-void Quads::initBuffers(void* shader_byte_code, size_t size_shader)
+void Quads::initBuffers()
 {
+	ShaderNames shader_names;
+	void* shaderByteCode = nullptr;
+	size_t sizeShader = 0;
+	ShaderLibrary::getInstance()->requestVertexShaderData(shader_names.BASE_VERTEX_SHADER_NAME, &shaderByteCode, &sizeShader);
+
 	vertexAnim list_anim[] =
 	{
 		//X - Y - Z
@@ -51,11 +57,16 @@ void Quads::initBuffers(void* shader_byte_code, size_t size_shader)
 	};
 
 	m_vb = GraphicsEngine::getInstance()->createVertexBuffer();
-	m_vb->load(list_anim, sizeof(vertex), 4, shader_byte_code, size_shader);
+	m_vb->load(list_anim, sizeof(vertex), 4, shaderByteCode, sizeShader);
 }
 
-void Quads::initAnimBuffers(void* shader_byte_code, size_t size_shader)
+void Quads::initAnimBuffers()
 {
+	ShaderNames shader_names;
+	void* shaderByteCode = nullptr;
+	size_t sizeShader = 0;
+	ShaderLibrary::getInstance()->requestVertexShaderData(shader_names.BASE_VERTEX_SHADER_NAME, &shaderByteCode, &sizeShader);
+
 	vertexAnim list_anim[] =
 	{
 		//X - Y - Z
@@ -78,7 +89,7 @@ void Quads::initAnimBuffers(void* shader_byte_code, size_t size_shader)
 	};
 
 	m_vb = GraphicsEngine::getInstance()->createVertexBuffer();
-	m_vb->load(list_anim, sizeof(vertexAnim), 4, shader_byte_code, size_shader);
+	m_vb->load(list_anim, sizeof(vertex), 4, shaderByteCode, sizeShader);
 }
 
 void Quads::initConstBuffers()
@@ -88,34 +99,25 @@ void Quads::initConstBuffers()
 	m_cb->load(&cc, sizeof(constant));
 }
 
-void Quads::draw(VertexShader* m_vs, PixelShader* m_ps)
+void Quads::draw()
 {
-	/*cc.m_angle += static_cast<float>(speed * EngineTime::getDeltaTime());
-	if (!decrease) {
-		speed += EngineTime::getDeltaTime();
-		if (speed >= 10)
-		{
-			decrease = true;
-		}
-	}
-	if (decrease) {
-		speed -= EngineTime::getDeltaTime();
-		if (speed <= 2)
-		{
-			decrease = false;
-		}
-	}*/
-	
+	ShaderNames shader_names;
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setRenderConfig
+	(
+		ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME),
+		ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME)
+	);
+
 	updatePosition();
 
 
 	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexShader(m_vs);
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(m_ps);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexShader(ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME));
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME));
 
 
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME), m_cb);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME), m_cb);
 
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexBuffer(m_vb);

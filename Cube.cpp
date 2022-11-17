@@ -3,13 +3,14 @@
 #include <random>
 
 #include "AppWindow.h"
-#include "Renderer.h"
+#include "GameObjectManager.h"
 #include "DeviceContext.h"
 #include "ConstantBuffer.h"
 #include "EngineTime.h"
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
 #include "CameraHandler.h"
+#include "ShaderLibrary.h"
 
 
 Cube::Cube()
@@ -24,17 +25,6 @@ void Cube::initialize(std::string name)
 {
 	AGameObject::initialize(name);
 
-	////no.4
-	//std::random_device rd; // obtain a random number from hardware
-	//std::mt19937 gen(rd()); // seed the generator
-	//std::uniform_real_distribution<> distr(-5.f, 5.f);
-	//float numx = distr(gen);
-	//float numy = distr(gen);
-	//float numz = distr(gen);
-	//this->setPosition(Vector3D(numx,numy,0));
-	//float unumx = distr(gen);
-	//float unumy = distr(gen);
-	//float unumz = distr(gen);
 	rotation = getLocalRotation();
 	translation = getLocalPosition();
 	scaling = getLocalScale();
@@ -47,8 +37,13 @@ void Cube::destroy()
 	AGameObject::destroy();
 }
 
-void Cube::initBuffers(void* shader_byte_code, size_t size_shader, int num = 0)
+void Cube::initBuffers(int num = 0)
 {
+	ShaderNames shader_names;
+	void* shaderByteCode = nullptr;
+	size_t sizeShader = 0;
+	ShaderLibrary::getInstance()->requestVertexShaderData(shader_names.BASE_VERTEX_SHADER_NAME, &shaderByteCode, &sizeShader);
+
 	this->num = num;
 	vertexCube vertex_list[] =
 	{
@@ -105,12 +100,12 @@ void Cube::initBuffers(void* shader_byte_code, size_t size_shader, int num = 0)
 	if (this->num == 0) {
 		UINT size_list = ARRAYSIZE(vertex_list);
 		//std::cout << list->position.m_x << std::endl;
-		m_vb->load(vertex_list, sizeof(vertexCube), size_list, shader_byte_code, size_shader);
+		m_vb->load(vertex_list, sizeof(vertexCube), size_list, shaderByteCode, sizeShader);
 	}
 	else {
 		UINT size_list = ARRAYSIZE(plane_vertex_list);
 		//std::cout << list->position.m_x << std::endl;
-		m_vb->load(plane_vertex_list, sizeof(vertexCube), size_list, shader_byte_code, size_shader);
+		m_vb->load(plane_vertex_list, sizeof(vertexCube), size_list, shaderByteCode, sizeShader);
 	}
 
 	unsigned int index_list[] =
@@ -148,19 +143,25 @@ void Cube::initConstBuffers()
 	m_cb->load(&cc, sizeof(constant));
 }
 
-void Cube::draw(VertexShader* m_vs, PixelShader* m_ps)
+void Cube::draw()
 {
-	AGameObject::draw(m_vs, m_ps);
+	ShaderNames shader_names;
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setRenderConfig
+	(
+		ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME), 
+		ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME)
+	);
+
 	updatePosition();
 
 
 	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexShader(m_vs);
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(m_ps);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexShader(ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME));
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME));
 
 
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME), m_cb);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME), m_cb);
 
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexBuffer(m_vb);

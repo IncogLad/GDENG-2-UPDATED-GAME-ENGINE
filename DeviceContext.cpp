@@ -82,12 +82,12 @@ void DeviceContext::setRasterizerState(RasterizerState* rasterizerState)
 
 }
 
-void DeviceContext::setTexture(VertexShader* vertex_shader, Texture* texture)
+void DeviceContext::setVSTexture(VertexShader* vertex_shader, Texture* texture)
 {
 	m_device_context->VSSetShaderResources(0, 1, &texture->m_shader_res_view);
 }
 
-void DeviceContext::setTexture(PixelShader* pixel_shader, Texture* texture)
+void DeviceContext::setPSTexture(PixelShader* pixel_shader, Texture* texture)
 {
 	m_device_context->PSSetShaderResources(0, 1, &texture->m_shader_res_view);
 }
@@ -110,6 +110,12 @@ void DeviceContext::setConstantBuffer(VertexShader* vertex_shader, ConstantBuffe
 void DeviceContext::setConstantBuffer(PixelShader* pixel_shader, ConstantBuffer* buffer)
 {
 	m_device_context->PSSetConstantBuffers(0, 1, &buffer->m_buffer);
+}
+
+void DeviceContext::setRenderConfig(VertexShader* vs, PixelShader* ps)
+{
+	m_device_context->VSSetShader(vs->getShader(), nullptr, 0);
+	m_device_context->PSSetShader(ps->getShader(), nullptr, 0);
 }
 
 
