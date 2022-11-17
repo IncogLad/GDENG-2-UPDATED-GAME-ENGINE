@@ -8,7 +8,6 @@
 #include "CameraHandler.h"
 #include "RenderTexture.h"
 #include "MeshManager.h"
-#include "ShaderLibrary.h"
 #include "TextureManager.h"
 #include "UISystem.h"
 
