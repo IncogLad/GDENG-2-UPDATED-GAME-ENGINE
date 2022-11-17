@@ -20,6 +20,8 @@ Quads::~Quads()
 void Quads::initialize(std::string name)
 {
 	AGameObject::initialize(name);
+	//m_vs = AppWindow::getInstance()->m_vs;
+	//m_ps = AppWindow::getInstance()->m_ps;
 }
 
 void Quads::destroy()
@@ -86,26 +88,12 @@ void Quads::initConstBuffers()
 	cc.m_angle = 0.0f;
 	m_cb = GraphicsEngine::getInstance()->createConstantBuffer();
 	m_cb->load(&cc, sizeof(constant));
+
 }
 
-void Quads::draw(VertexShader* m_vs, PixelShader* m_ps)
+void Quads::draw()
 {
-	/*cc.m_angle += static_cast<float>(speed * EngineTime::getDeltaTime());
-	if (!decrease) {
-		speed += EngineTime::getDeltaTime();
-		if (speed >= 10)
-		{
-			decrease = true;
-		}
-	}
-	if (decrease) {
-		speed -= EngineTime::getDeltaTime();
-		if (speed <= 2)
-		{
-			decrease = false;
-		}
-	}*/
-	
+
 	updatePosition();
 
 

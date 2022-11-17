@@ -16,7 +16,7 @@ public:
 
 	void initBuffers(void* shader_byte_code, size_t size_shader, int num );
 	void initConstBuffers();
-	void draw(VertexShader* m_vs, PixelShader* m_ps) override;
+	void draw() override;
 	void releaseBuffers();
 
 	void updatePosition();
@@ -28,16 +28,15 @@ private:
 
 	constant cc;
 
+	VertexShader* m_vs;
+	PixelShader* m_ps;
 
-	//no.2
+
 	Vector3D rotation;
-
-	//no.3
 	Vector3D translation;
 	Vector3D scaling;
 	bool i_trans;
 	bool i_scale;
-
 
 	int num = 0;
 

@@ -14,7 +14,7 @@ public:
 	void initialize(std::string name) override;
 	void destroy() override;
 
-	void draw(VertexShader* m_vs, PixelShader* m_ps) override;
+	void draw() override;
 
 	void update(float deltaTime);
 

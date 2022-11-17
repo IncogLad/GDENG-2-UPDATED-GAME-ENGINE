@@ -17,7 +17,7 @@ public:
 	void initBuffers(void* shader_byte_code, size_t size_shader);
 	void initAnimBuffers(void* shader_byte_code, size_t size_shader);
 	void initConstBuffers();
-	void draw(VertexShader* m_vs, PixelShader* m_ps) override;
+	void draw() override;
 	void releaseBuffers();
 
 	void updatePosition();
@@ -25,6 +25,9 @@ public:
 private:
 	VertexBuffer* m_vb;
 	ConstantBuffer* m_cb;
+
+	VertexShader* m_vs;
+	PixelShader* m_ps;
 
 	constant cc;
 	double speed = 2;

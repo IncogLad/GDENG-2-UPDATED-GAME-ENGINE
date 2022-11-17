@@ -35,6 +35,8 @@ void Cube::initialize(std::string name)
 	//float unumx = distr(gen);
 	//float unumy = distr(gen);
 	//float unumz = distr(gen);
+
+
 	rotation = getLocalRotation();
 	translation = getLocalPosition();
 	scaling = getLocalScale();
@@ -146,11 +148,12 @@ void Cube::initConstBuffers()
 	cc.m_angle = 0.0f;
 	m_cb = GraphicsEngine::getInstance()->createConstantBuffer();
 	m_cb->load(&cc, sizeof(constant));
+
 }
 
-void Cube::draw(VertexShader* m_vs, PixelShader* m_ps)
+void Cube::draw()
 {
-	AGameObject::draw(m_vs, m_ps);
+	AGameObject::draw();
 	updatePosition();
 
 

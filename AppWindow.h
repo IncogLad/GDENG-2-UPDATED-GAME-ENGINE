@@ -3,6 +3,7 @@
 #include "GraphicsEngine.h"
 #include "SwapChain.h"
 #include "InputListener.h"
+#include "Mesh.h"
 #include "Renderer.h"
 
 class AppWindow : public Window, public InputListener
@@ -34,6 +35,7 @@ public:
 	
 
 	float move_cube = 0.0f;
+	
 
 private:
 	static AppWindow* sharedInstance;
@@ -41,5 +43,8 @@ private:
 	SwapChain* m_swap_chain;
 	VertexShader* m_vs;
 	PixelShader* m_ps;
+
+	Mesh* m_mesh;
+	Texture* m_brick_tex;
 	
 };

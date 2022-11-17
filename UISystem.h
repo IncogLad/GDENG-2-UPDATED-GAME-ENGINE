@@ -29,6 +29,9 @@ public:
 	const String PERSPECTIVE_VIEW = "PERSPECTIVE_VIEW";
 	const String TOPDOWN_VIEW = "TOPDOWN_VIEW";
 	const String WIREFRAME_VIEW = "WIREFRAME_VIEW";
+
+	const String SCENE_EDITOR = "SCENE_EDITOR";
+	const String INSPECTOR_WINDOW = "INSPECTOR_WINDOW";
 };
 
 

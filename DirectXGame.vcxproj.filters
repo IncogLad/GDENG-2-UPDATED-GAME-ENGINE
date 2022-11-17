@@ -73,6 +73,9 @@
     <Filter Include="GameEngine\GraphicsEngine\ResourceManager\MeshManager">
       <UniqueIdentifier>{a3e6ad7f-ae81-4504-a21d-b80ae6e0dcdc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\ShaderLibrary">
+      <UniqueIdentifier>{edf3967a-4826-4536-bcf5-ccc4a24a0f56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -206,6 +209,15 @@
     </ClCompile>
     <ClCompile Include="MeshVertexBuffer.cpp">
       <Filter>GameEngine\GraphicsEngine\VertexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="InspectorWindow.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneEditor.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderLibrary.cpp">
+      <Filter>GameEngine\GraphicsEngine\ShaderLibrary</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -363,6 +375,15 @@
     <ClInclude Include="MeshVertexBuffer.h">
       <Filter>GameEngine\GraphicsEngine\VertexBuffer</Filter>
     </ClInclude>
+    <ClInclude Include="InspectorWindow.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneEditor.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderLibrary.h">
+      <Filter>GameEngine\GraphicsEngine\ShaderLibrary</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">
@@ -384,6 +405,12 @@
       <Filter>GameEngine\GraphicsEngine\PixelShader</Filter>
     </FxCompile>
     <FxCompile Include="VertexMeshLayoutShader.hlsl">
+      <Filter>GameEngine\GraphicsEngine\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelShaderTex.hlsl">
+      <Filter>GameEngine\GraphicsEngine\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexShaderTex.hlsl">
       <Filter>GameEngine\GraphicsEngine\VertexShader</Filter>
     </FxCompile>
   </ItemGroup>

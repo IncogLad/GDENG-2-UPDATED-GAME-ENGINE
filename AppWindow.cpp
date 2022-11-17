@@ -7,6 +7,8 @@
 #include "PixelShader.h"
 #include "CameraHandler.h"
 #include "RenderTexture.h"
+#include "MeshManager.h"
+#include "ShaderLibrary.h"
 #include "TextureManager.h"
 #include "UISystem.h"
 
@@ -45,12 +47,14 @@ void AppWindow::onCreate()
 	Window::onCreate();
 	InputSystem::get()->addListener(this);
 	GraphicsEngine::getInstance()->initialize();
-	CameraHandler::getInstance()->initialize();
+	CameraHandler::initialize();
+	//ShaderLibrary::getInstance()->initialize();
 	
-	UISystem::getInstance()->initialize();
+	UISystem::initialize();
 	UISystem::getInstance()->initImGUI(this->m_hwnd);
 
-	
+	m_brick_tex = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(L"Assets\\Textures\\brick.png");
+	m_mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\teapot.obj");
 
 	m_swap_chain = GraphicsEngine::getInstance()->createSwapChain();
 	RECT rc = this->getClientWindowRect();
@@ -78,6 +82,9 @@ void AppWindow::onCreate()
 	Renderer::getInstance()->initializeCube("cube2", shader_byte_code, size_shader, 0);
 
 	Renderer::getInstance()->initializeCube("plane", shader_byte_code, size_shader, 1);
+
+	
+
 	/*for (int i = 0; i < 15; i++)
 	{
 		Renderer::getInstance()->initializeCube("card" + i, shader_byte_code, size_shader, 1);
@@ -117,12 +124,31 @@ void AppWindow::onUpdate()
 
 		//Draw Everything
 		for (auto const& i : Renderer::getInstance()->getQuadList()) {
-			i->draw(m_vs, m_ps);
+			i->draw();
 		}
 
 		for (auto const& i : Renderer::getInstance()->getCubeList()) {
-			i->draw(m_vs, m_ps);
+			i->draw();
 		}
+
+
+		//MESH EXPERIMENT///////////////////////////
+		//GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_mesh->getConstantBuffer());
+		//GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_mesh->getConstantBuffer());
+
+		//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexShader(m_vs);
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(m_ps);
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setTexture(m_ps, m_brick_tex);
+		//SET THE VERTICES OF THE TRIANGLE TO DRAW
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexBuffer(m_mesh->getVertexBuffer());
+		//SET THE INDICES OF THE TRIANGLE TO DRAW
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setIndexBuffer(m_mesh->getIndexBuffer());
+
+
+		// FINALLY DRAW THE TRIANGLE
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->drawIndexedTriangleList(m_mesh->getIndexBuffer()->getSizeIndexList(), 0, 0);
+		/// ////////////////////////////////////
 
 		CameraHandler::getInstance()->update();
 	}
@@ -152,6 +178,7 @@ void AppWindow::onDestroy()
 	m_vs->release();
 	m_ps->release();
 	GraphicsEngine::getInstance()->release();
+	//ShaderLibrary::getInstance()->destroy();
 	UISystem::getInstance()->destroy();
 
 }
