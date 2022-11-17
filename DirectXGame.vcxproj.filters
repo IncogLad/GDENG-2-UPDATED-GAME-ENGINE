@@ -395,6 +395,12 @@
     <FxCompile Include="VertexMeshLayoutShader.hlsl">
       <Filter>GameEngine\GraphicsEngine\VertexShader</Filter>
     </FxCompile>
+    <FxCompile Include="VertexShaderTex.hlsl">
+      <Filter>GameEngine\GraphicsEngine\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelShaderTex.hlsl">
+      <Filter>GameEngine\GraphicsEngine\PixelShader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectXGame.rc" />
