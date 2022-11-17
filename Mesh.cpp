@@ -11,6 +11,7 @@
 #include "GraphicsEngine.h"
 #include "VertexMesh.h"
 #include "DeviceContext.h"
+#include "EngineTime.h"
 #include "ShaderLibrary.h"
 #include "TextureManager.h"
 
@@ -68,15 +69,18 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 		}
 	}
 
-	void* shader_byte_code = nullptr;
-	size_t size_shader = 0;
-	GraphicsEngine::getInstance()->getVertexMeshLayoutShaderByteCodeAndSize(&shader_byte_code, &size_shader);
-	m_vertex_buffer = GraphicsEngine::getInstance()->createVertexBuffer();
-	m_vertex_buffer->load(&list_vertices[0], sizeof(VertexMesh),(UINT)list_vertices.size(), shader_byte_code, (UINT)size_shader);
+	ShaderNames shader_names;
+	void* shaderByteCode = nullptr;
+	size_t sizeShader = 0;
+	ShaderLibrary::getInstance()->requestVertexShaderData(shader_names.TEXTURED_VERTEX_SHADER_NAME, &shaderByteCode, &sizeShader);
+
+	GraphicsEngine::getInstance()->getVertexMeshLayoutShaderByteCodeAndSize(&shaderByteCode, &sizeShader);
+	m_vertex_buffer = GraphicsEngine::getInstance()->createMeshVertexBuffer();
+	m_vertex_buffer->load(&list_vertices[0], sizeof(VertexMesh),list_vertices.size(), shaderByteCode, sizeShader);
+
 	m_index_buffer = GraphicsEngine::getInstance()->createIndexBuffer();
 	m_index_buffer->load(&list_indices[0], (UINT)list_indices.size());
 
-	cc.m_angle = 0.0f;
 	m_cb = GraphicsEngine::getInstance()->createConstantBuffer();
 	m_cb->load(&cc, sizeof(constant));
 
@@ -92,6 +96,8 @@ void Mesh::initialize(std::string name)
 {
 	AGameObject::initialize(name);
 	this->name = name;
+	translation = getLocalPosition();
+	scaling = getLocalScale();
 }
 
 void Mesh::destroy()
@@ -104,8 +110,8 @@ void Mesh::draw()
 	ShaderNames shader_names;
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setRenderConfig
 	(
-		ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME),
-		ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME)
+		ShaderLibrary::getInstance()->getVertexShader(shader_names.TEXTURED_VERTEX_SHADER_NAME),
+		ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME)
 	);
 
 	updateTransforms();
@@ -136,6 +142,29 @@ void Mesh::updateTransforms()
 	//WORLD MATRIX
 	cc.m_world.setIdentity();
 	Matrix4x4 allMatrix; allMatrix.setIdentity();
+	float speed = 1.0f;
+
+	if (!i_trans) {
+		scaling.m_x += speed * (float)EngineTime::getDeltaTime();
+		scaling.m_y += speed * (float)EngineTime::getDeltaTime();
+		scaling.m_z += speed * (float)EngineTime::getDeltaTime();
+		if (scaling.m_x >= 2)
+		{
+			i_trans = true;
+		}
+	}
+	else
+	{
+		scaling.m_x -= speed * (float)EngineTime::getDeltaTime();
+		scaling.m_y -= speed * (float)EngineTime::getDeltaTime();
+		scaling.m_z -= speed * (float)EngineTime::getDeltaTime();
+		if (scaling.m_x <= 1)
+		{
+			i_trans = false;
+		}
+	}
+	setScale(scaling);
+	
 
 	Matrix4x4 translationMatrix; translationMatrix.setIdentity(); translationMatrix.setTranslation(this->getLocalPosition());
 	Matrix4x4 scaleMatrix; scaleMatrix.setIdentity(); scaleMatrix.setScale(this->getLocalScale());
@@ -186,12 +215,12 @@ void Mesh::updateTransforms()
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setRasterizerState(CameraHandler::getInstance()->getCurrentCamera()->m_rs);
 }
 
-const VertexBuffer* Mesh::getVertexBuffer()
+MeshVertexBuffer* Mesh::getVertexBuffer()
 {
 	return m_vertex_buffer;
 }
 
-const IndexBuffer* Mesh::getIndexBuffer()
+IndexBuffer* Mesh::getIndexBuffer()
 {
 	return m_index_buffer;
 }

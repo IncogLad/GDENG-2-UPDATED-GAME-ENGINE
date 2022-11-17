@@ -2,8 +2,9 @@
 #include "AGameObject.h"
 #include "ConstantBuffer.h"
 #include "Resource.h"
-#include "VertexBuffer.h"
+
 #include "IndexBuffer.h"
+#include "MeshVertexBuffer.h"
 #include "Texture.h"
 
 
@@ -19,11 +20,11 @@ public:
 	void draw() override;
 	void updateTransforms();
 
-	const VertexBuffer* getVertexBuffer();
-	const IndexBuffer* getIndexBuffer();
+	MeshVertexBuffer* getVertexBuffer();
+	IndexBuffer* getIndexBuffer();
 
 private:
-	VertexBuffer* m_vertex_buffer;
+	MeshVertexBuffer* m_vertex_buffer;
 	IndexBuffer* m_index_buffer;
 	ConstantBuffer* m_cb;
 
@@ -32,6 +33,8 @@ private:
 	Vector3D rotation;
 	Vector3D translation;
 	Vector3D scaling;
+	bool i_trans;
+	bool i_scale;
 
 	Texture* brick_tex;
 private:
