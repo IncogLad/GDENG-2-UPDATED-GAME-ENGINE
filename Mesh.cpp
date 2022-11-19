@@ -38,34 +38,57 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 	std::vector<VertexMesh> list_vertices;
 	std::vector<unsigned int> list_indices;
 
+	size_t vertex_buffer_size = 0;
+
+
+	for (size_t s = 0; s < shapes.size(); s++)
+	{
+		vertex_buffer_size += shapes[s].mesh.indices.size();
+	}
+
+	list_vertices.reserve(vertex_buffer_size);
+	list_indices.reserve(vertex_buffer_size);
+
+	size_t index_global_offset = 0;
+
 	for (size_t s = 0; s < shapes.size(); s++)
 	{
 		size_t index_offset = 0;
-		list_vertices.reserve(shapes[s].mesh.indices.size());
-		list_indices.reserve(shapes[s].mesh.indices.size());
 
 		for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++)
 		{
 			unsigned char num_face_verts = shapes[s].mesh.num_face_vertices[f];
 
+			Vector3D vertices_face[3];
+			Vector2D texcoords_face[3];
+
 			for (unsigned char v = 0; v < num_face_verts; v++)
 			{
 				tinyobj::index_t index = shapes[s].mesh.indices[index_offset + v];
 
-				tinyobj::real_t vx = attribs.vertices[index.vertex_index * 3 + 0];
-				tinyobj::real_t vy = attribs.vertices[index.vertex_index * 3 + 1];
-				tinyobj::real_t vz = attribs.vertices[index.vertex_index * 3 + 2];
+				tinyobj::real_t vx = attribs.vertices[(int)index.vertex_index * 3 + 0];
+				tinyobj::real_t vy = attribs.vertices[(int)index.vertex_index * 3 + 1];
+				tinyobj::real_t vz = attribs.vertices[(int)index.vertex_index * 3 + 2];
 
-				tinyobj::real_t tx = attribs.texcoords[index.texcoord_index * 2 + 0];
-				tinyobj::real_t ty = attribs.texcoords[index.texcoord_index * 2 + 1];
+				tinyobj::real_t tx = 0;
+				tinyobj::real_t ty = 0;
+				if (attribs.texcoords.size())
+				{
+					tx = attribs.texcoords[(int)index.texcoord_index * 2 + 0];
+					ty = attribs.texcoords[(int)index.texcoord_index * 2 + 1];
+				}
+				vertices_face[v] = Vector3D(vx, vy, vz);
+				texcoords_face[v] = Vector2D(tx, ty);
 
 				VertexMesh vertex(Vector3D(vx, vy, vz), Vector2D(tx, ty));
 				list_vertices.push_back(vertex);
 
-				list_indices.push_back((unsigned int)index_offset + v);
+				list_indices.push_back((unsigned int)index_global_offset + v);
 			}
 
+
 			index_offset += num_face_verts;
+			index_global_offset += num_face_verts;
 		}
 	}
 
@@ -144,23 +167,37 @@ void Mesh::updateTransforms()
 	Matrix4x4 allMatrix; allMatrix.setIdentity();
 	float speed = 1.0f;
 
-	if (!i_trans) {
-		scaling.m_x += speed * (float)EngineTime::getDeltaTime();
-		scaling.m_y += speed * (float)EngineTime::getDeltaTime();
-		scaling.m_z += speed * (float)EngineTime::getDeltaTime();
-		if (scaling.m_x >= 2)
-		{
-			i_trans = true;
-		}
-	}
-	else
+	if (name == "bunny")
 	{
-		scaling.m_x -= speed * (float)EngineTime::getDeltaTime();
-		scaling.m_y -= speed * (float)EngineTime::getDeltaTime();
-		scaling.m_z -= speed * (float)EngineTime::getDeltaTime();
-		if (scaling.m_x <= 1)
+		translation.m_x = 5;
+		scaling = Vector3D(10, 10, 10);
+	}
+	if (name == "armadillo")
+	{
+		translation.m_x = -5;
+	}
+
+	setPosition(translation);
+
+	if (name == "teapot") {
+		if (!i_scale) {
+			scaling.m_x += speed * (float)EngineTime::getDeltaTime();
+			scaling.m_y += speed * (float)EngineTime::getDeltaTime();
+			scaling.m_z += speed * (float)EngineTime::getDeltaTime();
+			if (scaling.m_x >= 2)
+			{
+				i_scale = true;
+			}
+		}
+		else
 		{
-			i_trans = false;
+			scaling.m_x -= speed * (float)EngineTime::getDeltaTime();
+			scaling.m_y -= speed * (float)EngineTime::getDeltaTime();
+			scaling.m_z -= speed * (float)EngineTime::getDeltaTime();
+			if (scaling.m_x <= 1)
+			{
+				i_scale = false;
+			}
 		}
 	}
 	setScale(scaling);
@@ -187,6 +224,7 @@ void Mesh::updateTransforms()
 	//scaleMatrix *= rotMatrix;
 	allMatrix *= scaleMatrix;
 	allMatrix *= translationMatrix;
+	//allMatrix *= localMatrix;
 	cc.m_world = allMatrix;
 
 	//VIEW MATRIX

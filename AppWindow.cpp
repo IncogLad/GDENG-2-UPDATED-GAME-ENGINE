@@ -1,11 +1,15 @@
 #include "AppWindow.h"
 #include <Windows.h>
+
+#include "BaseComponentSystem.h"
 #include "InputSystem.h"
 #include "DeviceContext.h"
 #include "EngineTime.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "CameraHandler.h"
+#include "PhysicsComponent.h"
+#include "PhysicsSystem.h"
 #include "RenderTexture.h"
 #include "ShaderLibrary.h"
 #include "TextureManager.h"
@@ -45,6 +49,7 @@ void AppWindow::onCreate()
 {
 	Window::onCreate();
 	InputSystem::get()->addListener(this);
+	BaseComponentSystem::initialize();
 	GraphicsEngine::getInstance()->initialize();
 	
 	CameraHandler::initialize();
@@ -81,7 +86,7 @@ void AppWindow::onUpdate()
 	Window::onUpdate();
 
 	InputSystem::get()->update();
-	
+	BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
 	//////////////RENDER EVERY VIEW TO TEXTURE///////////////////
 	for (auto const& tempRT : GraphicsEngine::getInstance()->getRenderTextureList()) {
 		//std::cout << GraphicsEngine::getInstance()->getCurrentRenderedTexture()->getName() << std::endl;
@@ -96,12 +101,12 @@ void AppWindow::onUpdate()
 		}
 
 		for (auto const& i : GameObjectManager::getInstance()->getCubeList()) {
-			std::cout << i->getName() << std::endl;
+			//std::cout << i->getName() << std::endl;
 			i->draw();
 		}
 
 		for (auto const& i : GameObjectManager::getInstance()->getMeshList()) {
-			std::cout<<i->getName() << std::endl;
+			//std::cout<<i->getName() << std::endl;
 			i->draw();
 		}
 

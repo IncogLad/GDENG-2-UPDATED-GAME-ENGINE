@@ -125,6 +125,37 @@ public:
 		setMatrix(out);
 	}
 
+	Matrix4x4& operator =(const float* matrix)
+	{
+		Matrix4x4 out;
+		
+		out.m_mat[0][0] = matrix[0];
+		out.m_mat[0][1] = matrix[1];
+		out.m_mat[0][2] = matrix[2];
+		out.m_mat[0][3] = matrix[3];
+
+		out.m_mat[1][0] = matrix[4];
+		out.m_mat[1][1] = matrix[5];
+		out.m_mat[1][2] = matrix[6];
+		out.m_mat[1][3] = matrix[7];
+
+		out.m_mat[2][0] = matrix[8];
+		out.m_mat[2][1] = matrix[9];
+		out.m_mat[2][2] = matrix[10];
+		out.m_mat[2][3] = matrix[11];
+
+		out.m_mat[3][0] = matrix[12];
+		out.m_mat[3][1] = matrix[13];
+		out.m_mat[3][2] = matrix[14];
+		out.m_mat[3][3] = matrix[15];
+
+		setMatrix(out);
+
+		return *this;
+	}
+
+	
+
 	void setMatrix(const Matrix4x4& matrix)
 	{
 		::memcpy(m_mat, matrix.m_mat, sizeof(float) * 16);
@@ -171,6 +202,7 @@ public:
 	~Matrix4x4()
 	{
 	}
+
 
 public:
 	float m_mat[4][4] = {};

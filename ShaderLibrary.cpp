@@ -1,6 +1,8 @@
 #include "ShaderLibrary.h"
 
 #include "GraphicsEngine.h"
+#include "PixelShader.h"
+#include "VertexShader.h"
 
 ShaderLibrary* ShaderLibrary::sharedInstance = nullptr;
 

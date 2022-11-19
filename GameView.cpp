@@ -5,7 +5,7 @@
 
 GameView::GameView() :AUIScreen("GAME_VIEW")
 {
-    open = false;
+    open = true;
 }
 
 GameView::~GameView()

@@ -1,6 +1,7 @@
 #include "GameObjectManager.h"
 #include "AppWindow.h"
 #include "MeshManager.h"
+#include "PhysicsComponent.h"
 #include "SwapChain.h"
 
 
@@ -82,16 +83,24 @@ void GameObjectManager::initializeMesh()
 	meshList.push_back(mesh);
 	meshTable["teapot"] = mesh;
 
-	/*Mesh* mesh1 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\armadillo.obj");
+	Mesh* mesh1 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\armadillo.obj");
 	mesh1->initialize("armadillo");
 	meshList.push_back(mesh1);
-	meshTable["armadillo"] = mesh1;*/
-
-	/*
+	meshTable["armadillo"] = mesh1;
+	
 	Mesh* mesh2 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\bunny.obj");
 	mesh2->initialize("bunny");
 	meshList.push_back(mesh2);
-	meshTable["bunny"] = mesh2;*/
+	meshTable["bunny"] = mesh2;
+
+	/*PhysicsComponent* physics_component = new PhysicsComponent(mesh->getName(), mesh);
+	mesh->attachComponent(physics_component);
+
+	PhysicsComponent* physics_component2 = new PhysicsComponent(mesh2->getName(), mesh2);
+	mesh2->attachComponent(physics_component);
+
+	PhysicsComponent* physics_component3 = new PhysicsComponent(mesh1->getName(), mesh1);
+	mesh1->attachComponent(physics_component);*/
 }
 
 std::list<Mesh*> GameObjectManager::getMeshList()
@@ -109,6 +118,13 @@ void GameObjectManager::initializeCube(std::string name, int num = 0)
 	Cube* cube = new Cube();
 	cube->initialize(name);
 	cube->initBuffers(num);
+	PhysicsComponent* physics_component = new PhysicsComponent(cube->getName(), cube);
+	if (num == 1)
+	{
+		physics_component->getRigidBody()->setType(BodyType::KINEMATIC);
+		
+	}
+	cube->attachComponent(physics_component);
 	insertCube(cube);
 	cubeTable[name] = cube;
 }
