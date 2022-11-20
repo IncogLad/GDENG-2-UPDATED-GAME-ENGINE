@@ -69,6 +69,8 @@ public:
 	reactphysics3d::decimal* getPhysicsLocalMatrix();
 
 	std::string getName();
+	bool isObjectSelected();
+	void setSelected(bool value);
 
 	void attachComponent(AComponent* component);
 	void detachComponent(AComponent* component);
@@ -85,6 +87,8 @@ protected:
 	Vector3D localPosition;
 	Vector3D localRotation;
 	Vector3D localScale;
+
+	bool isSelected = false;
 
 	Matrix4x4 localMatrix;
 	reactphysics3d::decimal physicsLocalMatrix[4][4] = {};

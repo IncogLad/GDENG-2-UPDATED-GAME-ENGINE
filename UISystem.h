@@ -51,8 +51,8 @@ public:
 	void update();
 	void initImGUI(HWND hwnd);
 
-	static const int WINDOW_HEIGHT = 1440;
-	static const int WINDOW_WIDTH = 900;
+	static const int WINDOW_HEIGHT = 900;
+	static const int WINDOW_WIDTH = 1440;
 
 private:
 	static UISystem* sharedInstance;

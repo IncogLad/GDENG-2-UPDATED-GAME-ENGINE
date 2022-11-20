@@ -76,6 +76,35 @@ Cube* GameObjectManager::getCubeByName(std::string name)
 	return cubeTable[name];
 }
 
+void GameObjectManager::populateObjectList()
+{
+	for (auto const& i : quadList) {
+		gameObjectList.push_back(i);
+		gameObjectTable[i->getName()] = i;
+	}
+
+	for (auto const& i : cubeList) {
+		gameObjectList.push_back(i);
+		gameObjectTable[i->getName()] = i;
+	}
+
+	for (auto const& i : meshList) {
+		gameObjectList.push_back(i);
+		gameObjectTable[i->getName()] = i;
+	}
+
+}
+
+std::list<AGameObject*> GameObjectManager::getGameObjectList()
+{
+	return this->gameObjectList;
+}
+
+std::unordered_map<std::string, AGameObject*> GameObjectManager::getGameObjectTable()
+{
+	return this->gameObjectTable;
+}
+
 void GameObjectManager::initializeMesh()
 {
 	Mesh* mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\teapot.obj");
@@ -118,13 +147,13 @@ void GameObjectManager::initializeCube(std::string name, int num = 0)
 	Cube* cube = new Cube();
 	cube->initialize(name);
 	cube->initBuffers(num);
-	PhysicsComponent* physics_component = new PhysicsComponent(cube->getName(), cube);
+	/*PhysicsComponent* physics_component = new PhysicsComponent(cube->getName(), cube);
 	if (num == 1)
 	{
 		physics_component->getRigidBody()->setType(BodyType::KINEMATIC);
 		
 	}
-	cube->attachComponent(physics_component);
+	cube->attachComponent(physics_component);*/
 	insertCube(cube);
 	cubeTable[name] = cube;
 }

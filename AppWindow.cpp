@@ -74,6 +74,8 @@ void AppWindow::onCreate()
 
 	GameObjectManager::getInstance()->initializeCube("plane", 1);
 	GameObjectManager::getInstance()->initializeMesh();
+
+	GameObjectManager::getInstance()->populateObjectList();
 	
 	GameObjectManager::getInstance()->initializeQuadConst();
 	GameObjectManager::getInstance()->initializeCubeConst();

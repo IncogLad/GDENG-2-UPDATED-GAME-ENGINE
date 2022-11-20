@@ -50,6 +50,7 @@ private:
 	Matrix4x4 worldCam;
 	Vector3D camPos;
 
+	float speed = 5.0f;
 	Camera(Camera const&) {}
 	Camera& operator=(Camera const&) {}
 

@@ -75,9 +75,9 @@ void Camera::update(float deltaTime)
 	temp *= yMatrix;
 
 
-	Vector3D new_pos = worldCam.getTranslation() + temp.getZDirection() * (m_forward * deltaTime * 1.5f);
-	new_pos = new_pos + temp.getYDirection() * (m_upward * deltaTime * 1.5f);
-	new_pos = new_pos + temp.getXDirection() * (m_rightward * deltaTime * 1.5f);
+	Vector3D new_pos = worldCam.getTranslation() + temp.getZDirection() * (m_forward * deltaTime * speed);
+	new_pos = new_pos + temp.getYDirection() * (m_upward * deltaTime * speed);
+	new_pos = new_pos + temp.getXDirection() * (m_rightward * deltaTime * speed);
 	temp.setTranslation(new_pos);
 
 	worldCam = temp;

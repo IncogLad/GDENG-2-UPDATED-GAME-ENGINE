@@ -57,7 +57,6 @@ public:
 	RenderTexture* getRenderTextureOfType(String type);
 	void setCurrentRenderTexture(RenderTexture* rt);
 	std::list<RenderTexture*> getRenderTextureList();
-	std::unordered_map<String, RenderTexture*> getRenderTextureTable();
 
 	TextureManager* getTextureManager();
 	MeshManager* getMeshManager();

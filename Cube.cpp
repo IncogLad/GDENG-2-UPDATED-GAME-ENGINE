@@ -33,22 +33,22 @@ void Cube::initialize(std::string name)
 	i_trans = false;
 	if (name == "plane") {
 		setScale(Vector3D(50, 1, 50));
-		//setPosition(Vector3D(0.0f, -3.0f, 0.0f));
+		setPosition(Vector3D(0.0f, -3.0f, 0.0f));
 	}
 	if (name == "cube0")
 	{
 		setScale(Vector3D(1, 1, 1));
-		//setPosition(Vector3D(0.0f, 10.0f, 0.0f));
+		setPosition(Vector3D(0.0f, 2.0f, 0.0f));
 	}
 	if (name == "cube1")
 	{
 		setScale(Vector3D(1, 1, 1));
-		//setPosition(Vector3D(-1.5f, 10.0f, 0));
+		setPosition(Vector3D(-1.5f, 5.0f, 0));
 	}
 	if (name == "cube2")
 	{
 		setScale(Vector3D(1, 1, 1));
-		//setPosition(Vector3D(-1.5f, 10.0f, -2.0f));
+		setPosition(Vector3D(-1.5f, 3.5f, -2.0f));
 	}
 	
 }
@@ -273,7 +273,7 @@ void Cube::updatePosition()
 	Matrix4x4 translationMatrix; translationMatrix.setIdentity(); translationMatrix.setTranslation(this->getLocalPosition());
 	Matrix4x4 scaleMatrix; scaleMatrix.setIdentity(); scaleMatrix.setScale(this->getLocalScale());
 
-	/*if (name != "plane") {
+	if (name != "plane") {
 		if (rotation.m_x < 360) {
 			rotation.m_x += speed * (float)EngineTime::getDeltaTime();
 		}
@@ -297,10 +297,10 @@ void Cube::updatePosition()
 		{
 			rotation.m_z = 0;
 		}
-	}*/
+	}
 	//allMatrix *= localMatrix;
 
-	std::cout << this->name << ": " << localPosition.m_x << ", " << localPosition.m_y << ", " << localPosition.m_z << std::endl;
+	//std::cout << this->name << ": " << localPosition.m_x << ", " << localPosition.m_y << ", " << localPosition.m_z << std::endl;
 	Matrix4x4 w_zMatrix; w_zMatrix.setIdentity();
 	w_zMatrix.setRotationZ(rotation.m_z);
 	allMatrix *= w_zMatrix;

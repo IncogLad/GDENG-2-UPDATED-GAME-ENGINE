@@ -115,6 +115,16 @@ std::string AGameObject::getName()
 	return this->name;
 }
 
+bool AGameObject::isObjectSelected()
+{
+	return this->isSelected;
+}
+
+void AGameObject::setSelected(bool value)
+{
+	isSelected = value;
+}
+
 void AGameObject::attachComponent(AComponent* component)
 {
 	component->attachOwner(this);

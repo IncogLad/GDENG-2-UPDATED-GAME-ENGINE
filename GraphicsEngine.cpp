@@ -310,11 +310,6 @@ std::list<RenderTexture*> GraphicsEngine::getRenderTextureList()
 	return this->renderTextureList;
 }
 
-std::unordered_map<String, RenderTexture*> GraphicsEngine::getRenderTextureTable()
-{
-	return this->renderTextureTable;
-}
-
 TextureManager* GraphicsEngine::getTextureManager()
 {
 	return this->m_tex_manager;
