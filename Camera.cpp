@@ -141,6 +141,15 @@ void Camera::onKeyDown(int key)
 		if (name == "PERSPECTIVE_CAMERA")
 			perspectiveMode = false;
 	}
+	else if (key == 'R')
+	{
+		InputSystem::get()->setMouseLock(true);
+	}
+	else if (key == 'T')
+	{
+		InputSystem::get()->setMouseLock(false);
+	}
+	
 }
 
 void Camera::onKeyUp(int key)
@@ -148,21 +157,28 @@ void Camera::onKeyUp(int key)
 	this->m_forward = 0.0f;
 	this->m_rightward = 0.0f;
 	this->m_upward = 0.0f;
+	
 }
 
 void Camera::onMouseMove(const Point& mouse_pos)
 {
+	if (InputSystem::get()->getMouseLock() == true) {
+		//InputSystem::get()->showCursor(false);
+		int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
+		int height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
 
-	int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
-	int height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
+		if (name != "TOPDOWN_CAMERA")
+		{
+			m_rot_x += (mouse_pos.m_y - (height / 2.0f)) * EngineTime::getDeltaTime() * 0.5f;
+			m_rot_y += (mouse_pos.m_x - (width / 2.0f)) * EngineTime::getDeltaTime() * 0.5f;
+		}
 
-	if (name != "TOPDOWN_CAMERA")
-	{
-		m_rot_x += (mouse_pos.m_y - (height / 2.0f)) * EngineTime::getDeltaTime() * 0.5f;
-		m_rot_y += (mouse_pos.m_x - (width / 2.0f)) * EngineTime::getDeltaTime() * 0.5f;
+		InputSystem::get()->setCursorPosition(Point((int)(width / 2.0f), (int)(height / 2.0f)));
 	}
-
-	InputSystem::get()->setCursorPosition(Point((int)(width / 2.0f), (int)(height / 2.0f)));
+	else if (InputSystem::get()->getMouseLock() == false)
+	{
+		//InputSystem::get()->showCursor(true);
+	}
 
 }
 

@@ -15,6 +15,8 @@ public:
 
 	void setCursorPosition(const Point& pos);
 	void showCursor(bool show);
+	void setMouseLock(bool value);
+	bool getMouseLock();
 
 public:
 	static InputSystem* get();
@@ -24,4 +26,6 @@ private:
 	unsigned char m_old_keys_state[256] = {};
 	Point m_old_mouse_pos;
 	bool m_first_time = true;
+	bool mouseLock = false;
 };
+

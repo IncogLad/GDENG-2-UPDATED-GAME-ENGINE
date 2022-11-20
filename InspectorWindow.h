@@ -15,7 +15,7 @@ public:
 
 private:
 	bool hasObjectSelected;
-
+	
 	AGameObject* SelectedObject;
 
 	friend class SceneEditor;

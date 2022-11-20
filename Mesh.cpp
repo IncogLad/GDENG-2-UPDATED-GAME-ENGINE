@@ -121,6 +121,20 @@ void Mesh::initialize(std::string name)
 	this->name = name;
 	translation = getLocalPosition();
 	scaling = getLocalScale();
+	if (name == "bunny")
+	{
+		setPosition(Vector3D(5, 0, 0));
+		setScale( Vector3D(10, 10, 10));
+	}
+	if (name == "armadillo")
+	{
+		setPosition(Vector3D(-5, 0, 0));
+	}
+	if (name == "teapot") {
+		setScale(Vector3D(2, 2, 2));
+	}
+	
+	
 }
 
 void Mesh::destroy()
@@ -167,45 +181,8 @@ void Mesh::updateTransforms()
 	Matrix4x4 allMatrix; allMatrix.setIdentity();
 	float speed = 1.0f;
 
-	if (name == "bunny")
-	{
-		translation.m_x = 5;
-		scaling = Vector3D(10, 10, 10);
-	}
-	if (name == "armadillo")
-	{
-		translation.m_x = -5;
-	}
-
-	setPosition(translation);
-
-	if (name == "teapot") {
-		if (!i_scale) {
-			scaling.m_x += speed * (float)EngineTime::getDeltaTime();
-			scaling.m_y += speed * (float)EngineTime::getDeltaTime();
-			scaling.m_z += speed * (float)EngineTime::getDeltaTime();
-			if (scaling.m_x >= 2)
-			{
-				i_scale = true;
-			}
-		}
-		else
-		{
-			scaling.m_x -= speed * (float)EngineTime::getDeltaTime();
-			scaling.m_y -= speed * (float)EngineTime::getDeltaTime();
-			scaling.m_z -= speed * (float)EngineTime::getDeltaTime();
-			if (scaling.m_x <= 1)
-			{
-				i_scale = false;
-			}
-		}
-	}
-	setScale(scaling);
-	
-
 	Matrix4x4 translationMatrix; translationMatrix.setIdentity(); translationMatrix.setTranslation(this->getLocalPosition());
 	Matrix4x4 scaleMatrix; scaleMatrix.setIdentity(); scaleMatrix.setScale(this->getLocalScale());
-
 	
 	//std::cout << localRotation.m_z << std::endl;
 
@@ -244,9 +221,6 @@ void Mesh::updateTransforms()
 	{
 		cc.m_proj.setOrthoLH(1.57f, ((float)width / (float)height), 0.1f, 1000.0f);
 	}
-	//cc.m_proj.setOrthoLH(1.57f, ((float)width / (float)height), 0.1f, 1000.0f);
-	//cc.m_proj.setPerspectiveFovLH(1.57, ((float)width / (float)height), 0.1f, 1000.0f);
-
 	//std::cout << getLocalPosition().m_x << ", " << getLocalPosition().m_y << ", " << getLocalPosition().m_z << std::endl;
 
 	m_cb->update(GraphicsEngine::getInstance()->getImmediateDeviceContext(), &cc);
