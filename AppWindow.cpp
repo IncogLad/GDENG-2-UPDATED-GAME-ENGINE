@@ -113,7 +113,7 @@ void AppWindow::onUpdate()
 		}
 
 
-		CameraHandler::getInstance()->update();
+		//CameraHandler::getInstance()->update();
 	}
 	
 	GraphicsEngine::getInstance()->SetBackBufferRenderTarget(this->m_swap_chain);
