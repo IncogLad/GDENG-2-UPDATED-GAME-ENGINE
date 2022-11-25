@@ -19,7 +19,6 @@ public:
 
 class CameraHandler
 {
-
 public:
 	static CameraHandler* getInstance();
 	static void initialize();
@@ -48,7 +47,5 @@ private:
 	
 	CameraList camera_list_;
 	CameraTable camera_table_;
-
-
 };
 

@@ -8,9 +8,11 @@
 #include "imgui\imgui_impl_win32.h"
 #include "imgui\imgui_impl_dx11.h"
 #include "GraphicsEngine.h"
+#include "InspectorWindow.h"
 #include "TextureManager.h"
 #include "MenuToolBar.h"
 #include "PerspectiveView.h"
+#include "SceneEditor.h"
 #include "TopdownView.h"
 #include "WireframeView.h"
 
@@ -83,6 +85,14 @@ void UISystem::initImGUI(HWND hwnd)
     WireframeView* wireframe_view = new WireframeView();
     uiTable[uiNames.WIREFRAME_VIEW] = wireframe_view;
     uiList.push_back(wireframe_view);
+
+    SceneEditor* scene_editor = new SceneEditor();
+    uiTable[uiNames.SCENE_EDITOR] = scene_editor;
+    uiList.push_back(scene_editor);
+
+    InspectorWindow* inspector_window = new InspectorWindow();
+    uiTable[uiNames.INSPECTOR_WINDOW] = inspector_window;
+    uiList.push_back(inspector_window);
 
 }
 

@@ -3,13 +3,15 @@
 #include <random>
 
 #include "AppWindow.h"
-#include "Renderer.h"
+#include "GameObjectManager.h"
 #include "DeviceContext.h"
 #include "ConstantBuffer.h"
 #include "EngineTime.h"
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
 #include "CameraHandler.h"
+#include "PhysicsComponent.h"
+#include "ShaderLibrary.h"
 
 
 Cube::Cube()
@@ -23,23 +25,32 @@ Cube::~Cube()
 void Cube::initialize(std::string name)
 {
 	AGameObject::initialize(name);
-
-	////no.4
-	//std::random_device rd; // obtain a random number from hardware
-	//std::mt19937 gen(rd()); // seed the generator
-	//std::uniform_real_distribution<> distr(-5.f, 5.f);
-	//float numx = distr(gen);
-	//float numy = distr(gen);
-	//float numz = distr(gen);
-	//this->setPosition(Vector3D(numx,numy,0));
-	//float unumx = distr(gen);
-	//float unumy = distr(gen);
-	//float unumz = distr(gen);
+	
 	rotation = getLocalRotation();
 	translation = getLocalPosition();
 	scaling = getLocalScale();
 	i_scale = false;
 	i_trans = false;
+	if (name == "plane") {
+		setScale(Vector3D(50, 1, 50));
+		setPosition(Vector3D(0.0f, -3.0f, 0.0f));
+	}
+	if (name == "cube0")
+	{
+		setScale(Vector3D(1, 1, 1));
+		setPosition(Vector3D(0.0f, 2.0f, 0.0f));
+	}
+	if (name == "cube1")
+	{
+		setScale(Vector3D(1, 1, 1));
+		setPosition(Vector3D(-1.5f, 5.0f, 0));
+	}
+	if (name == "cube2")
+	{
+		setScale(Vector3D(1, 1, 1));
+		setPosition(Vector3D(-1.5f, 3.5f, -2.0f));
+	}
+	
 }
 
 void Cube::destroy()
@@ -47,8 +58,13 @@ void Cube::destroy()
 	AGameObject::destroy();
 }
 
-void Cube::initBuffers(void* shader_byte_code, size_t size_shader, int num = 0)
+void Cube::initBuffers(int num = 0)
 {
+	ShaderNames shader_names;
+	void* shaderByteCode = nullptr;
+	size_t sizeShader = 0;
+	ShaderLibrary::getInstance()->requestVertexShaderData(shader_names.BASE_VERTEX_SHADER_NAME, &shaderByteCode, &sizeShader);
+
 	this->num = num;
 	vertexCube vertex_list[] =
 	{
@@ -88,16 +104,16 @@ void Cube::initBuffers(void* shader_byte_code, size_t size_shader, int num = 0)
 	{
 		//X - Y - Z
 		//FRONT FACE
-		{Vector3D(-1.0f,0.0f,-1.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{Vector3D(-1.0f,0.0f,-1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
-		{ Vector3D(1.0f,.0f,-1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{ Vector3D(1.0f,0.0f,-1.0f),     Vector3D(1,1,1), Vector3D(1,1,1) },
+		{Vector3D(-1.0f,0.1f,-1.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{Vector3D(-1.0f,0.1f,-1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(1.0f,0.1f,-1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(1.0f,0.1f,-1.0f),     Vector3D(1,1,1), Vector3D(1,1,1) },
 
 		//BACK FACE
-		{ Vector3D(1.0f,0.0f,1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
-		{ Vector3D(1.0f,0.0f,1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
-		{ Vector3D(-1.0f,0.0f,1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{ Vector3D(-1.0f,0.0f,1.0f),     Vector3D(1,1,1), Vector3D(1,1,1) }
+		{ Vector3D(1.0f,0.1f,1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(1.0f,0.1f,1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(-1.0f,0.1f,1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(-1.0f,0.1f,1.0f),     Vector3D(1,1,1), Vector3D(1,1,1) }
 
 	};
 
@@ -105,12 +121,12 @@ void Cube::initBuffers(void* shader_byte_code, size_t size_shader, int num = 0)
 	if (this->num == 0) {
 		UINT size_list = ARRAYSIZE(vertex_list);
 		//std::cout << list->position.m_x << std::endl;
-		m_vb->load(vertex_list, sizeof(vertexCube), size_list, shader_byte_code, size_shader);
+		m_vb->load(vertex_list, sizeof(vertexCube), size_list, shaderByteCode, sizeShader);
 	}
 	else {
 		UINT size_list = ARRAYSIZE(plane_vertex_list);
 		//std::cout << list->position.m_x << std::endl;
-		m_vb->load(plane_vertex_list, sizeof(vertexCube), size_list, shader_byte_code, size_shader);
+		m_vb->load(plane_vertex_list, sizeof(vertexCube), size_list, shaderByteCode, sizeShader);
 	}
 
 	unsigned int index_list[] =
@@ -148,19 +164,26 @@ void Cube::initConstBuffers()
 	m_cb->load(&cc, sizeof(constant));
 }
 
-void Cube::draw(VertexShader* m_vs, PixelShader* m_ps)
+void Cube::draw()
 {
-	AGameObject::draw(m_vs, m_ps);
+	//std::cout << "Component " << component_list_[0]->getName() << std::endl;
+	ShaderNames shader_names;
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setRenderConfig
+	(
+		ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME), 
+		ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME)
+	);
+
 	updatePosition();
 
 
 	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexShader(m_vs);
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(m_ps);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexShader(ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME));
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME));
 
 
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME), m_cb);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME), m_cb);
 
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
@@ -185,119 +208,13 @@ void Cube::updatePosition()
 	//WORLD MATRIX
 	cc.m_world.setIdentity();
 	Matrix4x4 allMatrix; allMatrix.setIdentity();
-	/*
-	if (!i_trans) {
-		translation.m_x += speed * (float)EngineTime::getDeltaTime();
-		if (translation.m_x >= 1)
-		{
-			i_trans = true;
-		}
-	}
-	else
-	{
-		translation.m_x -= speed * (float)EngineTime::getDeltaTime();
-		if (translation.m_x <= -1)
-		{
-			i_trans = false;
-		}
-	}
-	*/
-
-	//no6
-	if (name == "plane") {
-		setScale(Vector3D(4, 4, 4));
-		setPosition(Vector3D(0.0f, 0.0f, 0.0f));
-	}
-	if (name == "cube0")
-	{
-		setScale(Vector3D(0.5, 0.5, 0.5));
-		setPosition(Vector3D(0.0f, 0.9f, 0.0f));
-	}
-	if (name == "cube1")
-	{
-		setScale(Vector3D(0.5, 0.5, 0.5));
-		setPosition(Vector3D(-1.5f, 2.0f, 0));
-	}
-	if (name == "cube2")
-	{
-		setScale(Vector3D(0.5, 0.5, 0.5));
-		setPosition(Vector3D(-1.5f, 3.0f, -2.0f));
-	}
-
-	
-	//
-	////no5
-	//if (!i_scale) {
-	//	if (scaling.m_z < 2.0f)
-	//		scaling.m_x += (speed * (float)EngineTime::getDeltaTime());
-	//	
-	//	if (scaling.m_z < 2.0f)
-	//		scaling.m_z += (speed * (float)EngineTime::getDeltaTime());
-
-	//	scaling.m_y -= (speed * (float)EngineTime::getDeltaTime());
-	//	if (scaling.m_y <= 0.0f && scaling.m_z >= 2.0f && scaling.m_x >= 2.0f)
-	//	{
-	//		i_scale = true;
-	//	}
-	//}
-	//else
-	//{
-	//	if (scaling.m_x > 1.0f)
-	//		scaling.m_x -= (speed * (float)EngineTime::getDeltaTime());
-
-	//	if (scaling.m_z > 1.0f)
-	//		scaling.m_z -= (speed * (float)EngineTime::getDeltaTime());
-
-	//	scaling.m_y += (speed * (float)EngineTime::getDeltaTime());
-
-
-	//	if (scaling.m_y >= 1.0f && scaling.m_x <= 1.0f && scaling.m_z <= 1.0f)
-	//	{
-	//		i_scale = false;
-	//	}
-	//}
-
-	
-	
-	//Vector3D translate1 = Vector3D(translation.m_x, translation.m_x, 0);
-	//Vector3D moveX = Vector3D(AppWindow::getInstance()->move_cube, 0, 0);
-	//this->setPosition(translation);
-
-	//Vector3D scale1 = Vector3D(scaling.m_x, scaling.m_y, scaling.m_z);
-	//this->setScale(scale1);
 	
 	Matrix4x4 translationMatrix; translationMatrix.setIdentity(); translationMatrix.setTranslation(this->getLocalPosition());
 	Matrix4x4 scaleMatrix; scaleMatrix.setIdentity(); scaleMatrix.setScale(this->getLocalScale());
 
-	if (name != "plane") {
-		if (rotation.m_x < 360) {
-			rotation.m_x += speed * (float)EngineTime::getDeltaTime();
-		}
-		else
-		{
-			rotation.m_x = 0;
-		}
-
-		if (rotation.m_y < 360) {
-			rotation.m_y += speed * (float)EngineTime::getDeltaTime();
-		}
-		else
-		{
-			rotation.m_y = 0;
-		}
-
-		if (rotation.m_z < 360) {
-			rotation.m_z += speed * (float)EngineTime::getDeltaTime();
-		}
-		else
-		{
-			rotation.m_z = 0;
-		}
-	}
-	//std::cout << localRotation.m_z << std::endl;
-
+	//std::cout << this->name << ": " << localPosition.m_x << ", " << localPosition.m_y << ", " << localPosition.m_z << std::endl;
 	Matrix4x4 w_zMatrix; w_zMatrix.setIdentity();
-	w_zMatrix.setRotationZ(getLocalRotation().m_z);
+	w_zMatrix.setRotationZ(rotation.m_z);
 	allMatrix *= w_zMatrix;
 
 	Matrix4x4 w_xMatrix; w_xMatrix.setIdentity();
@@ -308,15 +225,15 @@ void Cube::updatePosition()
 	w_yMatrix.setRotationY(rotation.m_y);
 	allMatrix *= w_yMatrix;
 
-	//scaleMatrix *= rotMatrix;
 	allMatrix *= scaleMatrix;
 	allMatrix *= translationMatrix;
+	
 	cc.m_world = allMatrix;
 
 	//VIEW MATRIX
 	cc.m_view.setIdentity();
 	cc.m_view = CameraHandler::getInstance()->getCurrentCameraViewMatrix();
-	std::cout << CameraHandler::getInstance()->getCurrentCamera()->getName() << std::endl;
+	//std::cout << CameraHandler::getInstance()->getCurrentCamera()->getName() << std::endl;
 	
 	//PROJ MATRIX
 	int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
@@ -330,8 +247,6 @@ void Cube::updatePosition()
 	{
 		cc.m_proj.setOrthoLH(1.57f, ((float)width / (float)height), 0.1f, 1000.0f);
 	}
-	//cc.m_proj.setOrthoLH(1.57f, ((float)width / (float)height), 0.1f, 1000.0f);
-	//cc.m_proj.setPerspectiveFovLH(1.57, ((float)width / (float)height), 0.1f, 1000.0f);
 
 	//std::cout << getLocalPosition().m_x << ", " << getLocalPosition().m_y << ", " << getLocalPosition().m_z << std::endl;
 

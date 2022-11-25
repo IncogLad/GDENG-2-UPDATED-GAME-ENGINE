@@ -14,7 +14,7 @@ public:
 	void initialize(std::string name) override;
 	void destroy() override;
 
-	void draw(VertexShader* m_vs, PixelShader* m_ps) override;
+	void draw() override;
 
 	void update(float deltaTime);
 
@@ -50,6 +50,7 @@ private:
 	Matrix4x4 worldCam;
 	Vector3D camPos;
 
+	float speed = 5.0f;
 	Camera(Camera const&) {}
 	Camera& operator=(Camera const&) {}
 

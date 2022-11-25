@@ -54,7 +54,7 @@ void Camera::destroy()
 	AGameObject::destroy();
 }
 
-void Camera::draw(VertexShader* m_vs, PixelShader* m_ps)
+void Camera::draw()
 {
 
 }
@@ -75,9 +75,9 @@ void Camera::update(float deltaTime)
 	temp *= yMatrix;
 
 
-	Vector3D new_pos = worldCam.getTranslation() + temp.getZDirection() * (m_forward * deltaTime * 1.5f);
-	new_pos = new_pos + temp.getYDirection() * (m_upward * deltaTime * 1.5f);
-	new_pos = new_pos + temp.getXDirection() * (m_rightward * deltaTime * 1.5f);
+	Vector3D new_pos = worldCam.getTranslation() + temp.getZDirection() * (m_forward * deltaTime * speed);
+	new_pos = new_pos + temp.getYDirection() * (m_upward * deltaTime * speed);
+	new_pos = new_pos + temp.getXDirection() * (m_rightward * deltaTime * speed);
 	temp.setTranslation(new_pos);
 
 	worldCam = temp;
@@ -141,6 +141,15 @@ void Camera::onKeyDown(int key)
 		if (name == "PERSPECTIVE_CAMERA")
 			perspectiveMode = false;
 	}
+	else if (key == 'R')
+	{
+		InputSystem::get()->setMouseLock(true);
+	}
+	else if (key == 'T')
+	{
+		InputSystem::get()->setMouseLock(false);
+	}
+	
 }
 
 void Camera::onKeyUp(int key)
@@ -148,21 +157,28 @@ void Camera::onKeyUp(int key)
 	this->m_forward = 0.0f;
 	this->m_rightward = 0.0f;
 	this->m_upward = 0.0f;
+	
 }
 
 void Camera::onMouseMove(const Point& mouse_pos)
 {
+	if (InputSystem::get()->getMouseLock() == true) {
+		//InputSystem::get()->showCursor(false);
+		int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
+		int height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
 
-	int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
-	int height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
+		if (name != "TOPDOWN_CAMERA")
+		{
+			m_rot_x += (mouse_pos.m_y - (height / 2.0f)) * EngineTime::getDeltaTime() * 0.5f;
+			m_rot_y += (mouse_pos.m_x - (width / 2.0f)) * EngineTime::getDeltaTime() * 0.5f;
+		}
 
-	if (name != "TOPDOWN_CAMERA")
-	{
-		m_rot_x += (mouse_pos.m_y - (height / 2.0f)) * EngineTime::getDeltaTime() * 0.5f;
-		m_rot_y += (mouse_pos.m_x - (width / 2.0f)) * EngineTime::getDeltaTime() * 0.5f;
+		InputSystem::get()->setCursorPosition(Point((int)(width / 2.0f), (int)(height / 2.0f)));
 	}
-
-	InputSystem::get()->setCursorPosition(Point((int)(width / 2.0f), (int)(height / 2.0f)));
+	else if (InputSystem::get()->getMouseLock() == false)
+	{
+		//InputSystem::get()->showCursor(true);
+	}
 
 }
 

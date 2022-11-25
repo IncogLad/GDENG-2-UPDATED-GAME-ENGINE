@@ -3,7 +3,7 @@
 #include "GraphicsEngine.h"
 #include "SwapChain.h"
 #include "InputListener.h"
-#include "Renderer.h"
+#include "GameObjectManager.h"
 
 class AppWindow : public Window, public InputListener
 {
@@ -31,15 +31,10 @@ public:
 	virtual void onLeftMouseUp(const Point& mouse_pos) override;
 	virtual void onRightMouseDown(const Point& mouse_pos) override;
 	virtual void onRightMouseUp(const Point& mouse_pos) override;
-	
-
-	float move_cube = 0.0f;
 
 private:
 	static AppWindow* sharedInstance;
 	
 	SwapChain* m_swap_chain;
-	VertexShader* m_vs;
-	PixelShader* m_ps;
 	
 };

@@ -3,9 +3,11 @@
 #include "VertexBuffer.h"
 #include "ConstantBuffer.h"
 #include "IndexBuffer.h"
+#include "MeshVertexBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "RasterizerState.h"
+#include "Texture.h"
 
 DeviceContext::DeviceContext(ID3D11DeviceContext* device_context) :m_device_context(device_context)
 {
@@ -25,6 +27,14 @@ void DeviceContext::clearRenderTargetColor(SwapChain* swap_chain, float red, flo
 }
 
 void DeviceContext::setVertexBuffer(VertexBuffer* vertex_buffer)
+{
+	UINT stride = vertex_buffer->m_size_vertex;
+	UINT offset = 0;
+	m_device_context->IASetVertexBuffers(0, 1, &vertex_buffer->m_buffer, &stride, &offset);
+	m_device_context->IASetInputLayout(vertex_buffer->m_layout);
+}
+
+void DeviceContext::setVertexBuffer(MeshVertexBuffer* vertex_buffer)
 {
 	UINT stride = vertex_buffer->m_size_vertex;
 	UINT offset = 0;
@@ -72,6 +82,16 @@ void DeviceContext::setRasterizerState(RasterizerState* rasterizerState)
 
 }
 
+void DeviceContext::setVSTexture(VertexShader* vertex_shader, Texture* texture)
+{
+	m_device_context->VSSetShaderResources(0, 1, &texture->m_shader_res_view);
+}
+
+void DeviceContext::setPSTexture(PixelShader* pixel_shader, Texture* texture)
+{
+	m_device_context->PSSetShaderResources(0, 1, &texture->m_shader_res_view);
+}
+
 void DeviceContext::setVertexShader(VertexShader* vertex_shader)
 {
 	m_device_context->VSSetShader(vertex_shader->m_vs, nullptr, 0);
@@ -90,6 +110,12 @@ void DeviceContext::setConstantBuffer(VertexShader* vertex_shader, ConstantBuffe
 void DeviceContext::setConstantBuffer(PixelShader* pixel_shader, ConstantBuffer* buffer)
 {
 	m_device_context->PSSetConstantBuffers(0, 1, &buffer->m_buffer);
+}
+
+void DeviceContext::setRenderConfig(VertexShader* vs, PixelShader* ps)
+{
+	m_device_context->VSSetShader(vs->getShader(), nullptr, 0);
+	m_device_context->PSSetShader(ps->getShader(), nullptr, 0);
 }
 
 

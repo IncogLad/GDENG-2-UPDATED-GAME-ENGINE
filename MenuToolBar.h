@@ -15,5 +15,6 @@ public:
 
 private:
 	friend class UISystem;
+	
 };
 

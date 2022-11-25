@@ -17,6 +17,8 @@ class GameView;
 class PerspectiveView;
 class TopdownView;
 class ColorPicker;
+class InspectorWindow;
+class SceneEditor;
 
 class UINames
 {
@@ -29,6 +31,9 @@ public:
 	const String PERSPECTIVE_VIEW = "PERSPECTIVE_VIEW";
 	const String TOPDOWN_VIEW = "TOPDOWN_VIEW";
 	const String WIREFRAME_VIEW = "WIREFRAME_VIEW";
+
+	const String SCENE_EDITOR = "SCENE_EDITOR";
+	const String INSPECTOR_WINDOW = "INSPECTOR_WINDOW";
 };
 
 
@@ -46,8 +51,8 @@ public:
 	void update();
 	void initImGUI(HWND hwnd);
 
-	static const int WINDOW_HEIGHT = 1440;
-	static const int WINDOW_WIDTH = 900;
+	static const int WINDOW_HEIGHT = 900;
+	static const int WINDOW_WIDTH = 1440;
 
 private:
 	static UISystem* sharedInstance;
@@ -66,5 +71,7 @@ private:
 	friend class PerspectiveView;
 	friend class TopdownView;
 	friend class WireframeView;
+	friend class InspectorWindow;
+	friend class SceneEditor;
 };
 

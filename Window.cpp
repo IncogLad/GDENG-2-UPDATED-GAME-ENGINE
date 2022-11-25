@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "EngineTime.h"
+#include "UISystem.h"
 
 //Window* window=nullptr;
 
@@ -29,7 +30,20 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		window->onCreate();
 		break;
 	}
-
+	case WM_SETFOCUS:
+	{
+		// Event fired when the window get focus
+		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		window->onFocus();
+		break;
+	}
+	case WM_KILLFOCUS:
+	{
+		// Event fired when the window lost focus
+		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		window->onKillFocus();
+		break;
+	}
 	case WM_DESTROY:
 	{
 		// Event fired when the window is destroyed
@@ -75,7 +89,7 @@ bool Window::init()
 
 		//Creation of the window
 	m_hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"MyWindowClass", L"DirectX Application",
-		WS_CAPTION | WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768,
+		WS_CAPTION | WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, UISystem::WINDOW_WIDTH, UISystem::WINDOW_HEIGHT,
 		NULL, NULL, NULL, this);
 
 	//if the creation fail return false

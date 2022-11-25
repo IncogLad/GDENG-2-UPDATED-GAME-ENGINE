@@ -14,7 +14,8 @@ InputSystem::~InputSystem()
 void InputSystem::update()
 {
 	POINT current_mouse_pos = {};
-	//::GetCursorPos(&current_mouse_pos);
+	
+	::GetCursorPos(&current_mouse_pos);
 
 	if (m_first_time)
 	{
@@ -109,6 +110,16 @@ void InputSystem::setCursorPosition(const Point& pos)
 void InputSystem::showCursor(bool show)
 {
 	::ShowCursor(show);
+}
+
+void InputSystem::setMouseLock(bool value)
+{
+	mouseLock = value;
+}
+
+bool InputSystem::getMouseLock()
+{
+	return this->mouseLock;
 }
 
 InputSystem* InputSystem::get()
