@@ -14,6 +14,7 @@
 #include "ShaderLibrary.h"
 #include "TextureManager.h"
 #include "UISystem.h"
+#include "JsonParser.h"
 
 AppWindow* AppWindow::sharedInstance = nullptr;
 
@@ -79,6 +80,8 @@ void AppWindow::onCreate()
 	
 	GameObjectManager::getInstance()->initializeQuadConst();
 	GameObjectManager::getInstance()->initializeCubeConst();
+
+	JsonParser::initialize();
 	
 
 }

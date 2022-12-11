@@ -108,7 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NOMINMAX;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Libs\ReactPhysics3D\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Libs\ReactPhysics3D\include;jsoncpp-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,6 +161,10 @@
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="InspectorWindow.cpp" />
+    <ClCompile Include="jsoncpp-master\dist\jsoncpp.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="JsonParser.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuToolBar.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -216,6 +220,13 @@
     <ClInclude Include="InputListener.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="InspectorWindow.h" />
+    <ClInclude Include="jsoncpp-master\dist\json\json-forwards.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="jsoncpp-master\dist\json\json.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="JsonParser.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="MenuToolBar.h" />
     <ClInclude Include="Mesh.h" />

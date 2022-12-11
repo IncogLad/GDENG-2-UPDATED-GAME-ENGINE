@@ -82,6 +82,9 @@
     <Filter Include="GameEngine\ECS\ComponentSystem">
       <UniqueIdentifier>{9c7a296f-ed32-424e-927b-0d29db97d8ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\Json">
+      <UniqueIdentifier>{c478ba72-6625-4e4b-9172-f06fc73a38fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -236,6 +239,12 @@
     </ClCompile>
     <ClCompile Include="AComponent.cpp">
       <Filter>GameEngine\ECS\ComponentSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="jsoncpp-master\dist\jsoncpp.cpp">
+      <Filter>GameEngine\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonParser.cpp">
+      <Filter>GameEngine\Json</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -413,6 +422,15 @@
     </ClInclude>
     <ClInclude Include="AComponent.h">
       <Filter>GameEngine\ECS\ComponentSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp-master\dist\json\json.h">
+      <Filter>GameEngine\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp-master\dist\json\json-forwards.h">
+      <Filter>GameEngine\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonParser.h">
+      <Filter>GameEngine\Json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
