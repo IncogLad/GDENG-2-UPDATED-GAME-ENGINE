@@ -1,6 +1,7 @@
 #pragma once
 #include <d3d11.h>
 #include <list>
+#include <string>
 #include <unordered_map>
 
 typedef std::string String;
