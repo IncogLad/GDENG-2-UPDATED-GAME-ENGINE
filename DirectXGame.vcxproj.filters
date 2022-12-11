@@ -85,6 +85,9 @@
     <Filter Include="GameEngine\Json">
       <UniqueIdentifier>{c478ba72-6625-4e4b-9172-f06fc73a38fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\Backend">
+      <UniqueIdentifier>{72336ede-a4ab-40cc-9b99-9ab69b7e2f2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -245,6 +248,12 @@
     </ClCompile>
     <ClCompile Include="JsonParser.cpp">
       <Filter>GameEngine\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineBackend.cpp">
+      <Filter>GameEngine\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaybackScreen.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -431,6 +440,12 @@
     </ClInclude>
     <ClInclude Include="JsonParser.h">
       <Filter>GameEngine\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineBackend.h">
+      <Filter>GameEngine\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaybackScreen.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
