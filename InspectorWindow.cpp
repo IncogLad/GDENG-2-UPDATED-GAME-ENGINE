@@ -63,8 +63,6 @@ void InspectorWindow::drawUI()
         rotation[2] = SelectedObject->getLocalRotation().m_z;
         rotation[3] = 1.f;
 
-        
-
         if (ImGui::DragFloat3("Position", position))
         {
             SelectedObject->setPosition(position[0], position[1], position[2]);
@@ -87,7 +85,6 @@ void InspectorWindow::drawUI()
         if (ImGui::Button("Add Physics Component"))
         {
             PhysicsComponent* physics_component =  new PhysicsComponent(SelectedObject->getName(),SelectedObject);
-	        GameObjectManager::getInstance()->saveEditStates();
         }
 
     }
