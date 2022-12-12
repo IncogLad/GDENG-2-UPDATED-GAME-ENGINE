@@ -67,6 +67,14 @@ void JsonParser::saveScene()
 			data["y"] = game_object->getLocalScale().m_y;//get position data
 			data["z"] = game_object->getLocalScale().m_z;
 			result["scale"] = data;
+			if (!game_object->getComponentsOfType(AComponent::Physics).empty())
+			{
+				result["rigidBody"] = true;
+			}
+			else
+			{
+				result["rigidBody"] = false;
+			}
 			event["cubes"][latestCubeCount] = result;
 			latestCubeCount++;
 		}
@@ -85,6 +93,14 @@ void JsonParser::saveScene()
 			data["y"] = game_object->getLocalScale().m_y;//get position data
 			data["z"] = game_object->getLocalScale().m_z;
 			result["scale"] = data;
+			if (!game_object->getComponentsOfType(AComponent::Physics).empty())
+			{
+				result["rigidBody"] = true;
+			}
+			else
+			{
+				result["rigidBody"] = false;
+			}
 			event["planes"][latestPlaneCount] = result;
 			latestPlaneCount++;
 		}
@@ -103,7 +119,15 @@ void JsonParser::saveScene()
 			data["y"] = game_object->getLocalScale().m_y;//get position data
 			data["z"] = game_object->getLocalScale().m_z;
 			result["scale"] = data;
-			event["sphere"][latestSphereCount] = result;
+			if (!game_object->getComponentsOfType(AComponent::Physics).empty())
+			{
+				result["rigidBody"] = true;
+			}
+			else
+			{
+				result["rigidBody"] = false;
+			}
+			event["spheres"][latestSphereCount] = result;
 			latestSphereCount++;
 		}
 		if (game_object->getTag() == "capsule")
@@ -121,7 +145,16 @@ void JsonParser::saveScene()
 			data["y"] = game_object->getLocalScale().m_y;//get position data
 			data["z"] = game_object->getLocalScale().m_z;
 			result["scale"] = data;
-			event["capsule"][latestCapsuleCount] = result;
+			if (!game_object->getComponentsOfType(AComponent::Physics).empty())
+			{
+				result["rigidBody"] = true;
+			}
+			else
+			{
+				result["rigidBody"] = false;
+			}
+			
+			event["capsules"][latestCapsuleCount] = result;
 			latestCapsuleCount++;
 		}
 	}
@@ -133,7 +166,7 @@ void JsonParser::saveScene()
 
 	std::ofstream myfile;
 	//filepath
-	myfile.open("test.level");
+	myfile.open("test.txt");
 	//writing it to file
 	myfile << json_file;
 	myfile.close();
@@ -174,8 +207,9 @@ void JsonParser::loadScene()
 		Vector3D scale = Vector3D(xScale, yScale, zScale);
 		Vector3D rotation = Vector3D(xRotation, yRotation, zRotation);
 
+		bool isRigidBody = actualJson["cubes"][i]["rigidBody"].asBool();
 
-		GameObjectManager::getInstance()->initializeCubeOnLoad(name, 0, position, scale, rotation, false);
+		GameObjectManager::getInstance()->initializeCubeOnLoad(name, 0, position, scale, rotation, isRigidBody);
 	}
 
 	for (int i = 0; i < actualJson["planes"].size(); i++)
@@ -200,8 +234,9 @@ void JsonParser::loadScene()
 		Vector3D scale = Vector3D(xScale, yScale, zScale);
 		Vector3D rotation = Vector3D(xRotation, yRotation, zRotation);
 
+		bool isRigidBody = actualJson["planes"][i]["rigidBody"].asBool();
 
-		GameObjectManager::getInstance()->initializeCubeOnLoad(name, 1, position, scale, rotation, false);
+		GameObjectManager::getInstance()->initializeCubeOnLoad(name, 1, position, scale, rotation, isRigidBody);
 	}
 	for (int i = 0; i < actualJson["capsules"].size(); i++)
 	{
@@ -225,8 +260,9 @@ void JsonParser::loadScene()
 		Vector3D scale = Vector3D(xScale, yScale, zScale);
 		Vector3D rotation = Vector3D(xRotation, yRotation, zRotation);
 
+		bool isRigidBody = actualJson["capsules"][i]["rigidBody"].asBool();
 
-		GameObjectManager::getInstance()->initializeCapsuleOnLoad(name, position, scale, rotation, false);
+		GameObjectManager::getInstance()->initializeCapsuleOnLoad(name, position, scale, rotation, isRigidBody);
 	}
 
 	for (int i = 0; i < actualJson["spheres"].size(); i++)
@@ -251,8 +287,9 @@ void JsonParser::loadScene()
 		Vector3D scale = Vector3D(xScale, yScale, zScale);
 		Vector3D rotation = Vector3D(xRotation, yRotation, zRotation);
 
+		bool isRigidBody = actualJson["spheres"][i]["rigidBody"].asBool();
 
-		GameObjectManager::getInstance()->initializeSphereOnLoad(name, position, scale, rotation, false);
+		GameObjectManager::getInstance()->initializeSphereOnLoad(name, position, scale, rotation, isRigidBody);
 	}
 	
 }
