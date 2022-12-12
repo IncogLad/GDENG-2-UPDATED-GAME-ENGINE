@@ -145,6 +145,7 @@ void GameObjectManager::initializeCapsuleOnLoad(std::string name, Vector3D posit
 	capsule->setPosition(position);
 	capsule->setRotation(rotation);
 	capsule->setScale(scale);
+	//std::cout << "aaaaa" << std::endl;
 
 	if (isRigidBody)
 	{
