@@ -65,18 +65,18 @@ void InspectorWindow::drawUI()
 
         if (ImGui::DragFloat3("Position", position))
         {
-            SelectedObject->setPosition(position[0], position[1], position[2]);
-            ActionHistory::getInstance()->recordAction(this->SelectedObject);
+        	ActionHistory::getInstance()->recordAction(this->SelectedObject);
+        	SelectedObject->setPosition(position[0], position[1], position[2]);
         }
         if (ImGui::DragFloat3("Scale", scale))
         {
-	        SelectedObject->setScale(scale[0], scale[1], scale[2]);
             ActionHistory::getInstance()->recordAction(this->SelectedObject);
+	        SelectedObject->setScale(scale[0], scale[1], scale[2]);
         }
 		if(ImGui::DragFloat3("Rotation", rotation))
         {
-            SelectedObject->setRotation(rotation[0], rotation[1], rotation[2]);
             ActionHistory::getInstance()->recordAction(this->SelectedObject);
+            SelectedObject->setRotation(rotation[0], rotation[1], rotation[2]);
         }
 
         ImGui::Separator();
@@ -86,7 +86,6 @@ void InspectorWindow::drawUI()
         {
             PhysicsComponent* physics_component =  new PhysicsComponent(SelectedObject->getName(),SelectedObject);
         }
-
     }
     
     ImGui::End();

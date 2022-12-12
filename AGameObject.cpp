@@ -3,6 +3,8 @@
 #include "BaseComponentSystem.h"
 #include "PhysicsSystem.h"
 #include "EditorAction.h"
+#include "PhysicsComponent.h"
+#include "reactphysics3d/reactphysics3d.h"
 
 void AGameObject::initialize(std::string name)
 {
