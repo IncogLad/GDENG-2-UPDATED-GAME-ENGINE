@@ -14,6 +14,8 @@
 #include "ShaderLibrary.h"
 #include "TextureManager.h"
 #include "UISystem.h"
+#include "EngineBackend.h"
+#include "ActionHistory.h"
 #include "JsonParser.h"
 
 AppWindow* AppWindow::sharedInstance = nullptr;
@@ -83,7 +85,8 @@ void AppWindow::onCreate()
 
 	JsonParser::initialize();
 	
-
+	EngineBackend::getInstance()->initialize();
+	ActionHistory::getInstance()->initialize();
 }
 
 void AppWindow::onUpdate()
@@ -91,32 +94,53 @@ void AppWindow::onUpdate()
 	Window::onUpdate();
 
 	InputSystem::get()->update();
-	BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
+	//BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
 	//////////////RENDER EVERY VIEW TO TEXTURE///////////////////
-	for (auto const& tempRT : GraphicsEngine::getInstance()->getRenderTextureList()) {
-		//std::cout << GraphicsEngine::getInstance()->getCurrentRenderedTexture()->getName() << std::endl;
-		GraphicsEngine::getInstance()->setCurrentRenderTexture(tempRT);
-		
-		CameraHandler::getInstance()->setCurrentCamera(tempRT->getName());
-		GraphicsEngine::getInstance()->RenderToTexture(this->m_swap_chain);
+	//for (auto const& tempRT : GraphicsEngine::getInstance()->getRenderTextureList()) {
+	//	//std::cout << GraphicsEngine::getInstance()->getCurrentRenderedTexture()->getName() << std::endl;
+	//	GraphicsEngine::getInstance()->setCurrentRenderTexture(tempRT);
+	//	
+	//	CameraHandler::getInstance()->setCurrentCamera(tempRT->getName());
+	//	GraphicsEngine::getInstance()->RenderToTexture(this->m_swap_chain);
 
-		//Draw Everything
-		for (auto const& i : GameObjectManager::getInstance()->getQuadList()) {
-			i->draw();
+	//	//Draw Everything
+	//	for (auto const& i : GameObjectManager::getInstance()->getQuadList()) {
+	//		i->draw();
+	//	}
+
+	//	for (auto const& i : GameObjectManager::getInstance()->getCubeList()) {
+	//		//std::cout << i->getName() << std::endl;
+	//		i->draw();
+	//	}
+
+	//	for (auto const& i : GameObjectManager::getInstance()->getMeshList()) {
+	//		//std::cout<<i->getName() << std::endl;
+	//		i->draw();
+	//	}
+
+
+	//	//CameraHandler::getInstance()->update();
+	//}
+
+	EngineBackend* backend = EngineBackend::getInstance();
+	if (backend->getMode() == EngineBackend::EditorMode::PLAY)
+	{
+		BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
+		GameObjectManager::getInstance()->updateAll();
+	}
+	else if (backend->getMode() == EngineBackend::EditorMode::EDITOR)
+	{
+		GameObjectManager::getInstance()->updateAll();
+	}
+	else if (backend->getMode() == EngineBackend::EditorMode::PAUSED)
+	{
+		if (backend->insideFrameStep())
+		{
+			BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
+			GameObjectManager::getInstance()->updateAll();
+
+			backend->endFrameStep();
 		}
-
-		for (auto const& i : GameObjectManager::getInstance()->getCubeList()) {
-			//std::cout << i->getName() << std::endl;
-			i->draw();
-		}
-
-		for (auto const& i : GameObjectManager::getInstance()->getMeshList()) {
-			//std::cout<<i->getName() << std::endl;
-			i->draw();
-		}
-
-
-		//CameraHandler::getInstance()->update();
 	}
 	
 	GraphicsEngine::getInstance()->SetBackBufferRenderTarget(this->m_swap_chain);
@@ -141,11 +165,12 @@ void AppWindow::onDestroy()
 {
 	Window::onDestroy();
 	m_swap_chain->release();
-	ShaderLibrary::destroy();
+	ShaderLibrary::getInstance()->destroy();
 	GraphicsEngine::getInstance()->release();
 	JsonParser::destroy();
 	UISystem::getInstance()->destroy();
-
+	ActionHistory::getInstance()->destroy();
+	EngineBackend::getInstance()->destroy();
 }
 
 void AppWindow::onFocus()
@@ -219,4 +244,9 @@ void AppWindow::onRightMouseDown(const Point& mouse_pos)
 
 void AppWindow::onRightMouseUp(const Point& mouse_pos)
 {
+}
+
+SwapChain* AppWindow::getSwapChain()
+{
+	return m_swap_chain;
 }

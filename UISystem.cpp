@@ -11,11 +11,12 @@
 #include "InspectorWindow.h"
 #include "TextureManager.h"
 #include "MenuToolBar.h"
-#include "ObjectSpawnPanel.h"
 #include "PerspectiveView.h"
 #include "SceneEditor.h"
 #include "TopdownView.h"
 #include "WireframeView.h"
+#include "PlaybackScreen.h"
+#include "ActionsScreen.h"
 
 UISystem* UISystem::sharedInstance = nullptr;
 
@@ -95,11 +96,13 @@ void UISystem::initImGUI(HWND hwnd)
     uiTable[uiNames.INSPECTOR_WINDOW] = inspector_window;
     uiList.push_back(inspector_window);
 
-    ObjectSpawnPanel* object_spawn_panel = new ObjectSpawnPanel();
-    uiTable[uiNames.OBJECT_SPAWN_PANEL] = object_spawn_panel;
-    uiList.push_back(object_spawn_panel);
+    PlaybackScreen* playback_screen = new PlaybackScreen();
+    uiTable[uiNames.PLAYBACK_SCREEN] = playback_screen;
+    uiList.push_back(playback_screen);
 
-
+	ActionsScreen* actions_screen = new ActionsScreen();
+    uiTable[uiNames.ACTIONS_SCREEN] = actions_screen;
+    uiList.push_back(actions_screen);
 }
 
 void UISystem::updateNewFrame()

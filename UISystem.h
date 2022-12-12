@@ -34,7 +34,9 @@ public:
 
 	const String SCENE_EDITOR = "SCENE_EDITOR";
 	const String INSPECTOR_WINDOW = "INSPECTOR_WINDOW";
-	const String OBJECT_SPAWN_PANEL = "OBJECT_SPAWN_PANEL";
+
+	const String PLAYBACK_SCREEN = "PLAYBACK_SCREEN";
+	const String ACTIONS_SCREEN = "ACTIONS_SCREEN";
 };
 
 
@@ -74,6 +76,5 @@ private:
 	friend class WireframeView;
 	friend class InspectorWindow;
 	friend class SceneEditor;
-	friend class ObjectSpawnPanel;
 };
 

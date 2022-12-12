@@ -2,8 +2,8 @@
 #include "AppWindow.h"
 #include "MeshManager.h"
 #include "PhysicsComponent.h"
-#include "SwapChain.h"
-
+#include "CameraHandler.h"
+#include "RenderTexture.h"
 
 GameObjectManager* GameObjectManager::sharedInstance = nullptr;
 
@@ -233,6 +233,51 @@ std::list<Mesh*> GameObjectManager::getMeshList()
 Mesh* GameObjectManager::getMeshByName(std::string name)
 {
 	return meshTable[name];
+}
+
+void GameObjectManager::saveEditStates()
+{
+	for (auto const& gameObj : gameObjectList)
+	{
+		gameObj->saveEditState();
+	}
+}
+
+void GameObjectManager::restoreEditStates()
+{
+	for (auto const& gameObj : gameObjectList)
+	{
+		gameObj->restoreEditState();
+	}
+}
+
+void GameObjectManager::updateAll()
+{
+	for (auto const& tempRT : GraphicsEngine::getInstance()->getRenderTextureList()) {
+		//std::cout << GraphicsEngine::getInstance()->getCurrentRenderedTexture()->getName() << std::endl;
+		GraphicsEngine::getInstance()->setCurrentRenderTexture(tempRT);
+		
+		CameraHandler::getInstance()->setCurrentCamera(tempRT->getName());
+		GraphicsEngine::getInstance()->RenderToTexture(AppWindow::getInstance()->getSwapChain());
+
+		//Draw Everything
+		for (auto const& i : GameObjectManager::getInstance()->getQuadList()) {
+			i->draw();
+		}
+
+		for (auto const& i : GameObjectManager::getInstance()->getCubeList()) {
+			//std::cout << i->getName() << std::endl;
+			i->draw();
+		}
+
+		for (auto const& i : GameObjectManager::getInstance()->getMeshList()) {
+			//std::cout<<i->getName() << std::endl;
+			i->draw();
+		}
+
+
+		//CameraHandler::getInstance()->update();
+	}
 }
 
 void GameObjectManager::initializeCube(std::string name, int num = 0)

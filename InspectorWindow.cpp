@@ -3,6 +3,7 @@
 #include "GameObjectManager.h"
 #include "PhysicsComponent.h"
 #include "imgui/imgui.h"
+#include "ActionHistory.h"
 
 InspectorWindow::InspectorWindow() : AUIScreen("INSPECTOR_WINDOW")
 {
@@ -61,20 +62,23 @@ void InspectorWindow::drawUI()
         rotation[1] = SelectedObject->getLocalRotation().m_y;
         rotation[2] = SelectedObject->getLocalRotation().m_z;
         rotation[3] = 1.f;
+
         
 
         if (ImGui::DragFloat3("Position", position))
         {
             SelectedObject->setPosition(position[0], position[1], position[2]);
+            ActionHistory::getInstance()->recordAction(this->SelectedObject);
         }
         if (ImGui::DragFloat3("Scale", scale))
         {
 	        SelectedObject->setScale(scale[0], scale[1], scale[2]);
+            ActionHistory::getInstance()->recordAction(this->SelectedObject);
         }
 		if(ImGui::DragFloat3("Rotation", rotation))
         {
-            Vector3D rot = Vector3D(rotation[0], rotation[1], rotation[2]);
-            SelectedObject->setRotation(rot);
+            SelectedObject->setRotation(rotation[0], rotation[1], rotation[2]);
+            ActionHistory::getInstance()->recordAction(this->SelectedObject);
         }
 
         ImGui::Separator();
@@ -83,7 +87,7 @@ void InspectorWindow::drawUI()
         if (ImGui::Button("Add Physics Component"))
         {
             PhysicsComponent* physics_component =  new PhysicsComponent(SelectedObject->getName(),SelectedObject);
-	        
+	        GameObjectManager::getInstance()->saveEditStates();
         }
 
     }

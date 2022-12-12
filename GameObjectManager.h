@@ -25,18 +25,11 @@ public:
 	Quads* getQuadByName(std::string name);
 
 	void initializeCube(std::string name, int num);
-	void initializeCubeOnLoad(std::string name, int num, Vector3D position, Vector3D scale, Vector3D rotation, bool isRigidBody);
 	void initializeCubeConst();
 	void insertCube(class Cube* cube);
 	void releaseCubes();
 	std::list<class Cube*> getCubeList();
 	Cube* getCubeByName(std::string name);
-
-	void initializeSphere(std::string name);
-	void initializeSphereOnLoad(std::string name, Vector3D position, Vector3D scale, Vector3D rotation, bool isRigidBody);
-
-	void initializeCapsule(std::string name);
-	void initializeCapsuleOnLoad(std::string name, Vector3D position, Vector3D scale, Vector3D rotation, bool isRigidBody);
 
 	void populateObjectList();
 	std::list<AGameObject*> getGameObjectList();
@@ -45,7 +38,11 @@ public:
 	void initializeMesh();
 	std::list<Mesh*> getMeshList();
 	Mesh* getMeshByName(std::string name);
-	
+
+	void saveEditStates();
+	void restoreEditStates();
+
+	void updateAll();
 	
 private:
 	static GameObjectManager* sharedInstance;
