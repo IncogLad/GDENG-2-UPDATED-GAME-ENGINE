@@ -48,6 +48,7 @@ PhysicsComponent::PhysicsComponent(String name, AGameObject* owner) : AComponent
 
 PhysicsComponent::~PhysicsComponent()
 {
+	
 }
 
 void PhysicsComponent::perform(float deltaTime)

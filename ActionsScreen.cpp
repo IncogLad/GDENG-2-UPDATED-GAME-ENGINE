@@ -1,6 +1,8 @@
 ﻿#include "ActionsScreen.h"
 #include "imgui/imgui.h"
 #include "ActionHistory.h"
+#include "EditorAction.h"
+#include "GameObjectManager.h"
 
 ActionsScreen::ActionsScreen() : AUIScreen("ACTIONS_SCREEN")
 {
@@ -18,9 +20,20 @@ void ActionsScreen::drawUI()
 
 	if (ImGui::Button("Undo"))
 	{
-		if (ActionHistory::getInstance()->hasRemainingUndoActions())
+		EditorAction* undoAction = ActionHistory::getInstance()->undoAction();
+
+		if (undoAction != nullptr)
 		{
-			
+			for (auto i : GameObjectManager::getInstance()->getGameObjectList())
+			{
+				if (i->getName() == undoAction->getOwnerName())
+				{
+					i->setPosition(undoAction->getStorePos());
+					i->setRotation(undoAction->getStoredRotation());
+					i->setScale(undoAction->getStoredScale());
+					i->setLocalMatrix(undoAction->getStoredMatrix());
+				}
+			}
 		}
 	}
 
@@ -28,9 +41,20 @@ void ActionsScreen::drawUI()
 
 	if (ImGui::Button("Redo"))
 	{
-		if (ActionHistory::getInstance()->hasRemainingRedoActions())
+		EditorAction* redoAction = ActionHistory::getInstance()->redoAction();
+
+		if (redoAction != nullptr)
 		{
-			
+			for (auto i : GameObjectManager::getInstance()->getGameObjectList())
+			{
+				if (i->getName() == redoAction->getOwnerName())
+				{
+					i->setPosition(redoAction->getStorePos());
+					i->setRotation(redoAction->getStoredRotation());
+					i->setScale(redoAction->getStoredScale());
+					i->setLocalMatrix(redoAction->getStoredMatrix());
+				}
+			}
 		}
 	}
 
