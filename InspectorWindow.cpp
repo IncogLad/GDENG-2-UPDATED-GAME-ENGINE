@@ -47,6 +47,58 @@ void InspectorWindow::drawUI()
         ImGui::Text(SelectedObject->getName().c_str());
         ImGui::Separator();
 
+        ImGui::Text("Enable/Disable Object");
+        if (ImGui::Checkbox("Yes", &enableCheckBox))
+        {
+            if (SelectedObject->getTag() == "cube")
+            {
+	            objectType = cube;
+            }
+            else if (SelectedObject->getTag() == "sphere" || SelectedObject->getTag() == "capsule")
+            {
+	            objectType = mesh;
+            }
+
+            enableCheckBox = true;
+            disableCheckBox = false;
+
+            if (objectType == cube)
+            {
+	            GameObjectManager::getInstance()->enableCubes(SelectedObject->getName());
+            }
+            else
+            {
+	            GameObjectManager::getInstance()->enableMeshes(SelectedObject->getName());
+            }
+        }
+    	else if (ImGui::Checkbox("No", &disableCheckBox))
+        {
+            if (SelectedObject->getTag() == "cube")
+            {
+	            objectType = cube;
+            }
+            else if (SelectedObject->getTag() == "sphere" || SelectedObject->getTag() == "capsule")
+            {
+	            objectType = mesh;
+
+            }
+
+            enableCheckBox = false;
+            disableCheckBox = true;
+
+            if (objectType == cube)
+            {
+	            GameObjectManager::getInstance()->disableCubes(SelectedObject->getName());
+            }
+            else
+            {
+	            GameObjectManager::getInstance()->disableMesh(SelectedObject->getName());
+            }
+            std::cout << SelectedObject << std::endl;
+        }
+
+        ImGui::Separator();
+
         ImGui::Text("Transform");
         position[0] = SelectedObject->getLocalPosition().m_x;
         position[1] = SelectedObject->getLocalPosition().m_y;

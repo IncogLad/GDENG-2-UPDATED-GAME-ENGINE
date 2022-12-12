@@ -193,6 +193,16 @@ void Cube::releaseBuffers()
 
 }
 
+bool Cube::getEnabled()
+{
+	return isEnabled;
+}
+
+void Cube::setEnabled(bool enable)
+{
+	isEnabled = enable;
+}
+
 void Cube::updatePosition()
 {
 	float speed = 1.5f / 5;

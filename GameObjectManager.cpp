@@ -236,6 +236,50 @@ Mesh* GameObjectManager::getMeshByName(std::string name)
 	return meshTable[name];
 }
 
+void GameObjectManager::enableCubes(std::string name)
+{
+	for (auto cube : cubeList)
+	{
+		if (cube->getName() == name)
+		{
+			cube->setEnabled(true);
+		}
+	}
+}
+
+void GameObjectManager::enableMeshes(std::string name)
+{
+		for (auto mesh : meshList)
+	{
+		if (mesh->getName() == name)
+		{
+			mesh->setEnabled(true);
+		}
+	}
+}
+
+void GameObjectManager::disableCubes(std::string name)
+{
+	for (auto cube : cubeList)
+	{
+		if (cube->getName() == name)
+		{
+			cube->setEnabled(false);
+		}
+	}
+}
+
+void GameObjectManager::disableMesh(std::string name)
+{
+	for (auto mesh : meshList)
+	{
+		if (mesh->getName() == name)
+		{
+			mesh->setEnabled(false);
+		}
+	}
+}
+
 void GameObjectManager::saveEditStates()
 {
 	for (auto const& gameObj : gameObjectList)
@@ -268,12 +312,19 @@ void GameObjectManager::updateAll()
 
 		for (auto const& i : GameObjectManager::getInstance()->getCubeList()) {
 			//std::cout << i->getName() << std::endl;
-			i->draw();
+			if (i->getEnabled())
+			{
+				//std::cout << i->getEnabled() << std::endl;
+				i->draw();
+			}
 		}
 
 		for (auto const& i : GameObjectManager::getInstance()->getMeshList()) {
 			//std::cout<<i->getName() << std::endl;
-			i->draw();
+			if (i->getEnabled())
+			{
+				i->draw();
+			}
 		}
 
 
@@ -285,6 +336,7 @@ void GameObjectManager::initializeCube(std::string name, int num = 0)
 {
 	Cube* cube = new Cube();
 	cube->initialize(name);
+	cube->setTag("cube");
 	cube->initBuffers(num);
 	cube->initConstBuffers();
 	insertCube(cube);
@@ -299,6 +351,7 @@ void GameObjectManager::initializeCubeOnLoad(std::string name, int num, Vector3D
 {
 	Cube* cube = new Cube();
 	cube->initialize(name);
+	cube->setTag("cube");
 	cube->initBuffers(num);
 	cube->initConstBuffers();
 
