@@ -127,7 +127,7 @@ void JsonParser::saveScene()
 			{
 				result["rigidBody"] = false;
 			}
-			event["sphere"][latestSphereCount] = result;
+			event["spheres"][latestSphereCount] = result;
 			latestSphereCount++;
 		}
 		if (game_object->getTag() == "capsule")
@@ -154,7 +154,7 @@ void JsonParser::saveScene()
 				result["rigidBody"] = false;
 			}
 			
-			event["capsule"][latestCapsuleCount] = result;
+			event["capsules"][latestCapsuleCount] = result;
 			latestCapsuleCount++;
 		}
 	}
@@ -166,7 +166,7 @@ void JsonParser::saveScene()
 
 	std::ofstream myfile;
 	//filepath
-	myfile.open("test.level");
+	myfile.open("test.txt");
 	//writing it to file
 	myfile << json_file;
 	myfile.close();
