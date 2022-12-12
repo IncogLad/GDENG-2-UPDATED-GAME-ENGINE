@@ -58,15 +58,15 @@ void JsonParser::saveScene()
 			data["x"] = game_object->getLocalPosition().m_x;//get position data
 			data["y"] = game_object->getLocalPosition().m_y;//get position data
 			data["z"] = game_object->getLocalPosition().m_z;//get position data
-			result["Position"] = data;
+			result["position"] = data;
 			data["x"] = game_object->getLocalRotation().m_x;//get position data
 			data["y"] = game_object->getLocalRotation().m_y;//get position data
 			data["z"] = game_object->getLocalRotation().m_z;//get position data
-			result["Rotation"] = data;
+			result["rotation"] = data;
 			data["x"] = game_object->getLocalScale().m_x;//get position data
 			data["y"] = game_object->getLocalScale().m_y;//get position data
 			data["z"] = game_object->getLocalScale().m_z;
-			result["Scale"] = data;
+			result["scale"] = data;
 			event["cubes"][latestCubeCount] = result;
 			latestCubeCount++;
 		}
@@ -76,15 +76,15 @@ void JsonParser::saveScene()
 			data["x"] = game_object->getLocalPosition().m_x;//get position data
 			data["y"] = game_object->getLocalPosition().m_y;//get position data
 			data["z"] = game_object->getLocalPosition().m_z;//get position data
-			result["Position"] = data;
+			result["position"] = data;
 			data["x"] = game_object->getLocalRotation().m_x;//get position data
 			data["y"] = game_object->getLocalRotation().m_y;//get position data
 			data["z"] = game_object->getLocalRotation().m_z;//get position data
-			result["Rotation"] = data;
+			result["rotation"] = data;
 			data["x"] = game_object->getLocalScale().m_x;//get position data
 			data["y"] = game_object->getLocalScale().m_y;//get position data
 			data["z"] = game_object->getLocalScale().m_z;
-			result["Scale"] = data;
+			result["scale"] = data;
 			event["planes"][latestPlaneCount] = result;
 			latestPlaneCount++;
 		}
@@ -94,15 +94,15 @@ void JsonParser::saveScene()
 			data["x"] = game_object->getLocalPosition().m_x;//get position data
 			data["y"] = game_object->getLocalPosition().m_y;//get position data
 			data["z"] = game_object->getLocalPosition().m_z;//get position data
-			result["Position"] = data;
+			result["position"] = data;
 			data["x"] = game_object->getLocalRotation().m_x;//get position data
 			data["y"] = game_object->getLocalRotation().m_y;//get position data
 			data["z"] = game_object->getLocalRotation().m_z;//get position data
-			result["Rotation"] = data;
+			result["rotation"] = data;
 			data["x"] = game_object->getLocalScale().m_x;//get position data
 			data["y"] = game_object->getLocalScale().m_y;//get position data
 			data["z"] = game_object->getLocalScale().m_z;
-			result["Scale"] = data;
+			result["scale"] = data;
 			event["sphere"][latestSphereCount] = result;
 			latestSphereCount++;
 		}
@@ -112,15 +112,15 @@ void JsonParser::saveScene()
 			data["x"] = game_object->getLocalPosition().m_x;//get position data
 			data["y"] = game_object->getLocalPosition().m_y;//get position data
 			data["z"] = game_object->getLocalPosition().m_z;//get position data
-			result["Position"] = data;
+			result["position"] = data;
 			data["x"] = game_object->getLocalRotation().m_x;//get position data
 			data["y"] = game_object->getLocalRotation().m_y;//get position data
 			data["z"] = game_object->getLocalRotation().m_z;//get position data
-			result["Rotation"] = data;
+			result["rotation"] = data;
 			data["x"] = game_object->getLocalScale().m_x;//get position data
 			data["y"] = game_object->getLocalScale().m_y;//get position data
 			data["z"] = game_object->getLocalScale().m_z;
-			result["Scale"] = data;
+			result["scale"] = data;
 			event["capsule"][latestCapsuleCount] = result;
 			latestCapsuleCount++;
 		}
@@ -133,7 +133,7 @@ void JsonParser::saveScene()
 
 	std::ofstream myfile;
 	//filepath
-	myfile.open("example.json");
+	myfile.open("test.level");
 	//writing it to file
 	myfile << json_file;
 	myfile.close();
@@ -144,7 +144,7 @@ void JsonParser::saveScene()
 void JsonParser::loadScene()
 {
 
-	ifstream file("example.json");
+	ifstream file("example.txt");
 
 	Json::Value actualJson;
 	Json::Reader reader;
@@ -158,17 +158,17 @@ void JsonParser::loadScene()
 		
 		std::string name = fastWriter.write(actualJson["cubes"][i]["name"]);
 
-		float xPosition = actualJson["cubes"][i]["Position"]["x"].asFloat();
-		float yPosition = actualJson["cubes"][i]["Position"]["y"].asFloat();
-		float zPosition = actualJson["cubes"][i]["Position"]["z"].asFloat();
+		float xPosition = actualJson["cubes"][i]["position"]["x"].asFloat();
+		float yPosition = actualJson["cubes"][i]["position"]["y"].asFloat();
+		float zPosition = actualJson["cubes"][i]["position"]["z"].asFloat();
 
-		float xScale = actualJson["cubes"][i]["Scale"]["x"].asFloat();
-		float yScale = actualJson["cubes"][i]["Scale"]["y"].asFloat();
-		float zScale = actualJson["cubes"][i]["Scale"]["z"].asFloat();
+		float xScale = actualJson["cubes"][i]["scale"]["x"].asFloat();
+		float yScale = actualJson["cubes"][i]["scale"]["y"].asFloat();
+		float zScale = actualJson["cubes"][i]["scale"]["z"].asFloat();
 
-		float xRotation = actualJson["cubes"][i]["Rotation"]["x"].asFloat();
-		float yRotation = actualJson["cubes"][i]["Rotation"]["y"].asFloat();
-		float zRotation = actualJson["cubes"][i]["Rotation"]["z"].asFloat();
+		float xRotation = actualJson["cubes"][i]["rotation"]["x"].asFloat();
+		float yRotation = actualJson["cubes"][i]["rotation"]["y"].asFloat();
+		float zRotation = actualJson["cubes"][i]["rotation"]["z"].asFloat();
 
 		Vector3D position = Vector3D(xPosition, yPosition, zPosition);
 		Vector3D scale = Vector3D(xScale, yScale, zScale);
@@ -184,17 +184,17 @@ void JsonParser::loadScene()
 
 		std::string name = fastWriter.write(actualJson["planes"][i]["name"]);
 
-		float xPosition = actualJson["planes"][i]["Position"]["x"].asFloat();
-		float yPosition = actualJson["planes"][i]["Position"]["y"].asFloat();
-		float zPosition = actualJson["planes"][i]["Position"]["z"].asFloat();
+		float xPosition = actualJson["planes"][i]["position"]["x"].asFloat();
+		float yPosition = actualJson["planes"][i]["position"]["y"].asFloat();
+		float zPosition = actualJson["planes"][i]["position"]["z"].asFloat();
 
-		float xScale = actualJson["planes"][i]["Scale"]["x"].asFloat();
-		float yScale = actualJson["planes"][i]["Scale"]["y"].asFloat();
-		float zScale = actualJson["planes"][i]["Scale"]["z"].asFloat();
+		float xScale = actualJson["planes"][i]["scale"]["x"].asFloat();
+		float yScale = actualJson["planes"][i]["scale"]["y"].asFloat();
+		float zScale = actualJson["planes"][i]["scale"]["z"].asFloat();
 
-		float xRotation = actualJson["planes"][i]["Rotation"]["x"].asFloat();
-		float yRotation = actualJson["planes"][i]["Rotation"]["y"].asFloat();
-		float zRotation = actualJson["planes"][i]["Rotation"]["z"].asFloat();
+		float xRotation = actualJson["planes"][i]["rotation"]["x"].asFloat();
+		float yRotation = actualJson["planes"][i]["rotation"]["y"].asFloat();
+		float zRotation = actualJson["planes"][i]["rotation"]["z"].asFloat();
 
 		Vector3D position = Vector3D(xPosition, yPosition, zPosition);
 		Vector3D scale = Vector3D(xScale, yScale, zScale);
@@ -203,23 +203,23 @@ void JsonParser::loadScene()
 
 		GameObjectManager::getInstance()->initializeCubeOnLoad(name, 1, position, scale, rotation, false);
 	}
-	for (int i = 0; i < actualJson["capsule"].size(); i++)
+	for (int i = 0; i < actualJson["capsules"].size(); i++)
 	{
 		Json::FastWriter fastWriter;
 
-		std::string name = fastWriter.write(actualJson["capsule"][i]["name"]);
+		std::string name = fastWriter.write(actualJson["capsules"][i]["name"]);
 
-		float xPosition = actualJson["capsule"][i]["Position"]["x"].asFloat();
-		float yPosition = actualJson["capsule"][i]["Position"]["y"].asFloat();
-		float zPosition = actualJson["capsule"][i]["Position"]["z"].asFloat();
+		float xPosition = actualJson["capsules"][i]["position"]["x"].asFloat();
+		float yPosition = actualJson["capsules"][i]["position"]["y"].asFloat();
+		float zPosition = actualJson["capsules"][i]["position"]["z"].asFloat();
 
-		float xScale = actualJson["capsule"][i]["Scale"]["x"].asFloat();
-		float yScale = actualJson["capsule"][i]["Scale"]["y"].asFloat();
-		float zScale = actualJson["capsule"][i]["Scale"]["z"].asFloat();
+		float xScale = actualJson["capsules"][i]["scale"]["x"].asFloat();
+		float yScale = actualJson["capsules"][i]["scale"]["y"].asFloat();
+		float zScale = actualJson["capsules"][i]["scale"]["z"].asFloat();
 
-		float xRotation = actualJson["capsule"][i]["Rotation"]["x"].asFloat();
-		float yRotation = actualJson["capsule"][i]["Rotation"]["y"].asFloat();
-		float zRotation = actualJson["capsule"][i]["Rotation"]["z"].asFloat();
+		float xRotation = actualJson["capsules"][i]["rotation"]["x"].asFloat();
+		float yRotation = actualJson["capsules"][i]["rotation"]["y"].asFloat();
+		float zRotation = actualJson["capsules"][i]["rotation"]["z"].asFloat();
 
 		Vector3D position = Vector3D(xPosition, yPosition, zPosition);
 		Vector3D scale = Vector3D(xScale, yScale, zScale);
@@ -229,23 +229,23 @@ void JsonParser::loadScene()
 		GameObjectManager::getInstance()->initializeCapsuleOnLoad(name, position, scale, rotation, false);
 	}
 
-	for (int i = 0; i < actualJson["sphere"].size(); i++)
+	for (int i = 0; i < actualJson["spheres"].size(); i++)
 	{
 		Json::FastWriter fastWriter;
 
-		std::string name = fastWriter.write(actualJson["sphere"][i]["name"]);
+		std::string name = fastWriter.write(actualJson["spheres"][i]["name"]);
 
-		float xPosition = actualJson["sphere"][i]["Position"]["x"].asFloat();
-		float yPosition = actualJson["sphere"][i]["Position"]["y"].asFloat();
-		float zPosition = actualJson["sphere"][i]["Position"]["z"].asFloat();
+		float xPosition = actualJson["spheres"][i]["position"]["x"].asFloat();
+		float yPosition = actualJson["spheres"][i]["position"]["y"].asFloat();
+		float zPosition = actualJson["spheres"][i]["position"]["z"].asFloat();
 
-		float xScale = actualJson["sphere"][i]["Scale"]["x"].asFloat();
-		float yScale = actualJson["sphere"][i]["Scale"]["y"].asFloat();
-		float zScale = actualJson["sphere"][i]["Scale"]["z"].asFloat();
+		float xScale = actualJson["spheres"][i]["scale"]["x"].asFloat();
+		float yScale = actualJson["spheres"][i]["scale"]["y"].asFloat();
+		float zScale = actualJson["spheres"][i]["scale"]["z"].asFloat();
 
-		float xRotation = actualJson["sphere"][i]["Rotation"]["x"].asFloat();
-		float yRotation = actualJson["sphere"][i]["Rotation"]["y"].asFloat();
-		float zRotation = actualJson["sphere"][i]["Rotation"]["z"].asFloat();
+		float xRotation = actualJson["spheres"][i]["rotation"]["x"].asFloat();
+		float yRotation = actualJson["spheres"][i]["rotation"]["y"].asFloat();
+		float zRotation = actualJson["spheres"][i]["rotation"]["z"].asFloat();
 
 		Vector3D position = Vector3D(xPosition, yPosition, zPosition);
 		Vector3D scale = Vector3D(xScale, yScale, zScale);
