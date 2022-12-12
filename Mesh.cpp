@@ -119,6 +119,7 @@ void Mesh::initialize(std::string name)
 {
 	AGameObject::initialize(name);
 	this->name = name;
+	this->tag = "mesh";
 	translation = getLocalPosition();
 	scaling = getLocalScale();
 	if (name == "bunny")
@@ -160,8 +161,15 @@ void Mesh::draw()
 
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getVertexShader(shader_names.TEXTURED_VERTEX_SHADER_NAME), m_cb);
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), m_cb);
-
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPSTexture(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), brick_tex);
+	if (this->tag == "capsule" || this->tag == "sphere")
+	{
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME));
+	}
+	else
+	{
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPSTexture(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), brick_tex);
+	}
+	
 
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexBuffer(m_vertex_buffer);
@@ -191,11 +199,11 @@ void Mesh::updateTransforms()
 	allMatrix *= w_zMatrix;
 
 	Matrix4x4 w_xMatrix; w_xMatrix.setIdentity();
-	w_xMatrix.setRotationX(rotation.m_x);
+	w_xMatrix.setRotationX(getLocalRotation().m_x);
 	allMatrix *= w_xMatrix;
 
 	Matrix4x4 w_yMatrix; w_yMatrix.setIdentity();
-	w_yMatrix.setRotationY(rotation.m_y);
+	w_yMatrix.setRotationY(getLocalRotation().m_y);
 	allMatrix *= w_yMatrix;
 
 	//scaleMatrix *= rotMatrix;

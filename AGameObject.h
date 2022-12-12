@@ -72,6 +72,9 @@ public:
 	bool isObjectSelected();
 	void setSelected(bool value);
 
+	void setTag(std::string tag);
+	std::string getTag();
+
 	void attachComponent(AComponent* component);
 	void detachComponent(AComponent* component);
 
@@ -84,6 +87,7 @@ private:
 
 protected:
 	std::string name;
+	std::string tag;
 	Vector3D localPosition;
 	Vector3D localRotation;
 	Vector3D localScale;

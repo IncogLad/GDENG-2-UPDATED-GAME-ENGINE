@@ -69,17 +69,17 @@ void AppWindow::onCreate()
 
 	GraphicsEngine::getInstance()->createRenderTexture(rc.right - rc.left, rc.bottom - rc.top);
 	
-	GameObjectManager::getInstance()->initializeCube("cube0", 0);
-	GameObjectManager::getInstance()->initializeCube("cube1", 0);
-	GameObjectManager::getInstance()->initializeCube("cube2", 0);
+	GameObjectManager::getInstance()->initializeCube("cubetest0", 0);
+	GameObjectManager::getInstance()->initializeCube("cubetest1", 0);
+	GameObjectManager::getInstance()->initializeCube("cubetest2", 0);
 
-	GameObjectManager::getInstance()->initializeCube("plane", 1);
+	GameObjectManager::getInstance()->initializeCube("planetest", 1);
 	GameObjectManager::getInstance()->initializeMesh();
 
-	GameObjectManager::getInstance()->populateObjectList();
+	//GameObjectManager::getInstance()->populateObjectList();
 	
-	GameObjectManager::getInstance()->initializeQuadConst();
-	GameObjectManager::getInstance()->initializeCubeConst();
+	//GameObjectManager::getInstance()->initializeQuadConst();
+	//GameObjectManager::getInstance()->initializeCubeConst();
 
 	JsonParser::initialize();
 	
@@ -143,6 +143,7 @@ void AppWindow::onDestroy()
 	m_swap_chain->release();
 	ShaderLibrary::destroy();
 	GraphicsEngine::getInstance()->release();
+	JsonParser::destroy();
 	UISystem::getInstance()->destroy();
 
 }

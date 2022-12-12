@@ -255,6 +255,9 @@
     <ClCompile Include="PlaybackScreen.cpp">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectSpawnPanel.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -445,6 +448,9 @@
       <Filter>GameEngine\Backend</Filter>
     </ClInclude>
     <ClInclude Include="PlaybackScreen.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectSpawnPanel.h">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClInclude>
   </ItemGroup>

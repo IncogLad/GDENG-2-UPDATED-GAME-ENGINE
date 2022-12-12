@@ -37,6 +37,6 @@ void ColorPicker::drawUI()
             ImGui::SameLine();
             //ImGui::ColorButton("Current", color, ImGuiColorEditFlags_NoPicker | ImGuiColorEditFlags_AlphaPreviewHalf, ImVec2(60, 40));
         }
-        ImGui::End(); \
+        ImGui::End(); 
     }
 }

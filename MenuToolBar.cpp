@@ -1,5 +1,7 @@
 #include "MenuToolBar.h"
 
+#include "GameObjectManager.h"
+#include "JsonParser.h"
 #include "UISystem.h"
 #include "imgui/imgui.h"
 
@@ -70,7 +72,28 @@ void MenuToolBar::drawUI()
     {
         if (ImGui::BeginMenu("File"))
         {
-
+            if (ImGui::MenuItem("Save Scene"))
+            {
+                JsonParser::getInstance()->saveScene();
+            }
+            if (ImGui::MenuItem("Load Scene"))
+            {
+                JsonParser::getInstance()->loadScene();
+            }
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Game Object"))
+        {
+            if (UISystem::getInstance()->uiTable["OBJECT_SPAWN_PANEL"]->open == true)
+            {
+                UISystem::getInstance()->uiTable["OBJECT_SPAWN_PANEL"]->open = false;
+            }
+            else
+            {
+                UISystem::getInstance()->uiTable["OBJECT_SPAWN_PANEL"]->open = true;
+            }
+            
+            ImGui::EndMenu();
         }
     	if (ImGui::BeginMenu("Viewports"))
         {

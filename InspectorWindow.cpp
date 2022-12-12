@@ -73,7 +73,8 @@ void InspectorWindow::drawUI()
         }
 		if(ImGui::DragFloat3("Rotation", rotation))
         {
-            SelectedObject->setRotation(rotation[0], rotation[1], rotation[2]);
+            Vector3D rot = Vector3D(rotation[0], rotation[1], rotation[2]);
+            SelectedObject->setRotation(rot);
         }
 
         ImGui::Separator();

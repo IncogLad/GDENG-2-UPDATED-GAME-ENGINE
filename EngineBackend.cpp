@@ -23,11 +23,11 @@ void EngineBackend::setMode(EditorMode mode)
 	this->editorMode = mode;
 	if (this->editorMode == EditorMode::PLAY)
 	{
-		GameObjectManager::getInstance()->saveEditStates();
+		//GameObjectManager::getInstance()->saveEditStates();
 	}
 	else if (this->editorMode == EditorMode::EDITOR)
 	{
-		GameObjectManager::getInstance()->restoreEditStates();
+		//GameObjectManager::getInstance()->restoreEditStates();
 	}
 }
 

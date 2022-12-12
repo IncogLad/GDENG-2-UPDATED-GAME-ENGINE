@@ -125,6 +125,16 @@ void AGameObject::setSelected(bool value)
 	isSelected = value;
 }
 
+void AGameObject::setTag(std::string tag)
+{
+	this->tag = tag;
+}
+
+std::string AGameObject::getTag()
+{
+	return this->tag;
+}
+
 void AGameObject::attachComponent(AComponent* component)
 {
 	component->attachOwner(this);

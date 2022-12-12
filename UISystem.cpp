@@ -11,6 +11,7 @@
 #include "InspectorWindow.h"
 #include "TextureManager.h"
 #include "MenuToolBar.h"
+#include "ObjectSpawnPanel.h"
 #include "PerspectiveView.h"
 #include "SceneEditor.h"
 #include "TopdownView.h"
@@ -93,6 +94,11 @@ void UISystem::initImGUI(HWND hwnd)
     InspectorWindow* inspector_window = new InspectorWindow();
     uiTable[uiNames.INSPECTOR_WINDOW] = inspector_window;
     uiList.push_back(inspector_window);
+
+    ObjectSpawnPanel* object_spawn_panel = new ObjectSpawnPanel();
+    uiTable[uiNames.OBJECT_SPAWN_PANEL] = object_spawn_panel;
+    uiList.push_back(object_spawn_panel);
+
 
 }
 

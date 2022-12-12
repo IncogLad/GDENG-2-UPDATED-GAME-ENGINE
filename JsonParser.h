@@ -12,11 +12,13 @@ public:
 	static JsonParser* getInstance();
 	static void destroy();
 	
-	void update();
-	
+	 void saveScene();
+	 void loadScene();
 
 private:
 	static JsonParser* sharedInstance;
+
+	
 
 
 };
