@@ -2,6 +2,7 @@
 
 #include "BaseComponentSystem.h"
 #include "PhysicsSystem.h"
+#include "EditorAction.h"
 
 void AGameObject::initialize(std::string name)
 {
@@ -204,4 +205,25 @@ AGameObject::ComponentList AGameObject::getComponentsOfTypeRecursive(AComponent:
 	}
 
 	return component_list;
+}
+
+void AGameObject::saveEditState()
+{
+	if (this->lastEditState == nullptr)
+	{
+		this->lastEditState = new EditorAction(this);
+	}
+}
+
+void AGameObject::restoreEditState()
+{
+	if (this->lastEditState != nullptr)
+	{
+		this->setPosition(lastEditState->getStorePos());
+		this->setRotation(lastEditState->getStoredRotation());
+		this->setScale(lastEditState->getStoredScale());
+		this->setLocalMatrix(lastEditState->getStoredMatrix());
+
+		this->lastEditState = nullptr;
+	}
 }

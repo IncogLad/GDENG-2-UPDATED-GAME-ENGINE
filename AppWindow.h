@@ -32,6 +32,8 @@ public:
 	virtual void onRightMouseDown(const Point& mouse_pos) override;
 	virtual void onRightMouseUp(const Point& mouse_pos) override;
 
+	SwapChain* getSwapChain();
+
 private:
 	static AppWindow* sharedInstance;
 	

@@ -255,6 +255,15 @@
     <ClCompile Include="PlaybackScreen.cpp">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClCompile>
+    <ClCompile Include="EditorAction.cpp">
+      <Filter>GameEngine\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionHistory.cpp">
+      <Filter>GameEngine\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionsScreen.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -445,6 +454,15 @@
       <Filter>GameEngine\Backend</Filter>
     </ClInclude>
     <ClInclude Include="PlaybackScreen.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorAction.h">
+      <Filter>GameEngine\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionHistory.h">
+      <Filter>GameEngine\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionsScreen.h">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClInclude>
   </ItemGroup>

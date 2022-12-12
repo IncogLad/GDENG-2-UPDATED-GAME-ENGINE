@@ -7,6 +7,7 @@
 #include "Matrix4x4.h"
 #include "Vector3D.h"
 
+
 struct vertex
 {
 	Vector3D position;
@@ -38,6 +39,7 @@ __declspec(align(16)) struct constant
 };
 
 class AComponent;
+class EditorAction;
 
 class AGameObject
 {
@@ -80,6 +82,9 @@ public:
 	ComponentList getComponentsOfType(AComponent::ComponentType type);
 	ComponentList getComponentsOfTypeRecursive(AComponent::ComponentType type);
 
+	void saveEditState();
+	void restoreEditState();
+
 private:
 
 protected:
@@ -96,5 +101,6 @@ protected:
 	ComponentList component_list_;
 	ComponentTable component_table_;
 
+	EditorAction* lastEditState = nullptr;
 };
 

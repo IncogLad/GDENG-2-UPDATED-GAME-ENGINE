@@ -39,6 +39,10 @@ public:
 	std::list<Mesh*> getMeshList();
 	Mesh* getMeshByName(std::string name);
 
+	void saveEditStates();
+	void restoreEditStates();
+
+	void updateAll();
 	
 private:
 	static GameObjectManager* sharedInstance;
