@@ -17,6 +17,7 @@
 #include "WireframeView.h"
 #include "PlaybackScreen.h"
 #include "ActionsScreen.h"
+#include "ObjectSpawnPanel.h"
 
 UISystem* UISystem::sharedInstance = nullptr;
 
@@ -103,6 +104,10 @@ void UISystem::initImGUI(HWND hwnd)
 	ActionsScreen* actions_screen = new ActionsScreen();
     uiTable[uiNames.ACTIONS_SCREEN] = actions_screen;
     uiList.push_back(actions_screen);
+
+    ObjectSpawnPanel* object_spawn_panel = new ObjectSpawnPanel();
+    uiTable[uiNames.OBJECT_SPAWN_PANEL] = object_spawn_panel;
+    uiList.push_back(object_spawn_panel);
 }
 
 void UISystem::updateNewFrame()
