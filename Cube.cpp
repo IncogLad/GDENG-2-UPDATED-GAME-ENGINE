@@ -96,24 +96,24 @@ void Cube::initBuffers(int num = 0)
 	{
 		//X - Y - Z
 		//FRONT FACE
-		{Vector3D(-1.0f,0.1f,-1.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{Vector3D(-1.0f,0.1f,-1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
-		{ Vector3D(1.0f,0.1f,-1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{ Vector3D(1.0f,0.1f,-1.0f),     Vector3D(1,1,1), Vector3D(1,1,1) },
+		{Vector3D(-5.0f,0.0f,-5.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{Vector3D(-5.0f,0.0f,-5.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(5.0f,0.0f,-5.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(5.0f,0.0f,-5.0f),     Vector3D(1,1,1), Vector3D(1,1,1) },
 
 		//BACK FACE
-		{ Vector3D(1.0f,0.1f,1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
-		{ Vector3D(1.0f,0.1f,1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
-		{ Vector3D(-1.0f,0.1f,1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{ Vector3D(-1.0f,0.1f,1.0f),     Vector3D(1,1,1), Vector3D(1,1,1) }
+		{ Vector3D(5.0f,0.0f,5.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(5.0f,0.0f,5.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(-5.0f,0.0f,5.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(-5.0f,0.0f,5.0f),     Vector3D(1,1,1), Vector3D(1,1,1) }
 
 	};
 
 	m_vb = GraphicsEngine::getInstance()->createVertexBuffer();
 	if (this->num == 0) {
-		UINT size_list = ARRAYSIZE(vertex_list);
+		UINT size_list = ARRAYSIZE(vertex_list_white_cube);
 		//std::cout << list->position.m_x << std::endl;
-		m_vb->load(vertex_list, sizeof(vertexCube), size_list, shaderByteCode, sizeShader);
+		m_vb->load(vertex_list_white_cube, sizeof(vertexCube), size_list, shaderByteCode, sizeShader);
 	}
 	else {
 		UINT size_list = ARRAYSIZE(plane_vertex_list);

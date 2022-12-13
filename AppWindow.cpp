@@ -71,12 +71,12 @@ void AppWindow::onCreate()
 
 	GraphicsEngine::getInstance()->createRenderTexture(rc.right - rc.left, rc.bottom - rc.top);
 	
-	GameObjectManager::getInstance()->initializeCube("cubetest0", 0);
-	GameObjectManager::getInstance()->initializeCube("cubetest1", 0);
-	GameObjectManager::getInstance()->initializeCube("cubetest2", 0);
+	//GameObjectManager::getInstance()->initializeCube("cubetest0", 0);
+	//GameObjectManager::getInstance()->initializeCube("cubetest1", 0);
+	//GameObjectManager::getInstance()->initializeCube("cubetest2", 0);
 
 	GameObjectManager::getInstance()->initializeCube("planetest", 1);
-	GameObjectManager::getInstance()->initializeMesh();
+	//GameObjectManager::getInstance()->initializeMesh();
 
 	//GameObjectManager::getInstance()->populateObjectList();
 	

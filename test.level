@@ -1,8 +1,52 @@
 {
-	"capsule" : 
+	"capsules" : 
 	[
 		{
 			"name" : "capsule0",
+			"position" : 
+			{
+				"x" : -6.0,
+				"y" : 0.0,
+				"z" : 0.0
+			},
+			"rigidBody" : false,
+			"rotation" : 
+			{
+				"x" : 0.0,
+				"y" : 0.0,
+				"z" : 0.0
+			},
+			"scale" : 
+			{
+				"x" : 1.0,
+				"y" : 1.0,
+				"z" : 1.0
+			}
+		},
+		{
+			"name" : "capsule1",
+			"position" : 
+			{
+				"x" : 19.0,
+				"y" : 22.0,
+				"z" : 0.0
+			},
+			"rigidBody" : false,
+			"rotation" : 
+			{
+				"x" : 0.0,
+				"y" : 0.0,
+				"z" : 0.0
+			},
+			"scale" : 
+			{
+				"x" : 1.0,
+				"y" : 1.0,
+				"z" : 1.0
+			}
+		},
+		{
+			"name" : "capsule2",
 			"position" : 
 			{
 				"x" : 0.0,
@@ -118,13 +162,13 @@
 			}
 		}
 	],
-	"sphere" : 
+	"spheres" : 
 	[
 		{
 			"name" : "sphere0",
 			"position" : 
 			{
-				"x" : 7.0,
+				"x" : 4.0,
 				"y" : 0.0,
 				"z" : 0.0
 			},
