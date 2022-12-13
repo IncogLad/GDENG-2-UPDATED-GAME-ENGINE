@@ -339,6 +339,11 @@ void GameObjectManager::initializeCube(std::string name, int num = 0)
 	cube->setTag("cube");
 	cube->initBuffers(num);
 	cube->initConstBuffers();
+	if (num == 0)
+	{
+		cube->attachComponent(new PhysicsComponent(cube->getName(), cube));
+
+	}
 	insertCube(cube);
 	cubeTable[name] = cube;
 	gameObjectList.push_back(cube);
