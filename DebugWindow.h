@@ -1,13 +1,14 @@
 #pragma once
-#include <json/json.h>
-
+#include "AUIScreen.h"
 #include "imgui/imgui.h"
 
-class JsonParser
+
+class DebugWindow : public AUIScreen
 {
 public:
-	JsonParser();
-	~JsonParser();
+	typedef std::string String;
+	DebugWindow();
+	~DebugWindow();
     struct ExampleAppLog
     {
         ImGuiTextBuffer     Buf;
@@ -130,21 +131,10 @@ public:
             ImGui::End();
         }
     };
+    void print(const std::string str, std::ostream& output);
 
-	static void initialize();
-	static JsonParser* getInstance();
-	static void destroy();
+    ExampleAppLog log;
 
-    static void ShowExampleAppLog(bool* p_open);
-	 void saveScene();
-	 void loadScene();
-	 void print(const std::string str, std::ostream& output);
-
-private:
-	static JsonParser* sharedInstance;
-
-	
-
-
+	void drawUI() override;
 };
 

@@ -1,0 +1,117 @@
+{
+	"cubes": [],
+	"spheres": [],
+	"capsules": [],
+	"planes": [
+		{
+			"name": "planetest",
+			"position":
+			{
+				"x": 3,
+				"y": 0,
+				"z": 0
+			},
+			"rotation":
+			{
+				"x": 3.1415927410125732,
+				"y": 3.1415927410125732,
+				"z": 1.5415927171707153
+			},
+			"scale":
+			{
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
+			"rigidBody": false
+		},
+		{
+			"name": "plane0",
+			"position":
+			{
+				"x": 0,
+				"y": 0,
+				"z": 4
+			},
+			"rotation":
+			{
+				"x": 1.6000000238418579,
+				"y": 0,
+				"z": 0
+			},
+			"scale":
+			{
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
+			"rigidBody": false
+		},
+		{
+			"name": "plane1",
+			"position":
+			{
+				"x": 0,
+				"y": 0,
+				"z": -5
+			},
+			"rotation":
+			{
+				"x": 1.6000000238418579,
+				"y": 0,
+				"z": 0
+			},
+			"scale":
+			{
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
+			"rigidBody": false
+		},
+		{
+			"name": "plane2",
+			"position":
+			{
+				"x": -5,
+				"y": 0,
+				"z": 0
+			},
+			"rotation":
+			{
+				"x": 3.1415927410125732,
+				"y": 3.1415927410125732,
+				"z": 1.5415927171707153
+			},
+			"scale":
+			{
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
+			"rigidBody": false
+		},
+		{
+			"name": "plane3",
+			"position":
+			{
+				"x": 0,
+				"y": -5,
+				"z": 0
+			},
+			"rotation":
+			{
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale":
+			{
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
+			"rigidBody": false
+		}
+	]
+}

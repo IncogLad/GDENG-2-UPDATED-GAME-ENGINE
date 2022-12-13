@@ -5,6 +5,7 @@
 
 #include "AUIScreen.h"
 #include "Texture.h"
+#include "DebugWindow.h"
 
 
 typedef std::string String;
@@ -38,6 +39,8 @@ public:
 	
 	const String PLAYBACK_SCREEN = "PLAYBACK_SCREEN";
 	const String ACTIONS_SCREEN = "ACTIONS_SCREEN";
+
+	const String DEBUG_WINDOW = "DEBUG_WINDOW";
 };
 
 
@@ -54,7 +57,7 @@ public:
 	void updateNewFrame();
 	void update();
 	void initImGUI(HWND hwnd);
-
+	void UpdateDebugWindow(const std::string str);
 	static const int WINDOW_HEIGHT = 900;
 	static const int WINDOW_WIDTH = 1440;
 
@@ -77,5 +80,6 @@ private:
 	friend class WireframeView;
 	friend class InspectorWindow;
 	friend class SceneEditor;
+	friend class DebugWindow;
 };
 

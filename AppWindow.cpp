@@ -246,6 +246,8 @@ void AppWindow::onRightMouseUp(const Point& mouse_pos)
 {
 }
 
+
+
 SwapChain* AppWindow::getSwapChain()
 {
 	return m_swap_chain;

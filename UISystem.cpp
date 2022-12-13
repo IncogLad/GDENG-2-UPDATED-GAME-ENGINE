@@ -1,6 +1,8 @@
 #include "UISystem.h"
 #include "UISystem.h"
 
+#include <iostream>
+
 #include "ColorPicker.h"
 #include "CreditsScreen.h"
 #include "GameView.h"
@@ -108,6 +110,11 @@ void UISystem::initImGUI(HWND hwnd)
     ObjectSpawnPanel* object_spawn_panel = new ObjectSpawnPanel();
     uiTable[uiNames.OBJECT_SPAWN_PANEL] = object_spawn_panel;
     uiList.push_back(object_spawn_panel);
+
+    DebugWindow* console = new DebugWindow();
+    uiTable[uiNames.DEBUG_WINDOW] = console;
+    uiList.push_back(console);
+
 }
 
 void UISystem::updateNewFrame()
@@ -153,3 +160,8 @@ void UISystem::destroy()
     ImGui::DestroyContext();
     delete sharedInstance;
 } 
+void UISystem::UpdateDebugWindow(const std::string str)
+{
+    
+    static_cast<DebugWindow*>(uiTable["DEBUG_WINDOW"])->print(str, std::cout);
+}

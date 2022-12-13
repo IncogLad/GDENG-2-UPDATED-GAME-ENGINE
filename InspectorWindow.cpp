@@ -92,3 +92,4 @@ void InspectorWindow::drawUI()
     ImGui::End();
 
 }
+
