@@ -47,6 +47,58 @@ void InspectorWindow::drawUI()
         ImGui::Text(SelectedObject->getName().c_str());
         ImGui::Separator();
 
+        ImGui::Text("Enable/Disable Object");
+        if (ImGui::Checkbox("Yes", &enableCheckBox))
+        {
+            if (SelectedObject->getTag() == "cube")
+            {
+	            objectType = cube;
+            }
+            else if (SelectedObject->getTag() == "sphere" || SelectedObject->getTag() == "capsule")
+            {
+	            objectType = mesh;
+            }
+
+            enableCheckBox = true;
+            disableCheckBox = false;
+
+            if (objectType == cube)
+            {
+	            GameObjectManager::getInstance()->enableCubes(SelectedObject->getName());
+            }
+            else
+            {
+	            GameObjectManager::getInstance()->enableMeshes(SelectedObject->getName());
+            }
+        }
+    	else if (ImGui::Checkbox("No", &disableCheckBox))
+        {
+            if (SelectedObject->getTag() == "cube")
+            {
+	            objectType = cube;
+            }
+            else if (SelectedObject->getTag() == "sphere" || SelectedObject->getTag() == "capsule")
+            {
+	            objectType = mesh;
+
+            }
+
+            enableCheckBox = false;
+            disableCheckBox = true;
+
+            if (objectType == cube)
+            {
+	            GameObjectManager::getInstance()->disableCubes(SelectedObject->getName());
+            }
+            else
+            {
+	            GameObjectManager::getInstance()->disableMesh(SelectedObject->getName());
+            }
+            std::cout << SelectedObject << std::endl;
+        }
+
+        ImGui::Separator();
+
         ImGui::Text("Transform");
         position[0] = SelectedObject->getLocalPosition().m_x;
         position[1] = SelectedObject->getLocalPosition().m_y;
@@ -65,18 +117,18 @@ void InspectorWindow::drawUI()
 
         if (ImGui::DragFloat3("Position", position))
         {
-            SelectedObject->setPosition(position[0], position[1], position[2]);
-            ActionHistory::getInstance()->recordAction(this->SelectedObject);
+        	ActionHistory::getInstance()->recordAction(this->SelectedObject);
+        	SelectedObject->setPosition(position[0], position[1], position[2]);
         }
         if (ImGui::DragFloat3("Scale", scale))
         {
-	        SelectedObject->setScale(scale[0], scale[1], scale[2]);
             ActionHistory::getInstance()->recordAction(this->SelectedObject);
+	        SelectedObject->setScale(scale[0], scale[1], scale[2]);
         }
 		if(ImGui::DragFloat3("Rotation", rotation))
         {
-            SelectedObject->setRotation(rotation[0], rotation[1], rotation[2]);
             ActionHistory::getInstance()->recordAction(this->SelectedObject);
+            SelectedObject->setRotation(rotation[0], rotation[1], rotation[2]);
         }
 
         ImGui::Separator();
@@ -86,7 +138,6 @@ void InspectorWindow::drawUI()
         {
             PhysicsComponent* physics_component =  new PhysicsComponent(SelectedObject->getName(),SelectedObject);
         }
-
     }
     
     ImGui::End();

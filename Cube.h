@@ -19,6 +19,9 @@ public:
 	void draw() override;
 	void releaseBuffers();
 
+	bool getEnabled();
+	void setEnabled(bool enable);
+
 	void updatePosition();
 
 private:
@@ -34,6 +37,7 @@ private:
 	bool i_trans;
 	bool i_scale;
 
+	bool isEnabled = true;
 
 	int num = 0;
 

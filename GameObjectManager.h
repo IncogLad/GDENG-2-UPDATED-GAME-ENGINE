@@ -46,6 +46,12 @@ public:
 	std::list<Mesh*> getMeshList();
 	Mesh* getMeshByName(std::string name);
 
+	void enableCubes(std::string name);
+	void enableMeshes(std::string name);
+
+	void disableCubes(std::string name);
+	void disableMesh(std::string name);
+
 	void saveEditStates();
 	void restoreEditStates();
 

@@ -5,6 +5,7 @@
 class InspectorWindow : public AUIScreen
 {
 public:
+	enum ObjectType { cube = 0, mesh = 1};
 	typedef std::string String;
 	InspectorWindow();
 	~InspectorWindow();
@@ -15,7 +16,11 @@ public:
 
 private:
 	bool hasObjectSelected;
-	
+
+	ObjectType objectType;
+	bool enableCheckBox = true;
+	bool disableCheckBox = false;
+
 	AGameObject* SelectedObject;
 
 	friend class SceneEditor;

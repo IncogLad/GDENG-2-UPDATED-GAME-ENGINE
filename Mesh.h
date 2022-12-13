@@ -23,6 +23,9 @@ public:
 	MeshVertexBuffer* getVertexBuffer();
 	IndexBuffer* getIndexBuffer();
 
+	bool getEnabled();
+	void setEnabled(bool enable);
+
 private:
 	MeshVertexBuffer* m_vertex_buffer;
 	IndexBuffer* m_index_buffer;
@@ -35,6 +38,8 @@ private:
 	Vector3D scaling;
 	bool i_trans;
 	bool i_scale;
+
+	bool isEnabled = true;
 
 	Texture* brick_tex;
 private:
