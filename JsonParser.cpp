@@ -166,7 +166,7 @@ void JsonParser::saveScene()
 
 	std::ofstream myfile;
 	//filepath
-	myfile.open("test.txt");
+	myfile.open("test.level");
 	//writing it to file
 	myfile << json_file;
 	myfile.close();
