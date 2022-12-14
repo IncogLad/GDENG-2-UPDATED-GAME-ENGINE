@@ -264,6 +264,9 @@
     <ClCompile Include="DebugWindow.cpp">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClCompile>
+    <ClCompile Include="TextureLibrary.cpp">
+      <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -464,6 +467,9 @@
     <ClInclude Include="EditorAction.h" />
     <ClInclude Include="DebugWindow.h">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureLibrary.h">
+      <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

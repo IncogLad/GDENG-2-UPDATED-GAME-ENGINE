@@ -25,6 +25,15 @@ private:
 	bool isKinematic = false;
 	bool isStatic = false;
 
+	bool brickCheckBox = false;
+	bool wallCheckBox = false;
+	bool woodCheckBox = false;
+	bool grassCheckBox = false;
+	bool asteroidCheckBox = false;
+	bool sandCheckBox = false;
+
+	String textureName;
+
 	AGameObject* SelectedObject;
 
 	friend class SceneEditor;

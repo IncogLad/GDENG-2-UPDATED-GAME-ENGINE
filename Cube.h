@@ -21,6 +21,8 @@ public:
 
 	void updatePosition();
 
+	void CheckShader();
+
 private:
 	VertexBuffer* m_vb;
 	ConstantBuffer* m_cb;
@@ -33,6 +35,7 @@ private:
 	Vector3D scaling;
 	bool i_trans;
 	bool i_scale;
+
 
 	int num = 0;
 

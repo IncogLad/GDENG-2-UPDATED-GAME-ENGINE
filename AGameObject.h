@@ -5,6 +5,7 @@
 
 #include "AComponent.h"
 #include "Matrix4x4.h"
+#include "Texture.h"
 #include "Vector3D.h"
 
 
@@ -91,6 +92,11 @@ public:
 	bool getActive();
 	void setActive(bool isActive);
 
+	bool getTextureStatus();
+	void setTextureStatus(bool status);
+
+	void setDedicatedTexture(String name);
+
 private:
 
 protected:
@@ -108,6 +114,10 @@ protected:
 
 	ComponentList component_list_;
 	ComponentTable component_table_;
+
+	Texture* dedicatedTex;
+
+	bool hasTexture = false;
 
 	EditorAction* lastEditState = nullptr;
 };

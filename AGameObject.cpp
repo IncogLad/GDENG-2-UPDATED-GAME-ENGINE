@@ -4,6 +4,7 @@
 #include "PhysicsSystem.h"
 #include "EditorAction.h"
 #include "PhysicsComponent.h"
+#include "TextureLibrary.h"
 #include "reactphysics3d/reactphysics3d.h"
 
 void AGameObject::initialize(std::string name)
@@ -251,4 +252,19 @@ bool AGameObject::getActive()
 void AGameObject::setActive(bool isActive)
 {
 	this->isActive = isActive;
+}
+
+bool AGameObject::getTextureStatus()
+{
+	return this->hasTexture;
+}
+
+void AGameObject::setTextureStatus(bool status)
+{
+	this->hasTexture = status;
+}
+
+void AGameObject::setDedicatedTexture(String name)
+{
+	this->dedicatedTex = TextureLibrary::getInstance()->getTextureByName(name);
 }

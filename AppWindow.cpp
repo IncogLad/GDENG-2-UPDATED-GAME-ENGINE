@@ -17,6 +17,7 @@
 #include "EngineBackend.h"
 #include "ActionHistory.h"
 #include "JsonParser.h"
+#include "TextureLibrary.h"
 
 AppWindow* AppWindow::sharedInstance = nullptr;
 
@@ -56,6 +57,7 @@ void AppWindow::onCreate()
 	GraphicsEngine::getInstance()->initialize();
 	
 	CameraHandler::initialize();
+	TextureLibrary::initialize();
 	
 	UISystem::initialize();
 
@@ -76,7 +78,7 @@ void AppWindow::onCreate()
 	//GameObjectManager::getInstance()->initializeCube("cubetest2", 0);
 
 	GameObjectManager::getInstance()->initializeCube("planetest", 1);
-	//GameObjectManager::getInstance()->initializeMesh();
+	GameObjectManager::getInstance()->initializeMesh();
 
 	//GameObjectManager::getInstance()->populateObjectList();
 	
@@ -84,6 +86,7 @@ void AppWindow::onCreate()
 	//GameObjectManager::getInstance()->initializeCubeConst();
 
 	JsonParser::initialize();
+
 	
 	EngineBackend::getInstance()->initialize();
 	ActionHistory::getInstance()->initialize();

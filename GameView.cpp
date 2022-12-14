@@ -24,7 +24,7 @@ void GameView::drawUI()
         {
             CameraHandler::getInstance()->setCurrentCamera("SCENE_CAMERA");
             CameraHandler::getInstance()->update();
-            UISystem::getInstance()->UpdateDebugWindow("lalal");
+            UISystem::getInstance()->UpdateDebugWindow("GameViewFocus");
             //std::cout << "lalal";
         }
         ImGui::End();

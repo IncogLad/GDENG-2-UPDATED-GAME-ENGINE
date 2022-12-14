@@ -13,6 +13,7 @@
 #include "DeviceContext.h"
 #include "EngineTime.h"
 #include "ShaderLibrary.h"
+#include "TextureLibrary.h"
 #include "TextureManager.h"
 
 Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
@@ -107,7 +108,7 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 	m_cb = GraphicsEngine::getInstance()->createConstantBuffer();
 	m_cb->load(&cc, sizeof(constant));
 
-	brick_tex = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(L"Assets\\Textures\\brick.png");
+	
 }
 
 
@@ -167,7 +168,7 @@ void Mesh::draw()
 	}
 	else
 	{
-		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPSTexture(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), brick_tex);
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPSTexture(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), TextureLibrary::getInstance()->getTextureByName("brick"));
 	}
 	
 

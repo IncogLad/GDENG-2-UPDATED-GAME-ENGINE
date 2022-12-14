@@ -124,7 +124,7 @@ void InspectorWindow::drawUI()
 
             ImGui::Separator();
 
-            ImGui::Text("Component");
+            ImGui::Text("Components");
             if (SelectedObject->getComponentsOfType(AComponent::Physics).empty())
             {
                 if (ImGui::Button("Add Physics Component"))
@@ -138,6 +138,7 @@ void InspectorWindow::drawUI()
             }
             else
             {
+                ImGui::Text("Rigidbody Types");
                 PhysicsComponent* physics_component = static_cast<PhysicsComponent*>(SelectedObject->findComponentByType(AComponent::Physics, SelectedObject->getName()));
                 if (physics_component->getRigidBody()->getType() == BodyType::DYNAMIC)
                 {
@@ -180,6 +181,70 @@ void InspectorWindow::drawUI()
                     isKinematic = true;
 
                     physics_component->setBodyType(BodyType::KINEMATIC);
+                }
+            }
+            ImGui::Separator();
+            if (!SelectedObject->getTextureStatus()) {
+                if (ImGui::Button("Add Texture Component"))
+                {
+                    if (enableCheckBox)
+                    {
+                        SelectedObject->setTextureStatus(true);
+                    }
+                }
+            }
+            else
+            {
+                ImGui::Text("Texture Types");
+                brickCheckBox = false;
+                wallCheckBox = false;
+                woodCheckBox = false;
+                grassCheckBox = false;
+                asteroidCheckBox = false;
+                sandCheckBox = false;
+
+                if (textureName == "brick")brickCheckBox = true;
+                if (textureName == "wall")wallCheckBox = true;
+                if (textureName == "wood")woodCheckBox = true;
+                if (textureName == "grass")grassCheckBox = true;
+                if (textureName == "asteroid")asteroidCheckBox = true;
+                if (textureName == "sand")sandCheckBox = true;
+
+                if (ImGui::Checkbox("Set Brick Texture", &brickCheckBox))
+                {
+                    brickCheckBox = true;
+                    textureName = "brick";
+                    this->SelectedObject->setDedicatedTexture(textureName);
+                }
+                if (ImGui::Checkbox("Set Grass Texture", &grassCheckBox))
+                {
+                    grassCheckBox = true;
+                    textureName = "grass";
+                    this->SelectedObject->setDedicatedTexture(textureName);
+                }
+                if (ImGui::Checkbox("Set Wood Texture", &woodCheckBox))
+                {
+                    woodCheckBox = true;
+                    textureName = "wood";
+                    this->SelectedObject->setDedicatedTexture(textureName);
+                }
+                if (ImGui::Checkbox("Set Wall Texture", &wallCheckBox))
+                {
+                    wallCheckBox = true;
+                    textureName = "wall";
+                    this->SelectedObject->setDedicatedTexture(textureName);
+                }
+                if (ImGui::Checkbox("Set Asteroid Texture", &asteroidCheckBox))
+                {
+                    asteroidCheckBox = true;
+                    textureName = "asteroid";
+                    this->SelectedObject->setDedicatedTexture(textureName);
+                }
+                if (ImGui::Checkbox("Set Sand Texture", &sandCheckBox))
+                {
+                    sandCheckBox = true;
+                    textureName = "sand";
+                    this->SelectedObject->setDedicatedTexture(textureName);
                 }
             }
         }

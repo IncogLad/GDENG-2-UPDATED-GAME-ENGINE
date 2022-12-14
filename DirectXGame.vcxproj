@@ -192,6 +192,7 @@
     <ClCompile Include="ShaderLibrary.cpp" />
     <ClCompile Include="SwapChain.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureLibrary.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TopdownView.cpp" />
     <ClCompile Include="UISystem.cpp" />
@@ -263,6 +264,7 @@
     <ClInclude Include="ShaderLibrary.h" />
     <ClInclude Include="SwapChain.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureLibrary.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TopdownView.h" />
     <ClInclude Include="UISystem.h" />
