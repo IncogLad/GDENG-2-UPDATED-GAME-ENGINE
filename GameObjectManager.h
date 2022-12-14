@@ -42,7 +42,7 @@ public:
 	std::list<AGameObject*> getGameObjectList();
 	std::unordered_map<std::string, AGameObject*> getGameObjectTable();
 
-	void initializeMesh();
+	void initializeMesh(std::string name);
 	std::list<Mesh*> getMeshList();
 	Mesh* getMeshByName(std::string name);
 

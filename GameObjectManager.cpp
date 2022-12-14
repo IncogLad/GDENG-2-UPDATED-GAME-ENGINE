@@ -191,31 +191,50 @@ std::unordered_map<std::string, AGameObject*> GameObjectManager::getGameObjectTa
 	return this->gameObjectTable;
 }
 
-void GameObjectManager::initializeMesh()
+void GameObjectManager::initializeMesh(std::string name)
 {
-	Mesh* mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\teapot.obj");
-	mesh->initialize("teapot");
-	meshList.push_back(mesh);
-	meshTable["teapot"] = mesh;
+	if (name == "teapot")
+	{
+			Mesh* mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\teapot.obj");
+		mesh->initialize(name);
+		meshList.push_back(mesh);
+		meshTable[name] = mesh;
 
-	gameObjectList.push_back(mesh);
-	gameObjectTable[mesh->getName()] = mesh;
+		gameObjectList.push_back(mesh);
+		gameObjectTable[mesh->getName()] = mesh;
+	}
 
-	Mesh* mesh1 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\armadillo.obj");
-	mesh1->initialize("armadillo");
-	meshList.push_back(mesh1);
-	meshTable["armadillo"] = mesh1;
 
-	gameObjectList.push_back(mesh1);
-	gameObjectTable[mesh1->getName()] = mesh1;
-	
-	Mesh* mesh2 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\bunny.obj");
-	mesh2->initialize("bunny");
-	meshList.push_back(mesh2);
-	meshTable["bunny"] = mesh2;
+	if (name == "armadillo")
+	{
+		Mesh* mesh1 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\armadillo.obj");
+		mesh1->initialize(name);
+		meshList.push_back(mesh1);
+		meshTable[name] = mesh1;
 
-	gameObjectList.push_back(mesh2);
-	gameObjectTable[mesh2->getName()] = mesh2;
+		gameObjectList.push_back(mesh1);
+		gameObjectTable[mesh1->getName()] = mesh1;
+	}
+	else if (name == "bunny")
+	{
+		Mesh* mesh2 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\bunny.obj");
+		mesh2->initialize(name);
+		meshList.push_back(mesh2);
+		meshTable[name] = mesh2;
+
+		gameObjectList.push_back(mesh2);
+		gameObjectTable[mesh2->getName()] = mesh2;
+	}
+	else if (name == "lucy")
+	{
+		Mesh* mesh3 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\statue.obj");
+		mesh3->initialize(name);
+		meshList.push_back(mesh3);
+		meshTable[name] = mesh3;
+
+		gameObjectList.push_back(mesh3);
+		gameObjectTable[mesh3->getName()] = mesh3;
+	}
 
 	/*PhysicsComponent* physics_component = new PhysicsComponent(mesh->getName(), mesh);
 	mesh->attachComponent(physics_component);
