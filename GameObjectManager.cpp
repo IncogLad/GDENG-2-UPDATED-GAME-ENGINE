@@ -4,6 +4,7 @@
 #include "PhysicsComponent.h"
 #include "CameraHandler.h"
 #include "RenderTexture.h"
+#include "UISystem.h"
 
 GameObjectManager* GameObjectManager::sharedInstance = nullptr;
 
@@ -236,50 +237,6 @@ Mesh* GameObjectManager::getMeshByName(std::string name)
 	return meshTable[name];
 }
 
-void GameObjectManager::enableCubes(std::string name)
-{
-	for (auto cube : cubeList)
-	{
-		if (cube->getName() == name)
-		{
-			cube->setEnabled(true);
-		}
-	}
-}
-
-void GameObjectManager::enableMeshes(std::string name)
-{
-		for (auto mesh : meshList)
-	{
-		if (mesh->getName() == name)
-		{
-			mesh->setEnabled(true);
-		}
-	}
-}
-
-void GameObjectManager::disableCubes(std::string name)
-{
-	for (auto cube : cubeList)
-	{
-		if (cube->getName() == name)
-		{
-			cube->setEnabled(false);
-		}
-	}
-}
-
-void GameObjectManager::disableMesh(std::string name)
-{
-	for (auto mesh : meshList)
-	{
-		if (mesh->getName() == name)
-		{
-			mesh->setEnabled(false);
-		}
-	}
-}
-
 void GameObjectManager::saveEditStates()
 {
 	for (auto const& gameObj : gameObjectList)
@@ -293,6 +250,40 @@ void GameObjectManager::restoreEditStates()
 	for (auto const& gameObj : gameObjectList)
 	{
 		gameObj->restoreEditState();
+	}
+}
+
+void GameObjectManager::deleteObject(AGameObject* gameObject)
+{
+	if (gameObject->getTag() == "cube" || gameObject->getTag() == "plane")
+	{
+		for (auto cube : cubeList)
+		{
+			if (cube->getName() == gameObject->getName())
+			{
+				cubeList.remove(cube);
+				gameObjectList.remove(cube);
+				break;
+			}
+		}
+
+		cubeTable.erase(gameObject->getName());
+		gameObjectTable.erase(gameObject->getName());
+	}
+	else if (gameObject->getTag() == "sphere" || gameObject->getTag() == "capsule")
+	{
+		for (auto mesh : meshList)
+		{
+			if (mesh->getName() == gameObject->getName())
+			{
+				meshList.remove(mesh);
+				gameObjectList.remove(mesh);
+				break;
+			}
+		}
+
+		meshTable.erase(gameObject->getName());
+		gameObjectTable.erase(gameObject->getName());
 	}
 }
 
@@ -312,7 +303,7 @@ void GameObjectManager::updateAll()
 
 		for (auto const& i : GameObjectManager::getInstance()->getCubeList()) {
 			//std::cout << i->getName() << std::endl;
-			if (i->getEnabled())
+			if (i->getActive())
 			{
 				//std::cout << i->getEnabled() << std::endl;
 				i->draw();
@@ -321,7 +312,7 @@ void GameObjectManager::updateAll()
 
 		for (auto const& i : GameObjectManager::getInstance()->getMeshList()) {
 			//std::cout<<i->getName() << std::endl;
-			if (i->getEnabled())
+			if (i->getActive())
 			{
 				i->draw();
 			}

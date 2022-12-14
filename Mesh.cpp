@@ -245,13 +245,3 @@ IndexBuffer* Mesh::getIndexBuffer()
 {
 	return m_index_buffer;
 }
-
-bool Mesh::getEnabled()
-{
-	return isEnabled;
-}
-
-void Mesh::setEnabled(bool enable)
-{
-	isEnabled = enable;
-}
