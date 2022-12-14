@@ -121,6 +121,8 @@ void Mesh::initialize(std::string name)
 	AGameObject::initialize(name);
 	this->name = name;
 	this->tag = "mesh";
+	this->hasTexture = true;
+	setDedicatedTexture("brick");
 	translation = getLocalPosition();
 	scaling = getLocalScale();
 	if (name == "bunny")
@@ -168,9 +170,10 @@ void Mesh::draw()
 	}
 	else
 	{
-		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPSTexture(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), TextureLibrary::getInstance()->getTextureByName("brick"));
+		
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPSTexture(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), dedicatedTex);
+		
 	}
-	
 
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexBuffer(m_vertex_buffer);
