@@ -2,8 +2,9 @@
 #include "AppWindow.h"
 #include "MeshManager.h"
 #include "PhysicsComponent.h"
-#include "SwapChain.h"
-
+#include "CameraHandler.h"
+#include "RenderTexture.h"
+#include "UISystem.h"
 
 GameObjectManager* GameObjectManager::sharedInstance = nullptr;
 
@@ -31,8 +32,12 @@ void GameObjectManager::initializeQuads(std::string name)
 	Quads* tempQuad = new Quads();
 	tempQuad->initialize(name);
 	tempQuad->initBuffers();
+	tempQuad->initConstBuffers();
 	insertQuads(tempQuad);
 	quadTable[name] = tempQuad;
+
+	gameObjectList.push_back(tempQuad);
+	gameObjectTable[tempQuad->getName()] = tempQuad;
 }
 
 void GameObjectManager::initializeQuadsAnim(std::string name)
@@ -40,8 +45,12 @@ void GameObjectManager::initializeQuadsAnim(std::string name)
 	Quads* tempQuad = new Quads();
 	tempQuad->initialize(name);
 	tempQuad->initAnimBuffers();
+	tempQuad->initConstBuffers();
 	insertQuads(tempQuad);
 	quadTable[name] = tempQuad;
+
+	gameObjectList.push_back(tempQuad);
+	gameObjectTable[tempQuad->getName()] = tempQuad;
 }
 
 void GameObjectManager::initializeQuadConst()
@@ -76,6 +85,83 @@ Cube* GameObjectManager::getCubeByName(std::string name)
 	return cubeTable[name];
 }
 
+void GameObjectManager::initializeSphere(std::string name)
+{
+	Mesh* sphere = new Mesh(*GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\sphere.obj"));
+	
+	sphere->initialize(name);
+	sphere->setTag("sphere");
+	meshList.push_back(sphere);
+	meshTable[name] = sphere;
+
+	gameObjectList.push_back(sphere);
+	gameObjectTable[sphere->getName()] = sphere;
+}
+
+void GameObjectManager::initializeCapsule(std::string name)
+{
+	Mesh* capsule = new Mesh(*GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\capsule.obj"));
+	capsule->initialize(name);
+	capsule->setTag("capsule");
+	meshList.push_back(capsule);
+	meshTable[capsule->getName()] = capsule;
+
+	gameObjectList.push_back(capsule);
+	gameObjectTable[capsule->getName()] = capsule;
+}
+
+void GameObjectManager::initializeSphereOnLoad(std::string name, Vector3D position, Vector3D scale, Vector3D rotation,
+                                               bool isRigidBody)
+{
+	Mesh* sphere = new Mesh(*GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\sphere.obj"));
+	sphere->initialize(name);
+	sphere->setTag("sphere");
+
+	sphere->setPosition(position);
+	sphere->setRotation(rotation);
+	sphere->setScale(scale);
+
+	if (isRigidBody)
+	{
+		PhysicsComponent* physics_component = new PhysicsComponent(sphere->getName(), sphere);
+		physics_component->getRigidBody()->setType(BodyType::DYNAMIC);
+		sphere->attachComponent(physics_component);
+	}
+
+
+	meshList.push_back(sphere);
+	meshTable[name] = sphere;
+	gameObjectList.push_back(sphere);
+	gameObjectTable[sphere->getName()] = sphere;
+	
+}
+
+void GameObjectManager::initializeCapsuleOnLoad(std::string name, Vector3D position, Vector3D scale, Vector3D rotation,
+	bool isRigidBody)
+{
+	Mesh* capsule = new Mesh(*GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\capsule.obj"));
+	capsule->initialize(name);
+	capsule->setTag("capsule");
+
+	capsule->setPosition(position);
+	capsule->setRotation(rotation);
+	capsule->setScale(scale);
+	//std::cout << "aaaaa" << std::endl;
+
+	if (isRigidBody)
+	{
+		PhysicsComponent* physics_component = new PhysicsComponent(capsule->getName(), capsule);
+		physics_component->getRigidBody()->setType(BodyType::DYNAMIC);
+		capsule->attachComponent(physics_component);
+	}
+
+	meshList.push_back(capsule);
+	meshTable[capsule->getName()] = capsule;
+
+	gameObjectList.push_back(capsule);
+	gameObjectTable[capsule->getName()] = capsule;
+}
+
 void GameObjectManager::populateObjectList()
 {
 	for (auto const& i : quadList) {
@@ -105,22 +191,50 @@ std::unordered_map<std::string, AGameObject*> GameObjectManager::getGameObjectTa
 	return this->gameObjectTable;
 }
 
-void GameObjectManager::initializeMesh()
+void GameObjectManager::initializeMesh(std::string name)
 {
-	Mesh* mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\teapot.obj");
-	mesh->initialize("teapot");
-	meshList.push_back(mesh);
-	meshTable["teapot"] = mesh;
+	if (name == "teapot")
+	{
+			Mesh* mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\teapot.obj");
+		mesh->initialize(name);
+		meshList.push_back(mesh);
+		meshTable[name] = mesh;
 
-	Mesh* mesh1 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\armadillo.obj");
-	mesh1->initialize("armadillo");
-	meshList.push_back(mesh1);
-	meshTable["armadillo"] = mesh1;
-	
-	Mesh* mesh2 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\bunny.obj");
-	mesh2->initialize("bunny");
-	meshList.push_back(mesh2);
-	meshTable["bunny"] = mesh2;
+		gameObjectList.push_back(mesh);
+		gameObjectTable[mesh->getName()] = mesh;
+	}
+
+
+	if (name == "armadillo")
+	{
+		Mesh* mesh1 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\armadillo.obj");
+		mesh1->initialize(name);
+		meshList.push_back(mesh1);
+		meshTable[name] = mesh1;
+
+		gameObjectList.push_back(mesh1);
+		gameObjectTable[mesh1->getName()] = mesh1;
+	}
+	else if (name == "bunny")
+	{
+		Mesh* mesh2 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\bunny.obj");
+		mesh2->initialize(name);
+		meshList.push_back(mesh2);
+		meshTable[name] = mesh2;
+
+		gameObjectList.push_back(mesh2);
+		gameObjectTable[mesh2->getName()] = mesh2;
+	}
+	else if (name == "lucy")
+	{
+		Mesh* mesh3 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\statue.obj");
+		mesh3->initialize(name);
+		meshList.push_back(mesh3);
+		meshTable[name] = mesh3;
+
+		gameObjectList.push_back(mesh3);
+		gameObjectTable[mesh3->getName()] = mesh3;
+	}
 
 	/*PhysicsComponent* physics_component = new PhysicsComponent(mesh->getName(), mesh);
 	mesh->attachComponent(physics_component);
@@ -142,21 +256,142 @@ Mesh* GameObjectManager::getMeshByName(std::string name)
 	return meshTable[name];
 }
 
+void GameObjectManager::saveEditStates()
+{
+	for (auto const& gameObj : gameObjectList)
+	{
+		gameObj->saveEditState();
+	}
+}
+
+void GameObjectManager::restoreEditStates()
+{
+	for (auto const& gameObj : gameObjectList)
+	{
+		gameObj->restoreEditState();
+	}
+}
+
+void GameObjectManager::deleteObject(AGameObject* gameObject)
+{
+	if (gameObject->getTag() == "cube" || gameObject->getTag() == "plane")
+	{
+		for (auto cube : cubeList)
+		{
+			if (cube->getName() == gameObject->getName())
+			{
+				cubeList.remove(cube);
+				gameObjectList.remove(cube);
+				break;
+			}
+		}
+
+		cubeTable.erase(gameObject->getName());
+		gameObjectTable.erase(gameObject->getName());
+	}
+	else if (gameObject->getTag() == "sphere" || gameObject->getTag() == "capsule")
+	{
+		for (auto mesh : meshList)
+		{
+			if (mesh->getName() == gameObject->getName())
+			{
+				meshList.remove(mesh);
+				gameObjectList.remove(mesh);
+				break;
+			}
+		}
+
+		meshTable.erase(gameObject->getName());
+		gameObjectTable.erase(gameObject->getName());
+	}
+}
+
+void GameObjectManager::updateAll()
+{
+	for (auto const& tempRT : GraphicsEngine::getInstance()->getRenderTextureList()) {
+		//std::cout << GraphicsEngine::getInstance()->getCurrentRenderedTexture()->getName() << std::endl;
+		GraphicsEngine::getInstance()->setCurrentRenderTexture(tempRT);
+		
+		CameraHandler::getInstance()->setCurrentCamera(tempRT->getName());
+		GraphicsEngine::getInstance()->RenderToTexture(AppWindow::getInstance()->getSwapChain());
+
+		//Draw Everything
+		for (auto const& i : GameObjectManager::getInstance()->getQuadList()) {
+			i->draw();
+		}
+
+		for (auto const& i : GameObjectManager::getInstance()->getCubeList()) {
+			//std::cout << i->getName() << std::endl;
+			if (i->getActive())
+			{
+				//std::cout << i->getEnabled() << std::endl;
+				i->draw();
+			}
+		}
+
+		for (auto const& i : GameObjectManager::getInstance()->getMeshList()) {
+			//std::cout<<i->getName() << std::endl;
+			if (i->getActive())
+			{
+				i->draw();
+			}
+		}
+
+
+		//CameraHandler::getInstance()->update();
+	}
+}
+
 void GameObjectManager::initializeCube(std::string name, int num = 0)
 {
 	Cube* cube = new Cube();
 	cube->initialize(name);
+	cube->setTag("cube");
 	cube->initBuffers(num);
-	/*PhysicsComponent* physics_component = new PhysicsComponent(cube->getName(), cube);
-	if (num == 1)
+	cube->initConstBuffers();
+	if (num == 0)
 	{
-		physics_component->getRigidBody()->setType(BodyType::KINEMATIC);
-		
+		cube->attachComponent(new PhysicsComponent(cube->getName(), cube));
+
 	}
-	cube->attachComponent(physics_component);*/
 	insertCube(cube);
 	cubeTable[name] = cube;
+	gameObjectList.push_back(cube);
+	gameObjectTable[cube->getName()] = cube;
+
 }
+
+void GameObjectManager::initializeCubeOnLoad(std::string name, int num, Vector3D position, Vector3D scale,
+	Vector3D rotation, bool isRigidBody)
+{
+	Cube* cube = new Cube();
+	cube->initialize(name);
+	cube->setTag("cube");
+	cube->initBuffers(num);
+	cube->initConstBuffers();
+
+	//cube->setRotation(rotation);
+	//cube->setScale(scale);
+
+	if (isRigidBody)
+	{
+		//PhysicsComponent* physics_component = new PhysicsComponent(cube->getName(), cube);
+		//physics_component->getRigidBody()->setType(BodyType::DYNAMIC);
+		cube->attachComponent(new PhysicsComponent(cube->getName(), cube));
+
+		//cube->attachComponent(physics_component);
+	}
+	cube->setPosition(position);
+
+	
+	insertCube(cube);
+	cubeTable[name] = cube;
+	gameObjectList.push_back(cube);
+	gameObjectTable[cube->getName()] = cube;
+}
+
+
+
 
 void GameObjectManager::initializeCubeConst()
 {

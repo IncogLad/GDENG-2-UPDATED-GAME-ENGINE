@@ -255,6 +255,18 @@
     <ClCompile Include="PlaybackScreen.cpp">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectSpawnPanel.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionHistory.cpp" />
+    <ClCompile Include="ActionsScreen.cpp" />
+    <ClCompile Include="EditorAction.cpp" />
+    <ClCompile Include="DebugWindow.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureLibrary.cpp">
+      <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -446,6 +458,18 @@
     </ClInclude>
     <ClInclude Include="PlaybackScreen.h">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectSpawnPanel.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionHistory.h" />
+    <ClInclude Include="ActionsScreen.h" />
+    <ClInclude Include="EditorAction.h" />
+    <ClInclude Include="DebugWindow.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureLibrary.h">
+      <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

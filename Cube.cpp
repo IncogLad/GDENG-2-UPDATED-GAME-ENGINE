@@ -10,6 +10,7 @@
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
 #include "CameraHandler.h"
+#include "EngineBackend.h"
 #include "PhysicsComponent.h"
 #include "ShaderLibrary.h"
 
@@ -20,6 +21,7 @@ Cube::Cube()
 
 Cube::~Cube()
 {
+	destroy();
 }
 
 void Cube::initialize(std::string name)
@@ -31,25 +33,8 @@ void Cube::initialize(std::string name)
 	scaling = getLocalScale();
 	i_scale = false;
 	i_trans = false;
-	if (name == "plane") {
-		setScale(Vector3D(50, 1, 50));
-		setPosition(Vector3D(0.0f, -3.0f, 0.0f));
-	}
-	if (name == "cube0")
-	{
-		setScale(Vector3D(1, 1, 1));
-		setPosition(Vector3D(0.0f, 2.0f, 0.0f));
-	}
-	if (name == "cube1")
-	{
-		setScale(Vector3D(1, 1, 1));
-		setPosition(Vector3D(-1.5f, 5.0f, 0));
-	}
-	if (name == "cube2")
-	{
-		setScale(Vector3D(1, 1, 1));
-		setPosition(Vector3D(-1.5f, 3.5f, -2.0f));
-	}
+
+	
 	
 }
 
@@ -60,6 +45,15 @@ void Cube::destroy()
 
 void Cube::initBuffers(int num = 0)
 {
+	if (num == 0)
+	{
+		this->tag = "cube";
+	}
+	else if (num == 1)
+	{
+		this->tag = "plane";
+	}
+
 	ShaderNames shader_names;
 	void* shaderByteCode = nullptr;
 	size_t sizeShader = 0;
@@ -104,16 +98,16 @@ void Cube::initBuffers(int num = 0)
 	{
 		//X - Y - Z
 		//FRONT FACE
-		{Vector3D(-1.0f,0.1f,-1.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{Vector3D(-1.0f,0.1f,-1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
-		{ Vector3D(1.0f,0.1f,-1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{ Vector3D(1.0f,0.1f,-1.0f),     Vector3D(1,1,1), Vector3D(1,1,1) },
+		{Vector3D(-10.0f,0.0f,-10.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{Vector3D(-10.0f,0.0f,-10.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(10.0f,0.0f,-10.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(10.0f,0.0f,-10.0f),     Vector3D(1,1,1), Vector3D(1,1,1) },
 
 		//BACK FACE
-		{ Vector3D(1.0f,0.1f,1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
-		{ Vector3D(1.0f,0.1f,1.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
-		{ Vector3D(-1.0f,0.1f,1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{ Vector3D(-1.0f,0.1f,1.0f),     Vector3D(1,1,1), Vector3D(1,1,1) }
+		{ Vector3D(10.0f,0.0f,10.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(10.0f,0.0f,10.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(-10.0f,0.0f,10.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(-10.0f,0.0f,10.0f),     Vector3D(1,1,1), Vector3D(1,1,1) }
 
 	};
 
@@ -166,24 +160,27 @@ void Cube::initConstBuffers()
 
 void Cube::draw()
 {
-	//std::cout << "Component " << component_list_[0]->getName() << std::endl;
-	ShaderNames shader_names;
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setRenderConfig
-	(
-		ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME), 
-		ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME)
-	);
+	////std::cout << "Component " << component_list_[0]->getName() << std::endl;
+	//ShaderNames shader_names;
+	//GraphicsEngine::getInstance()->getImmediateDeviceContext()->setRenderConfig
+	//(
+	//	ShaderLibrary::getInstance()->getVertexShader(shader_names.TEXTURED_VERTEX_SHADER_NAME), 
+	//	ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME)
+	//);
+
 
 	updatePosition();
+	CheckShader();
+	////SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
+	//GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexShader(ShaderLibrary::getInstance()->getVertexShader(shader_names.TEXTURED_VERTEX_SHADER_NAME));
+	//GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME));
 
 
-	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexShader(ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME));
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME));
+	//GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getVertexShader(shader_names.TEXTURED_VERTEX_SHADER_NAME), m_cb);
+	//GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), m_cb);
 
-
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME), m_cb);
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME), m_cb);
+	//if (dedicatedTex != nullptr)
+	//	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPSTexture(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), dedicatedTex);
 
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
@@ -211,24 +208,46 @@ void Cube::updatePosition()
 	
 	Matrix4x4 translationMatrix; translationMatrix.setIdentity(); translationMatrix.setTranslation(this->getLocalPosition());
 	Matrix4x4 scaleMatrix; scaleMatrix.setIdentity(); scaleMatrix.setScale(this->getLocalScale());
-
+	
 	//std::cout << this->name << ": " << localPosition.m_x << ", " << localPosition.m_y << ", " << localPosition.m_z << std::endl;
-	Matrix4x4 w_zMatrix; w_zMatrix.setIdentity();
-	w_zMatrix.setRotationZ(rotation.m_z);
-	allMatrix *= w_zMatrix;
+	
 
 	Matrix4x4 w_xMatrix; w_xMatrix.setIdentity();
-	w_xMatrix.setRotationX(rotation.m_x);
-	allMatrix *= w_xMatrix;
-
+	w_xMatrix.setRotationX(localRotation.m_x);
+	
 	Matrix4x4 w_yMatrix; w_yMatrix.setIdentity();
-	w_yMatrix.setRotationY(rotation.m_y);
-	allMatrix *= w_yMatrix;
+	w_yMatrix.setRotationY(localRotation.m_y);
+
+	Matrix4x4 w_zMatrix; w_zMatrix.setIdentity();
+	w_zMatrix.setRotationZ(localRotation.m_z);
+
 
 	allMatrix *= scaleMatrix;
+
+	allMatrix *= w_xMatrix;
+	allMatrix *= w_yMatrix;
+	allMatrix *= w_zMatrix;
+
 	allMatrix *= translationMatrix;
 	
 	cc.m_world = allMatrix;
+
+	if (!getComponentsOfType(AComponent::Physics).empty()) {
+		if (EngineBackend::getInstance()->getMode() == EngineBackend::EDITOR) {
+			Vector3D scale = this->getLocalScale();
+			Vector3D position = this->getLocalPosition();
+			Vector3D rotation = this->getLocalRotation();
+			Transform updatingTransform;
+			updatingTransform.setPosition(Vector3(position.m_x, position.m_y, position.m_z));
+			updatingTransform.setOrientation(Quaternion::fromEulerAngles(Vector3(rotation.m_x, rotation.m_y, rotation.m_z)));
+
+
+			PhysicsComponent* physics_component = static_cast<PhysicsComponent*>(this->findComponentByType(AComponent::Physics, this->getName()));
+			physics_component->setTransform(updatingTransform);
+			physics_component->getRigidBody()->setTransform(updatingTransform);
+			
+		}
+	}
 
 	//VIEW MATRIX
 	cc.m_view.setIdentity();
@@ -252,4 +271,46 @@ void Cube::updatePosition()
 
 	m_cb->update(GraphicsEngine::getInstance()->getImmediateDeviceContext(), &cc);
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setRasterizerState(CameraHandler::getInstance()->getCurrentCamera()->m_rs);
+}
+
+void Cube::CheckShader()
+{
+	ShaderNames shader_names;
+	
+
+	if(hasTexture)
+	{
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setRenderConfig
+		(
+			ShaderLibrary::getInstance()->getVertexShader(shader_names.TEXTURED_VERTEX_SHADER_NAME),
+			ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME)
+		);
+
+		//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexShader(ShaderLibrary::getInstance()->getVertexShader(shader_names.TEXTURED_VERTEX_SHADER_NAME));
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME));
+
+
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getVertexShader(shader_names.TEXTURED_VERTEX_SHADER_NAME), m_cb);
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), m_cb);
+
+		if (dedicatedTex != nullptr)
+			GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPSTexture(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), dedicatedTex);
+	}
+	else
+	{
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setRenderConfig
+		(
+			ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME),
+			ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME)
+		);
+
+		//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setVertexShader(ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME));
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPixelShader(ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME));
+
+
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getVertexShader(shader_names.BASE_VERTEX_SHADER_NAME), m_cb);
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(ShaderLibrary::getInstance()->getPixelShader(shader_names.BASE_PIXEL_SHADER_NAME), m_cb);
+	}
 }

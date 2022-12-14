@@ -5,7 +5,7 @@
 
 using namespace reactphysics3d;
 
-class PhysicsComponent: public AComponent
+class PhysicsComponent : public AComponent
 {
 public:
 	PhysicsComponent(String name, AGameObject* owner);

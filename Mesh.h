@@ -36,7 +36,7 @@ private:
 	bool i_trans;
 	bool i_scale;
 
-	Texture* brick_tex;
+
 private:
 	friend class DeviceContext;
 };

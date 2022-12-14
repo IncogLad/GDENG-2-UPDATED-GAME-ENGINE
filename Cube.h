@@ -21,6 +21,8 @@ public:
 
 	void updatePosition();
 
+	void CheckShader();
+
 private:
 	VertexBuffer* m_vb;
 	ConstantBuffer* m_cb;

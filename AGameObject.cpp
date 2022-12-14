@@ -2,6 +2,10 @@
 
 #include "BaseComponentSystem.h"
 #include "PhysicsSystem.h"
+#include "EditorAction.h"
+#include "PhysicsComponent.h"
+#include "TextureLibrary.h"
+#include "reactphysics3d/reactphysics3d.h"
 
 void AGameObject::initialize(std::string name)
 {
@@ -35,7 +39,10 @@ void AGameObject::initialize(std::string name)
 
 void AGameObject::destroy()
 {
-
+	//this->localPosition = nullptr;
+	//this->localRotation = nullptr;
+	//this->localScale = nullptr;
+	delete this;
 }
 
 void AGameObject::draw()
@@ -125,6 +132,16 @@ void AGameObject::setSelected(bool value)
 	isSelected = value;
 }
 
+void AGameObject::setTag(std::string tag)
+{
+	this->tag = tag;
+}
+
+std::string AGameObject::getTag()
+{
+	return this->tag;
+}
+
 void AGameObject::attachComponent(AComponent* component)
 {
 	component->attachOwner(this);
@@ -204,4 +221,50 @@ AGameObject::ComponentList AGameObject::getComponentsOfTypeRecursive(AComponent:
 	}
 
 	return component_list;
+}
+
+void AGameObject::saveEditState()
+{
+	if (this->lastEditState == nullptr)
+	{
+		this->lastEditState = new EditorAction(this);
+	}
+}
+
+void AGameObject::restoreEditState()
+{
+	if (this->lastEditState != nullptr)
+	{
+		this->setPosition(lastEditState->getStorePos());
+		this->setRotation(lastEditState->getStoredRotation());
+		this->setScale(lastEditState->getStoredScale());
+		this->setLocalMatrix(lastEditState->getStoredMatrix());
+
+		this->lastEditState = nullptr;
+	}
+}
+
+bool AGameObject::getActive()
+{
+	return this->isActive;
+}
+
+void AGameObject::setActive(bool isActive)
+{
+	this->isActive = isActive;
+}
+
+bool AGameObject::getTextureStatus()
+{
+	return this->hasTexture;
+}
+
+void AGameObject::setTextureStatus(bool status)
+{
+	this->hasTexture = status;
+}
+
+void AGameObject::setDedicatedTexture(String name)
+{
+	this->dedicatedTex = TextureLibrary::getInstance()->getTextureByName(name);
 }

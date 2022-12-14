@@ -5,7 +5,9 @@
 
 #include "AComponent.h"
 #include "Matrix4x4.h"
+#include "Texture.h"
 #include "Vector3D.h"
+
 
 struct vertex
 {
@@ -38,6 +40,7 @@ __declspec(align(16)) struct constant
 };
 
 class AComponent;
+class EditorAction;
 
 class AGameObject
 {
@@ -72,6 +75,9 @@ public:
 	bool isObjectSelected();
 	void setSelected(bool value);
 
+	void setTag(std::string tag);
+	std::string getTag();
+
 	void attachComponent(AComponent* component);
 	void detachComponent(AComponent* component);
 
@@ -80,15 +86,28 @@ public:
 	ComponentList getComponentsOfType(AComponent::ComponentType type);
 	ComponentList getComponentsOfTypeRecursive(AComponent::ComponentType type);
 
+	void saveEditState();
+	void restoreEditState();
+
+	bool getActive();
+	void setActive(bool isActive);
+
+	bool getTextureStatus();
+	void setTextureStatus(bool status);
+
+	void setDedicatedTexture(String name);
+
 private:
 
 protected:
 	std::string name;
+	std::string tag;
 	Vector3D localPosition;
 	Vector3D localRotation;
 	Vector3D localScale;
 
 	bool isSelected = false;
+	bool isActive = true;
 
 	Matrix4x4 localMatrix;
 	reactphysics3d::decimal physicsLocalMatrix[4][4] = {};
@@ -96,5 +115,10 @@ protected:
 	ComponentList component_list_;
 	ComponentTable component_table_;
 
+	Texture* dedicatedTex;
+
+	bool hasTexture = false;
+
+	EditorAction* lastEditState = nullptr;
 };
 
