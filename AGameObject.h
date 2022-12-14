@@ -88,6 +88,9 @@ public:
 	void saveEditState();
 	void restoreEditState();
 
+	bool getActive();
+	void setActive(bool isActive);
+
 private:
 
 protected:
@@ -98,6 +101,7 @@ protected:
 	Vector3D localScale;
 
 	bool isSelected = false;
+	bool isActive = true;
 
 	Matrix4x4 localMatrix;
 	reactphysics3d::decimal physicsLocalMatrix[4][4] = {};

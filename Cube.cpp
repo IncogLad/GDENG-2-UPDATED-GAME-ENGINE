@@ -20,6 +20,7 @@ Cube::Cube()
 
 Cube::~Cube()
 {
+	destroy();
 }
 
 void Cube::initialize(std::string name)
@@ -191,16 +192,6 @@ void Cube::draw()
 void Cube::releaseBuffers()
 {
 
-}
-
-bool Cube::getEnabled()
-{
-	return isEnabled;
-}
-
-void Cube::setEnabled(bool enable)
-{
-	isEnabled = enable;
 }
 
 void Cube::updatePosition()

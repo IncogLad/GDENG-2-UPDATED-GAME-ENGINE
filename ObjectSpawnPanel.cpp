@@ -57,8 +57,6 @@ void ObjectSpawnPanel::drawUI()
         {
             if (cubeCheckBox)
             {
-                
-                
 	            for (int i = 0; i < objectCount; i++)
 	            {
                     ObjectName = "cube";
@@ -67,6 +65,8 @@ void ObjectSpawnPanel::drawUI()
 
                     latestCubeCount++;
 	            }
+
+                cubeCheckBox = false;
             }
             else if (planeCheckBox)
             {
@@ -78,10 +78,11 @@ void ObjectSpawnPanel::drawUI()
                     GameObjectManager::getInstance()->initializeCube(ObjectName, 1);
                     latestPlaneCount++;
                 }
+
+                planeCheckBox = false;
             }
             else if (sphereCheckBox)
             {
-                
                 for (int i = 0; i < objectCount; i++)
                 {
                     ObjectName = "sphere";
@@ -91,6 +92,8 @@ void ObjectSpawnPanel::drawUI()
 
                     latestSphereCount++;
                 }
+
+                sphereCheckBox = false;
             }
             else if (capsuleCheckBox)
             {
@@ -104,8 +107,11 @@ void ObjectSpawnPanel::drawUI()
 
                     latestCapsuleCount++;
                 }
+
+                capsuleCheckBox = false;
             }
 
+            objectCount = 0;
         	open = false;
         }
         

@@ -2,6 +2,7 @@
 
 #include "EditorAction.h"
 #include "EngineBackend.h"
+#include "UISystem.h"
 
 ActionHistory* ActionHistory::sharedInstance = nullptr;
 
@@ -27,7 +28,7 @@ void ActionHistory::recordAction(AGameObject* gameObject)
 		EditorAction* editorAction = new EditorAction(gameObject);
 		this->actionsPerformed.push(editorAction);
 
-		std::cout << "Stored action " << gameObject->getName() << std::endl;
+		UISystem::getInstance()->UpdateDebugWindow("Stored action " + gameObject->getName());
 	}
 }
 

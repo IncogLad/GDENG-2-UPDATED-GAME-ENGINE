@@ -38,7 +38,10 @@ void AGameObject::initialize(std::string name)
 
 void AGameObject::destroy()
 {
-
+	//this->localPosition = nullptr;
+	//this->localRotation = nullptr;
+	//this->localScale = nullptr;
+	delete this;
 }
 
 void AGameObject::draw()
@@ -238,4 +241,14 @@ void AGameObject::restoreEditState()
 
 		this->lastEditState = nullptr;
 	}
+}
+
+bool AGameObject::getActive()
+{
+	return this->isActive;
+}
+
+void AGameObject::setActive(bool isActive)
+{
+	this->isActive = isActive;
 }

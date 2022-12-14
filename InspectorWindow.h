@@ -5,7 +5,7 @@
 class InspectorWindow : public AUIScreen
 {
 public:
-	enum ObjectType { cube = 0, mesh = 1};
+	enum ObjectType { cube = 0, mesh = 1 };
 	typedef std::string String;
 	InspectorWindow();
 	~InspectorWindow();
