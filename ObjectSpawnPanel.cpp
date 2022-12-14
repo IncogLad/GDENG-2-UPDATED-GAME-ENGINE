@@ -123,7 +123,35 @@ void ObjectSpawnPanel::drawUI()
 
         	open = false;
         }
-        
+        if (ImGui::Button("spawn 100"))
+        {
+            
+
+            for (int i = -2; i < 2; ++i)
+            {
+	            for (int j = -3; j < 2; ++j)
+	            {
+		            for (int k = -3; k < 2; ++k)
+		            {
+                        ObjectName = "cube";
+                        ObjectName = ObjectName + std::to_string(latestCubeCount);
+                        Vector3D position = Vector3D(i,j+5,k) * 2.4;
+
+                        GameObjectManager::getInstance()->initializeCubeOnLoad(ObjectName, 0, position, Vector3D::ones(),
+                            Vector3D::zeros(), true);
+                        latestCubeCount++;
+
+		            }
+	            }
+            }
+           
+           
+
+            std::cout << "wew" << std::endl;
+            open = false;
+
+        }
+
         ImGui::End();
     }
 }

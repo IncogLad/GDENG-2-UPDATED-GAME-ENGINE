@@ -360,17 +360,19 @@ void GameObjectManager::initializeCubeOnLoad(std::string name, int num, Vector3D
 	cube->initBuffers(num);
 	cube->initConstBuffers();
 
-	cube->setPosition(position);
-	cube->setRotation(rotation);
-	cube->setScale(scale);
+	//cube->setRotation(rotation);
+	//cube->setScale(scale);
 
 	if (isRigidBody)
 	{
-		PhysicsComponent* physics_component = new PhysicsComponent(cube->getName(), cube);
-		physics_component->getRigidBody()->setType(BodyType::DYNAMIC);
-		cube->attachComponent(physics_component);
+		//PhysicsComponent* physics_component = new PhysicsComponent(cube->getName(), cube);
+		//physics_component->getRigidBody()->setType(BodyType::DYNAMIC);
+		cube->attachComponent(new PhysicsComponent(cube->getName(), cube));
+
+		//cube->attachComponent(physics_component);
 	}
-	
+	cube->setPosition(position);
+
 	
 	insertCube(cube);
 	cubeTable[name] = cube;
