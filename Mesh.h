@@ -37,6 +37,9 @@ private:
 	bool i_scale;
 
 	Texture* brick_tex;
+	Texture* house_wood_tex;
+	Texture* house_brick_tex;
+	Texture* wall_tex;
 private:
 	friend class DeviceContext;
 };

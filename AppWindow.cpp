@@ -76,7 +76,9 @@ void AppWindow::onCreate()
 	//GameObjectManager::getInstance()->initializeCube("cubetest2", 0);
 
 	GameObjectManager::getInstance()->initializeCube("planetest", 1);
-	//GameObjectManager::getInstance()->initializeMesh();
+	//GameObjectManager::getInstance()->initializeMesh("armadillo");
+	//GameObjectManager::getInstance()->initializeMesh("bunny");
+	//GameObjectManager::getInstance()->initializeMesh("lucy");
 
 	//GameObjectManager::getInstance()->populateObjectList();
 	

@@ -108,6 +108,9 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 	m_cb->load(&cc, sizeof(constant));
 
 	brick_tex = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(L"Assets\\Textures\\brick.png");
+	house_wood_tex = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(L"Assets\\Textures\\house_wood.jpg");
+	house_brick_tex = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(L"Assets\\Textures\\house_brick.jpg");
+	wall_tex = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(L"Assets\\Textures\\wall.jpg");
 }
 
 
@@ -124,18 +127,22 @@ void Mesh::initialize(std::string name)
 	scaling = getLocalScale();
 	if (name == "bunny")
 	{
-		setPosition(Vector3D(5, 0, 0));
+		setPosition(Vector3D(5, 4, 0));
 		setScale( Vector3D(10, 10, 10));
 	}
 	if (name == "armadillo")
 	{
-		setPosition(Vector3D(-5, 0, 0));
+		setPosition(Vector3D(-5, 2, 0));
 	}
-	if (name == "teapot") {
+	if (name == "teapot")
+	{
 		setScale(Vector3D(2, 2, 2));
 	}
-	
-	
+	if (name == "lucy")
+	{
+		setPosition(Vector3D(1, 1, 0));
+		setScale(Vector3D(2, 2, 2));
+	}
 }
 
 void Mesh::destroy()
@@ -168,6 +175,19 @@ void Mesh::draw()
 	else
 	{
 		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPSTexture(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), brick_tex);
+	}
+
+	if (this->name == "lucy")
+	{
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPSTexture(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), house_brick_tex);
+	}
+	else if (this->name == "bunny")
+	{
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPSTexture(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), wall_tex);
+	}
+	else if (this->name == "armadillo")
+	{
+		GraphicsEngine::getInstance()->getImmediateDeviceContext()->setPSTexture(ShaderLibrary::getInstance()->getPixelShader(shader_names.TEXTURED_PIXEL_SHADER_NAME), house_wood_tex);
 	}
 	
 

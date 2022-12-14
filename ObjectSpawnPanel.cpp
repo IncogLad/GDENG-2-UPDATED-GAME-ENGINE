@@ -131,8 +131,32 @@ void ObjectSpawnPanel::drawUI()
 	            }
             }
             open = false;
-
         }
+
+        if(ImGui::Button("Spawn armadillo"))
+        {
+	        ObjectName = "armadillo";
+        	GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
+
+    	if(ImGui::Button("Spawn bunny"))
+        {
+	        ObjectName = "bunny";
+        	GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
+
+    	if(ImGui::Button("Spawn lucy"))
+        {
+	        ObjectName = "lucy";
+        	GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
+
+    	if(ImGui::Button("Spawn teapot"))
+        {
+	        ObjectName = "teapot";
+        	GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
+    	
 
         ImGui::End();
     }
