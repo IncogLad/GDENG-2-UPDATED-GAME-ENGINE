@@ -235,7 +235,8 @@ void JsonParser::saveScene()
 
 	std::ofstream myfile;
 	//filepath
-	myfile.open("ParseThis.level");
+	//myfile.open("ParseThis.level");
+	myfile.open("Whiteroom.level");
 	//writing it to file
 	myfile << json_file;
 	myfile.close();
@@ -248,7 +249,8 @@ void JsonParser::loadScene()
 
 	//ifstream file("example.txt");
 	//ifstream file("FromUnity.level");
-	ifstream file("FromUnreal.level");
+	//ifstream file("FromUnreal.level");
+	ifstream file("Whiteroom.level");
 
 	Json::Value actualJson;
 	Json::Reader reader;

@@ -62,35 +62,53 @@ void Cube::initBuffers(int num = 0)
 	{
 		//X - Y - Z
 		//FRONT FACE
-		{Vector3D(-1.0f,-1.0f,-1.0f),    Vector3D(1,0,1),  Vector3D(0.2f,0,1) },
-		{Vector3D(-1.0f,1.0f,-1.0f),    Vector3D(1,1,0), Vector3D(0,0.2f,0) },
-		{ Vector3D(1.0f,1.0f,-1.0f),   Vector3D(1,1,0),  Vector3D(0.2f,1,0) },
-		{ Vector3D(1.0f,-1.0f,-1.0f),     Vector3D(0,0,1), Vector3D(0.2f,0,0) },
+		{Vector3D(-0.5f,-0.5f,-0.5f),    Vector3D(1,0,1),  Vector3D(0.2f,0,1) },
+		{Vector3D(-0.5f,0.5f,-0.5f),    Vector3D(1,1,0), Vector3D(0,0.2f,0) },
+		{ Vector3D(0.5f,0.5f,-0.5f),   Vector3D(1,1,0),  Vector3D(0.2f,1,0) },
+		{ Vector3D(0.5f,-0.5f,-0.5f),     Vector3D(0,0,1), Vector3D(0.2f,0,0) },
 
 		//BACK FACE
-		{ Vector3D(1.0f,-1.0f,1.0f),    Vector3D(1,0,0), Vector3D(0,0.2f,0) },
-		{ Vector3D(1.0f,1.0f,1.0f),    Vector3D(0,1,1), Vector3D(0,0.2f,0.2f) },
-		{ Vector3D(-1.0f,1.0f,1.0f),   Vector3D(0,0,1),  Vector3D(0,0.2f,0.2f) },
-		{ Vector3D(-1.0f,-1.0f,1.0f),     Vector3D(0,1,0), Vector3D(1,0,0) }
+		{ Vector3D(0.5f,-0.5f,0.5f),    Vector3D(1,0,0), Vector3D(0,0.2f,0) },
+		{ Vector3D(0.5f,0.5f,0.5f),    Vector3D(0,1,1), Vector3D(0,0.2f,0.2f) },
+		{ Vector3D(-0.5f,0.5f,0.5f),   Vector3D(0,0,1),  Vector3D(0,0.2f,0.2f) },
+		{ Vector3D(-0.5f,-0.5f,0.5f),     Vector3D(0,1,0), Vector3D(1,0,0) }
 
 	};
-
 	vertexCube vertex_list_white_cube[] =
 	{
 		//X - Y - Z
 		//FRONT FACE
-		{Vector3D(-1.0f,-1.0f,-1.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{Vector3D(-1.0f,1.0f,-1.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{ Vector3D(1.0f,1.0f,-1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{ Vector3D(1.0f,-1.0f,-1.0f),     Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{Vector3D(-0.5f,-0.5f,-0.5f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{Vector3D(-0.5f,0.5f,-0.5f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(0.5f,0.5f,-0.5f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(0.5f,-0.5f,-0.5f),     Vector3D(1,1,1),  Vector3D(1,1,1) },
 
 		//BACK FACE
-		{ Vector3D(1.0f,-1.0f,1.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{ Vector3D(1.0f,1.0f,1.0f),    Vector3D(1,1,1),  Vector3D(1,1,1)},
-		{ Vector3D(-1.0f,1.0f,1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1)},
-		{ Vector3D(-1.0f,-1.0f,1.0f),     Vector3D(1,1,1),  Vector3D(1,1,1)}
+		{ Vector3D(0.5f,-0.5f,0.5f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(0.5f,0.5f,0.5f),    Vector3D(1,1,1),  Vector3D(1,1,1)},
+		{ Vector3D(-0.5f,0.5f,0.5f),   Vector3D(1,1,1),  Vector3D(1,1,1)},
+		{ Vector3D(-0.5f,-0.5f,0.5f),     Vector3D(1,1,1),  Vector3D(1,1,1)}
 
 	};
+
+
+
+	//vertexCube vertex_list_white_cube[] =
+	//{
+	//	//X - Y - Z
+	//	//FRONT FACE
+	//	{Vector3D(-1.0f,-1.0f,-1.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
+	//	{Vector3D(-1.0f,1.0f,-1.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
+	//	{ Vector3D(1.0f,1.0f,-1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+	//	{ Vector3D(1.0f,-1.0f,-1.0f),     Vector3D(1,1,1),  Vector3D(1,1,1) },
+
+	//	//BACK FACE
+	//	{ Vector3D(1.0f,-1.0f,1.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
+	//	{ Vector3D(1.0f,1.0f,1.0f),    Vector3D(1,1,1),  Vector3D(1,1,1)},
+	//	{ Vector3D(-1.0f,1.0f,1.0f),   Vector3D(1,1,1),  Vector3D(1,1,1)},
+	//	{ Vector3D(-1.0f,-1.0f,1.0f),     Vector3D(1,1,1),  Vector3D(1,1,1)}
+
+	//};
 
 	vertexCube plane_vertex_list[] =
 	{
@@ -111,9 +129,9 @@ void Cube::initBuffers(int num = 0)
 
 	m_vb = GraphicsEngine::getInstance()->createVertexBuffer();
 	if (this->num == 0) {
-		UINT size_list = ARRAYSIZE(vertex_list_white_cube);
+		UINT size_list = ARRAYSIZE(vertex_list);
 		//std::cout << list->position.m_x << std::endl;
-		m_vb->load(vertex_list_white_cube, sizeof(vertexCube), size_list, shaderByteCode, sizeShader);
+		m_vb->load(vertex_list, sizeof(vertexCube), size_list, shaderByteCode, sizeShader);
 	}
 	else {
 		UINT size_list = ARRAYSIZE(plane_vertex_list);
@@ -225,12 +243,15 @@ void Cube::updatePosition()
 
 	Matrix4x4 w_zMatrix; w_zMatrix.setIdentity();
 	w_zMatrix.setRotationZ(localRotation.m_z);
-	
+
+
+	allMatrix *= scaleMatrix;
+
+
 	allMatrix *= w_xMatrix;
 	allMatrix *= w_yMatrix;
 	allMatrix *= w_zMatrix;
 
-	allMatrix *= scaleMatrix;
 	allMatrix *= translationMatrix;
 	
 	cc.m_world = allMatrix;
