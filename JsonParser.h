@@ -135,10 +135,8 @@ public:
 	static JsonParser* getInstance();
 	static void destroy();
 
-    static void ShowExampleAppLog(bool* p_open);
 	 void saveScene();
 	 void loadScene();
-	 void print(const std::string str, std::ostream& output);
 
 private:
 	static JsonParser* sharedInstance;
