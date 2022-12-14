@@ -194,6 +194,8 @@ void Mesh::updateTransforms()
 	
 	//std::cout << localRotation.m_z << std::endl;
 
+	allMatrix *= scaleMatrix;
+
 	Matrix4x4 w_zMatrix; w_zMatrix.setIdentity();
 	w_zMatrix.setRotationZ(getLocalRotation().m_z);
 	allMatrix *= w_zMatrix;
@@ -207,7 +209,6 @@ void Mesh::updateTransforms()
 	allMatrix *= w_yMatrix;
 
 	//scaleMatrix *= rotMatrix;
-	allMatrix *= scaleMatrix;
 	allMatrix *= translationMatrix;
 	//allMatrix *= localMatrix;
 	cc.m_world = allMatrix;

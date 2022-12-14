@@ -134,10 +134,64 @@ void InspectorWindow::drawUI()
         ImGui::Separator();
 
         ImGui::Text("Component");
-        if (ImGui::Button("Add Physics Component"))
+        if (SelectedObject->getComponentsOfType(AComponent::Physics).empty())
         {
-            PhysicsComponent* physics_component =  new PhysicsComponent(SelectedObject->getName(),SelectedObject);
+            if (ImGui::Button("Add Physics Component"))
+            {
+
+                PhysicsComponent* physics_component = new PhysicsComponent(SelectedObject->getName(), SelectedObject);
+                SelectedObject->attachComponent(physics_component);
+
+            }
         }
+        else
+        {
+            PhysicsComponent* physics_component = static_cast<PhysicsComponent*>(SelectedObject->findComponentByType(AComponent::Physics, SelectedObject->getName()));
+            if (physics_component->getRigidBody()->getType() == BodyType::DYNAMIC)
+            {
+                isDynamic = true;
+                isStatic = false;
+                isKinematic = false;
+            }
+            if (physics_component->getRigidBody()->getType() == BodyType::STATIC)
+            {
+                isDynamic = false;
+                isStatic = true;
+                isKinematic = false;
+            }
+            if (physics_component->getRigidBody()->getType() == BodyType::KINEMATIC)
+            {
+                isDynamic = false;
+                isStatic = false;
+                isKinematic = true;
+            }
+            
+            if (ImGui::Checkbox("Dynamic", &isDynamic))
+            {
+                isDynamic = true;
+                isStatic = false;
+                isKinematic = false;
+                physics_component->getRigidBody()->setType(BodyType::DYNAMIC);
+            }
+            if (ImGui::Checkbox("Static", &isStatic))
+            {
+                isDynamic = false;
+                isStatic = true;
+                isKinematic = false;
+
+                physics_component->getRigidBody()->setType(BodyType::STATIC);
+            }
+            if (ImGui::Checkbox("Kinematic", &isKinematic))
+            {
+                isDynamic = false;
+                isStatic = false;
+                isKinematic = true;
+
+                physics_component->getRigidBody()->setType(BodyType::KINEMATIC);
+            }
+        }
+        
+        //physics_component->getRigidBody()->setType(BodyType::DYNAMIC);
     }
     
     ImGui::End();

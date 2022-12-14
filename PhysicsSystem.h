@@ -14,6 +14,8 @@ public:
 	typedef std::unordered_map<String, PhysicsComponent*> ComponentTable;
 	typedef std::vector<PhysicsComponent*> ComponentList;
 
+
+
 	PhysicsSystem();
 	~PhysicsSystem();
 
