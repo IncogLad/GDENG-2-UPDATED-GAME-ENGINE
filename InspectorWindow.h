@@ -21,6 +21,10 @@ private:
 	bool enableCheckBox = true;
 	bool disableCheckBox = false;
 
+	bool isDynamic = false;
+	bool isKinematic = false;
+	bool isStatic = false;
+
 	AGameObject* SelectedObject;
 
 	friend class SceneEditor;

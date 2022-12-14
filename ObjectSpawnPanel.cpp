@@ -51,7 +51,7 @@ void ObjectSpawnPanel::drawUI()
             capsuleCheckBox = true;
         }
 
-        ImGui::InputInt("Object Count:", &objectCount);
+        ImGui::InputInt("Object Count", &objectCount);
 
         if (ImGui::Button("Spawn"))
         {
