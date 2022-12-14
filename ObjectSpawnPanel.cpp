@@ -58,15 +58,30 @@ void ObjectSpawnPanel::drawUI()
             if (cubeCheckBox)
             {
                 
-                
-	            for (int i = 0; i < objectCount; i++)
-	            {
-                    ObjectName = "cube";
-                    ObjectName = ObjectName + std::to_string(latestCubeCount);
-                    GameObjectManager::getInstance()->initializeCube(ObjectName, 0);
+                if (!spawnUniform) {
+                    for (int i = 0; i < objectCount; i++)
+                    {
+                        ObjectName = "cube";
+                        ObjectName = ObjectName + std::to_string(latestCubeCount);
+                        GameObjectManager::getInstance()->initializeCube(ObjectName, 0);
 
-                    latestCubeCount++;
-	            }
+                        latestCubeCount++;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < objectCount; i++)
+                    {
+                        ObjectName = "cube";
+                        ObjectName = ObjectName + std::to_string(latestCubeCount);
+                       /* for (int j = 0; j < 10; j++) {
+                            Vector3D tempPosition = Vector3D(i, );
+                        }*/
+                        //GameObjectManager::getInstance()->initializeCubeOnLoad(ObjectName, 0,)
+
+                        latestCubeCount++;
+                    }
+                }
             }
             else if (planeCheckBox)
             {

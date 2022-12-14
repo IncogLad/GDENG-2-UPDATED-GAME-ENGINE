@@ -10,6 +10,7 @@
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
 #include "CameraHandler.h"
+#include "EngineBackend.h"
 #include "PhysicsComponent.h"
 #include "ShaderLibrary.h"
 
@@ -96,16 +97,16 @@ void Cube::initBuffers(int num = 0)
 	{
 		//X - Y - Z
 		//FRONT FACE
-		{Vector3D(-5.0f,0.0f,-5.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{Vector3D(-5.0f,0.0f,-5.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
-		{ Vector3D(5.0f,0.0f,-5.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{ Vector3D(5.0f,0.0f,-5.0f),     Vector3D(1,1,1), Vector3D(1,1,1) },
+		{Vector3D(-10.0f,0.0f,-10.0f),    Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{Vector3D(-10.0f,0.0f,-10.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(10.0f,0.0f,-10.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(10.0f,0.0f,-10.0f),     Vector3D(1,1,1), Vector3D(1,1,1) },
 
 		//BACK FACE
-		{ Vector3D(5.0f,0.0f,5.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
-		{ Vector3D(5.0f,0.0f,5.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
-		{ Vector3D(-5.0f,0.0f,5.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
-		{ Vector3D(-5.0f,0.0f,5.0f),     Vector3D(1,1,1), Vector3D(1,1,1) }
+		{ Vector3D(10.0f,0.0f,10.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(10.0f,0.0f,10.0f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(-10.0f,0.0f,10.0f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(-10.0f,0.0f,10.0f),     Vector3D(1,1,1), Vector3D(1,1,1) }
 
 	};
 
@@ -236,6 +237,23 @@ void Cube::updatePosition()
 	allMatrix *= translationMatrix;
 	
 	cc.m_world = allMatrix;
+
+	if (!getComponentsOfType(AComponent::Physics).empty()) {
+		if (EngineBackend::getInstance()->getMode() == EngineBackend::EDITOR) {
+			Vector3D scale = this->getLocalScale();
+			Vector3D position = this->getLocalPosition();
+			Vector3D rotation = this->getLocalRotation();
+			Transform updatingTransform;
+			updatingTransform.setPosition(Vector3(position.m_x, position.m_y, position.m_z));
+			updatingTransform.setOrientation(Quaternion::fromEulerAngles(Vector3(rotation.m_x, rotation.m_y, rotation.m_z)));
+
+
+			PhysicsComponent* physics_component = static_cast<PhysicsComponent*>(this->findComponentByType(AComponent::Physics, this->getName()));
+			physics_component->setTransform(updatingTransform);
+			physics_component->getRigidBody()->setTransform(updatingTransform);
+			
+		}
+	}
 
 	//VIEW MATRIX
 	cc.m_view.setIdentity();

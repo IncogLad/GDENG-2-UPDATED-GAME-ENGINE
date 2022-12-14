@@ -171,7 +171,7 @@ void InspectorWindow::drawUI()
                 isDynamic = true;
                 isStatic = false;
                 isKinematic = false;
-                physics_component->getRigidBody()->setType(BodyType::DYNAMIC);
+                physics_component->setBodyType(BodyType::DYNAMIC);
             }
             if (ImGui::Checkbox("Static", &isStatic))
             {
@@ -179,7 +179,7 @@ void InspectorWindow::drawUI()
                 isStatic = true;
                 isKinematic = false;
 
-                physics_component->getRigidBody()->setType(BodyType::STATIC);
+                physics_component->setBodyType(BodyType::STATIC);
             }
             if (ImGui::Checkbox("Kinematic", &isKinematic))
             {
@@ -187,7 +187,7 @@ void InspectorWindow::drawUI()
                 isStatic = false;
                 isKinematic = true;
 
-                physics_component->getRigidBody()->setType(BodyType::KINEMATIC);
+                physics_component->setBodyType(BodyType::KINEMATIC);
             }
         }
         

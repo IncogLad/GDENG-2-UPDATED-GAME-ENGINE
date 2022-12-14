@@ -27,6 +27,7 @@ private:
 	bool cubeCheckBox = false;
 	bool sphereCheckBox = false;
 	bool capsuleCheckBox = false;
-	
+
+	bool spawnUniform = false;
 };
 
