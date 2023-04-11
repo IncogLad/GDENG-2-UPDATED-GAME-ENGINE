@@ -3,8 +3,11 @@
 #include "MeshManager.h"
 #include "PhysicsComponent.h"
 #include "CameraHandler.h"
+#include "InspectorWindow.h"
 #include "RenderTexture.h"
 #include "UISystem.h"
+#include "Mesh.h"
+
 
 GameObjectManager* GameObjectManager::sharedInstance = nullptr;
 
@@ -191,50 +194,63 @@ std::unordered_map<std::string, AGameObject*> GameObjectManager::getGameObjectTa
 	return this->gameObjectTable;
 }
 
-void GameObjectManager::initializeMesh(std::string name)
+void GameObjectManager::initializeMesh(std::string name, int sceneNumber)
 {
-	if (name == "teapot")
-	{
-			Mesh* mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\teapot.obj");
-		mesh->initialize(name);
-		meshList.push_back(mesh);
-		meshTable[name] = mesh;
+	std::string temp_string = "Assets\\Meshes\\" + name + ".obj";
+	std::wstring temp2 = std::wstring(temp_string.begin(), temp_string.end());
+	const wchar_t* path = temp2.c_str();
 
-		gameObjectList.push_back(mesh);
-		gameObjectTable[mesh->getName()] = mesh;
-	}
+	Mesh* mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(path);
+	mesh->initialize(name + std::to_string(sceneNumber));
+	meshList.push_back(mesh);
+	meshTable[name + std::to_string(sceneNumber)] = mesh;
+
+	gameObjectList.push_back(mesh);
+	gameObjectTable[mesh->getName()] = mesh;
 
 
-	if (name == "armadillo")
-	{
-		Mesh* mesh1 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\armadillo.obj");
-		mesh1->initialize(name);
-		meshList.push_back(mesh1);
-		meshTable[name] = mesh1;
+	//if (name == "teapot")
+	//{
+	//	Mesh* mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\teapot.obj");
+	//	mesh->initialize(name + std::to_string(sceneNumber));
+	//	meshList.push_back(mesh);
+	//	meshTable[name + std::to_string(sceneNumber)] = mesh;
 
-		gameObjectList.push_back(mesh1);
-		gameObjectTable[mesh1->getName()] = mesh1;
-	}
-	else if (name == "bunny")
-	{
-		Mesh* mesh2 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\bunny.obj");
-		mesh2->initialize(name);
-		meshList.push_back(mesh2);
-		meshTable[name] = mesh2;
+	//	gameObjectList.push_back(mesh);
+	//	gameObjectTable[mesh->getName()] = mesh;
+	//}
 
-		gameObjectList.push_back(mesh2);
-		gameObjectTable[mesh2->getName()] = mesh2;
-	}
-	else if (name == "lucy")
-	{
-		Mesh* mesh3 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\statue.obj");
-		mesh3->initialize(name);
-		meshList.push_back(mesh3);
-		meshTable[name] = mesh3;
 
-		gameObjectList.push_back(mesh3);
-		gameObjectTable[mesh3->getName()] = mesh3;
-	}
+	//if (name == "armadillo")
+	//{
+	//	Mesh* mesh1 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\armadillo.obj");
+	//	mesh1->initialize(name + std::to_string(sceneNumber));
+	//	meshList.push_back(mesh1);
+	//	meshTable[name + std::to_string(sceneNumber)] = mesh1;
+
+	//	gameObjectList.push_back(mesh1);
+	//	gameObjectTable[mesh1->getName()] = mesh1;
+	//}
+	//else if (name == "bunny")
+	//{
+	//	Mesh* mesh2 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\bunny.obj");
+	//	mesh2->initialize(name + std::to_string(sceneNumber));
+	//	meshList.push_back(mesh2);
+	//	meshTable[name + std::to_string(sceneNumber)] = mesh2;
+
+	//	gameObjectList.push_back(mesh2);
+	//	gameObjectTable[mesh2->getName()] = mesh2;
+	//}
+	//else if (name == "lucy")
+	//{
+	//	Mesh* mesh3 = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\statue.obj");
+	//	mesh3->initialize(name + std::to_string(sceneNumber));
+	//	meshList.push_back(mesh3);
+	//	meshTable[name + std::to_string(sceneNumber)] = mesh3;
+
+	//	gameObjectList.push_back(mesh3);
+	//	gameObjectTable[mesh3->getName()] = mesh3;
+	//}
 
 	/*PhysicsComponent* physics_component = new PhysicsComponent(mesh->getName(), mesh);
 	mesh->attachComponent(physics_component);

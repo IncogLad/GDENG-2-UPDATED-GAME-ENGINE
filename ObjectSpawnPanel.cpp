@@ -156,6 +156,12 @@ void ObjectSpawnPanel::drawUI()
 	        ObjectName = "teapot";
         	GameObjectManager::getInstance()->initializeMesh(ObjectName);
         }
+
+        if (ImGui::Button("Spawn monitor"))
+        {
+            ObjectName = "monitor";
+            GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
     	
 
         ImGui::End();

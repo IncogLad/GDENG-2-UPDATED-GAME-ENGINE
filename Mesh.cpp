@@ -1,8 +1,8 @@
 #include "Mesh.h"
-
 #define TINYOBJLOADER_IMPLEMENTATION
-#include <tiny_obj_loader.h>
 
+#include <tiny_obj_loader.h>
+#include <Windows.h>
 #include <locale>
 #include <codecvt>
 
@@ -16,6 +16,8 @@
 #include "TextureLibrary.h"
 #include "TextureManager.h"
 
+
+
 Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 {
 	tinyobj::attrib_t attribs;
@@ -25,7 +27,8 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 	std::string warn;
 	std::string err;
 
-	std::string inputfile = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(full_path);
+	std::string inputfile = wide_string_to_string(full_path);
+	//inputfile = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(full_path);
 
 	bool res = tinyobj::LoadObj(&attribs, &shapes, &materials, &warn, &err, inputfile.c_str());
 

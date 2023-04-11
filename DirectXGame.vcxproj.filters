@@ -88,6 +88,9 @@
     <Filter Include="GameEngine\Backend">
       <UniqueIdentifier>{72336ede-a4ab-40cc-9b99-9ab69b7e2f2c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\Threading">
+      <UniqueIdentifier>{5b2d9fda-3c86-47c1-bf34-d557ed193436}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -267,6 +270,7 @@
     <ClCompile Include="TextureLibrary.cpp">
       <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
     </ClCompile>
+    <ClCompile Include="MonitorSharedLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -471,6 +475,7 @@
     <ClInclude Include="TextureLibrary.h">
       <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
     </ClInclude>
+    <ClInclude Include="MonitorSharedLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">
