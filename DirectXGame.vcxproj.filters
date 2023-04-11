@@ -261,16 +261,36 @@
     <ClCompile Include="ObjectSpawnPanel.cpp">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClCompile>
-    <ClCompile Include="ActionHistory.cpp" />
-    <ClCompile Include="ActionsScreen.cpp" />
-    <ClCompile Include="EditorAction.cpp" />
     <ClCompile Include="DebugWindow.cpp">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClCompile>
     <ClCompile Include="TextureLibrary.cpp">
       <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
     </ClCompile>
-    <ClCompile Include="MonitorSharedLoader.cpp" />
+    <ClCompile Include="MonitorSharedLoader.cpp">
+      <Filter>GameEngine\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionsScreen.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionHistory.cpp">
+      <Filter>GameEngine\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorAction.cpp">
+      <Filter>GameEngine\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingWorkerAction.cpp">
+      <Filter>GameEngine\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="PoolWorkerThread.cpp">
+      <Filter>GameEngine\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadPool.cpp">
+      <Filter>GameEngine\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="IETThread.cpp">
+      <Filter>GameEngine\Threading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -405,7 +425,6 @@
     <ClInclude Include="TextureManager.h">
       <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
     </ClInclude>
-    <ClInclude Include="resource1.h" />
     <ClInclude Include="WireframeView.h">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClInclude>
@@ -466,16 +485,45 @@
     <ClInclude Include="ObjectSpawnPanel.h">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClInclude>
-    <ClInclude Include="ActionHistory.h" />
-    <ClInclude Include="ActionsScreen.h" />
-    <ClInclude Include="EditorAction.h" />
     <ClInclude Include="DebugWindow.h">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClInclude>
     <ClInclude Include="TextureLibrary.h">
       <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
     </ClInclude>
-    <ClInclude Include="MonitorSharedLoader.h" />
+    <ClInclude Include="resource1.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="MonitorSharedLoader.h">
+      <Filter>GameEngine\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionsScreen.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionHistory.h">
+      <Filter>GameEngine\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorAction.h">
+      <Filter>GameEngine\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadPool.h">
+      <Filter>GameEngine\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingWorkerAction.h">
+      <Filter>GameEngine\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="IWorkerAction.h">
+      <Filter>GameEngine\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="PoolWorkerThread.h">
+      <Filter>GameEngine\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="IETThread.h">
+      <Filter>GameEngine\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="IExecutionEvent.h">
+      <Filter>GameEngine\Threading</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">
@@ -507,6 +555,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="DirectXGame.rc" />
+    <ResourceCompile Include="DirectXGame.rc">
+      <Filter>App</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

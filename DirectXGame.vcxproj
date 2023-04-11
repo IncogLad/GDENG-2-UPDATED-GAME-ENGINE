@@ -158,6 +158,7 @@
     <ClCompile Include="EngineTime.cpp" />
     <ClCompile Include="GameView.cpp" />
     <ClCompile Include="GraphicsEngine.cpp" />
+    <ClCompile Include="IETThread.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PlaybackScreen.cpp" />
+    <ClCompile Include="PoolWorkerThread.cpp" />
     <ClCompile Include="Quads.cpp" />
     <ClCompile Include="RasterizerState.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
@@ -193,10 +195,12 @@
     <ClCompile Include="CameraHandler.cpp" />
     <ClCompile Include="SceneEditor.cpp" />
     <ClCompile Include="ShaderLibrary.cpp" />
+    <ClCompile Include="LoadingWorkerAction.cpp" />
     <ClCompile Include="SwapChain.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureLibrary.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="ThreadPool.cpp" />
     <ClCompile Include="TopdownView.cpp" />
     <ClCompile Include="UISystem.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
@@ -224,6 +228,8 @@
     <ClInclude Include="EngineTime.h" />
     <ClInclude Include="GameView.h" />
     <ClInclude Include="GraphicsEngine.h" />
+    <ClInclude Include="IETThread.h" />
+    <ClInclude Include="IExecutionEvent.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_dx11.h" />
@@ -236,6 +242,7 @@
     <ClInclude Include="InputListener.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="InspectorWindow.h" />
+    <ClInclude Include="IWorkerAction.h" />
     <ClInclude Include="jsoncpp-master\dist\json\json-forwards.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -256,6 +263,7 @@
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="PlaybackScreen.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="PoolWorkerThread.h" />
     <ClInclude Include="Quads.h" />
     <ClInclude Include="RasterizerState.h" />
     <ClInclude Include="GameObjectManager.h" />
@@ -266,10 +274,12 @@
     <ClInclude Include="CameraHandler.h" />
     <ClInclude Include="SceneEditor.h" />
     <ClInclude Include="ShaderLibrary.h" />
+    <ClInclude Include="LoadingWorkerAction.h" />
     <ClInclude Include="SwapChain.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureLibrary.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="ThreadPool.h" />
     <ClInclude Include="TopdownView.h" />
     <ClInclude Include="UISystem.h" />
     <ClInclude Include="Vector2D.h" />
