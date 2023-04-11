@@ -21,7 +21,7 @@ private:
 	Mesh* mesh;
 	bool loadingDone = false;
 
-	void tryLoad();
+	void tryDisplay();
 	void reportLoadDone();
 
 };
