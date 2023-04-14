@@ -41,6 +41,8 @@ public:
 	const String ACTIONS_SCREEN = "ACTIONS_SCREEN";
 
 	const String DEBUG_WINDOW = "DEBUG_WINDOW";
+
+	const String GDPARCM_SCREEN = "GDPARCM_SCREEN";
 };
 
 

@@ -157,6 +157,7 @@
     <ClCompile Include="EngineBackend.cpp" />
     <ClCompile Include="EngineTime.cpp" />
     <ClCompile Include="GameView.cpp" />
+    <ClCompile Include="GDPARCMScreen.cpp" />
     <ClCompile Include="GraphicsEngine.cpp" />
     <ClCompile Include="IETThread.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="EngineBackend.h" />
     <ClInclude Include="EngineTime.h" />
     <ClInclude Include="GameView.h" />
+    <ClInclude Include="GDPARCMScreen.h" />
     <ClInclude Include="GraphicsEngine.h" />
     <ClInclude Include="IETThread.h" />
     <ClInclude Include="IExecutionEvent.h" />
