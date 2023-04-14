@@ -12,12 +12,12 @@ LoadingWorkerAction::LoadingWorkerAction(std::string SPath , IExecutionEvent* EE
 
 LoadingWorkerAction::~LoadingWorkerAction()
 {
-	//std::cout << "Destroying stream asset loader." << std::endl;
+	std::cout << "Destroying LoadingWorkerAction." << std::endl;
 }
 
 void LoadingWorkerAction::onStartTask()
 {
-	IETThread::sleep(2500);
+	IETThread::sleep(500);
 	//TextureManager::getInstance()->instantiateAsTexture(this->path, this->path, true);
 	
 	std::cout << "[TextureManager] Loaded streaming texture: " << this->path << std::endl;

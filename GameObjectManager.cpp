@@ -320,6 +320,21 @@ void GameObjectManager::deleteObject(AGameObject* gameObject)
 		meshTable.erase(gameObject->getName());
 		gameObjectTable.erase(gameObject->getName());
 	}
+	else
+	{
+		for (auto mesh : meshList)
+		{
+			if (mesh->getName() == gameObject->getName())
+			{
+				meshList.remove(mesh);
+				gameObjectList.remove(mesh);
+				break;
+			}
+		}
+
+		meshTable.erase(gameObject->getName());
+		gameObjectTable.erase(gameObject->getName());
+	}
 }
 
 void GameObjectManager::updateAll()

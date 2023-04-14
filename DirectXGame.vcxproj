@@ -195,6 +195,7 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="CameraHandler.cpp" />
     <ClCompile Include="SceneEditor.cpp" />
+    <ClCompile Include="Semaphore.cpp" />
     <ClCompile Include="ShaderLibrary.cpp" />
     <ClCompile Include="LoadingWorkerAction.cpp" />
     <ClCompile Include="SwapChain.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="CameraHandler.h" />
     <ClInclude Include="SceneEditor.h" />
+    <ClInclude Include="Semaphore.h" />
     <ClInclude Include="ShaderLibrary.h" />
     <ClInclude Include="LoadingWorkerAction.h" />
     <ClInclude Include="SwapChain.h" />
