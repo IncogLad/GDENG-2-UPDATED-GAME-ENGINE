@@ -95,7 +95,7 @@ void AppWindow::onCreate()
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
-
+	
 	InputSystem::get()->update();
 	//BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
 	//////////////RENDER EVERY VIEW TO TEXTURE///////////////////
