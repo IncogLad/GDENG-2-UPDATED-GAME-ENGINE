@@ -40,5 +40,4 @@ private:
 	static AppWindow* sharedInstance;
 	
 	SwapChain* m_swap_chain;
-	
 };

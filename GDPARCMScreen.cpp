@@ -1,5 +1,7 @@
 ﻿#include "GDPARCMScreen.h"
+#include "EngineTime.h"
 #include "imgui/imgui.h"
+#include <ctime>
 
 GDPARCMScreen::GDPARCMScreen() : AUIScreen("GDPARCM_SCREEN")
 {
@@ -13,6 +15,14 @@ void GDPARCMScreen::drawUI()
 {
 	ImGui::Begin("GDPARCM Controls", 0, ImGuiWindowFlags_NoResize);
 	ImGui::SetWindowSize(ImVec2(200, 500));
+
+	double fps = (1.0 / EngineTime::getDeltaTime());
+	if (fps > 60.0)
+		fps = 60.0;
+
+	ImGui::Text("FPS: %f", fps);
+
+	ImGui::Text("");
 
 	ImGui::Text("Scene 1");
 	ImGui::ProgressBar(1.0f);
