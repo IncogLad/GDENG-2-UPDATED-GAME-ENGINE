@@ -379,7 +379,7 @@ void GameObjectManager::updateAll()
 
 void GameObjectManager::initialize_threading_necessities()
 {
-	thread_pool = new ThreadPool("thread_pool", 1);
+	thread_pool = new ThreadPool("thread_pool", 5);
 	thread_pool->startScheduler();
 	//mutex = new Semaphore(1);
 }
@@ -484,9 +484,34 @@ void GameObjectManager::LoadAllScenes()
 	LoadSceneMeshes(5);
 }
 
-void GameObjectManager::onFinishedExecution(int sceneNum)
+void GameObjectManager::onFinishedExecution(int sceneNum, Mesh* mesh)
 {
+	switch (sceneNum)
+	{
+	case 1:
+		scene1MeshList.push_back(mesh);
+		SceneLoadingRatio[1] = static_cast<float>(scene1MeshList.size()) / scene1MeshNames.size();
+		break;
+	case 2:
+		scene2MeshList.push_back(mesh);
+		SceneLoadingRatio[2] = static_cast<float>(scene2MeshList.size()) / scene2MeshNames.size();
+		break;
+	case 3:
+		scene3MeshList.push_back(mesh);
+		SceneLoadingRatio[3] = static_cast<float>(scene3MeshList.size()) / scene3MeshNames.size();
+		break;
+	case 4:
+		scene4MeshList.push_back(mesh);
+		SceneLoadingRatio[4] = static_cast<float>(scene4MeshList.size()) / scene4MeshNames.size();
+		break;
+	case 5:
+		scene5MeshList.push_back(mesh);
+		SceneLoadingRatio[5] = static_cast<float>(scene5MeshList.size()) / scene5MeshNames.size();
+		break;
 
+	default: return;
+	
+	}
 }
 
 void GameObjectManager::initializeCube(std::string name, int num = 0)

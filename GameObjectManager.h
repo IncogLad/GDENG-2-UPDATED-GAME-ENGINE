@@ -62,7 +62,8 @@ public:
 	void LoadSceneMeshes(int sceneNumber); // func for the buttons
 	Mesh* initializeSceneMesh(std::string name, int sceneNumber);
 	void LoadAllScenes();
-	void onFinishedExecution(int num) override;
+	std::vector<float> SceneLoadingRatio = std::vector<float>(6);
+	void onFinishedExecution(int num, Mesh* mesh) override;
 
 	std::wstring string_to_wide_string(const std::string& string)
 	{

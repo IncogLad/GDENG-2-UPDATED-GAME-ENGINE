@@ -10,4 +10,8 @@ public:
 	~GDPARCMScreen();
 
 	void drawUI() override;
+
+private:
+
+	int currentlyViewingScene = 0;
 };

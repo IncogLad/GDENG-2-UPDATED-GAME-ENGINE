@@ -1,10 +1,12 @@
 ﻿#include "GDPARCMScreen.h"
 #include "EngineTime.h"
 #include "imgui/imgui.h"
+#include "GameObjectManager.h"
 #include <ctime>
 
 GDPARCMScreen::GDPARCMScreen() : AUIScreen("GDPARCM_SCREEN")
 {
+	
 }
 
 GDPARCMScreen::~GDPARCMScreen()
@@ -13,8 +15,7 @@ GDPARCMScreen::~GDPARCMScreen()
 
 void GDPARCMScreen::drawUI()
 {
-	ImGui::Begin("GDPARCM Controls", 0, ImGuiWindowFlags_NoResize);
-	ImGui::SetWindowSize(ImVec2(200, 500));
+	ImGui::Begin("GDPARCM Controls", 0);
 
 	double fps = (1.0 / EngineTime::getDeltaTime());
 	if (fps > 60.0)
@@ -25,49 +26,134 @@ void GDPARCMScreen::drawUI()
 	ImGui::Text("");
 
 	ImGui::Text("Scene 1");
-	ImGui::ProgressBar(1.0f);
-	if (ImGui::Button("View Scene"))
+	ImGui::ProgressBar(GameObjectManager::getInstance()->SceneLoadingRatio[1]);
+
+	if (currentlyViewingScene != 1)
 	{
-		
+		if (ImGui::Button("View Scene"))
+		{
+			if (GameObjectManager::getInstance()->SceneLoadingRatio[1] == 1)
+			{
+				currentlyViewingScene = 1;
+			}
+			else
+			{
+				//show bigger loading bar
+			}
+		}
+	}
+	
+
+	if (GameObjectManager::getInstance()->SceneLoadingRatio[1] == 1)
+	{
+		ImGui::Button("Unload Scene");
+	}
+	else 
+	{
+		ImGui::Text("");
 	}
 
-	ImGui::Text("");
+	ImGui::Separator();
 
 	ImGui::Text("Scene 2");
-	ImGui::ProgressBar(1.0f);
+	ImGui::ProgressBar(GameObjectManager::getInstance()->SceneLoadingRatio[2]);
 	if (ImGui::Button("View Scene"))
 	{
-		
+		if (GameObjectManager::getInstance()->SceneLoadingRatio[2] == 1)
+		{
+
+		}
+		else
+		{
+			//show bigger loading bar
+		}
 	}
 
-	ImGui::Text("");
+	if (GameObjectManager::getInstance()->SceneLoadingRatio[2] == 1)
+	{
+		ImGui::Button("Unload Scene");
+	}
+	else
+	{
+		ImGui::Text("");
+	}
+
+	ImGui::Separator();
 
 	ImGui::Text("Scene 3");
-	ImGui::ProgressBar(1.0f);
+	ImGui::ProgressBar(GameObjectManager::getInstance()->SceneLoadingRatio[3]);
 	if (ImGui::Button("View Scene"))
 	{
-		
+		if (GameObjectManager::getInstance()->SceneLoadingRatio[3] == 1)
+		{
+
+		}
+		else
+		{
+			//show bigger loading bar
+		}
 	}
 
-	ImGui::Text("");
+	if (GameObjectManager::getInstance()->SceneLoadingRatio[3] == 1)
+	{
+		ImGui::Button("Unload Scene");
+	}
+	else
+	{
+		ImGui::Text("");
+	}
+
+	ImGui::Separator();
 
 	ImGui::Text("Scene 4");
-	ImGui::ProgressBar(1.0f);
+	ImGui::ProgressBar(GameObjectManager::getInstance()->SceneLoadingRatio[4]);
 	if (ImGui::Button("View Scene"))
 	{
-		
+		if (GameObjectManager::getInstance()->SceneLoadingRatio[4] == 1)
+		{
+
+		}
+		else
+		{
+			//show bigger loading bar
+		}
 	}
 
-	ImGui::Text("");
+	if (GameObjectManager::getInstance()->SceneLoadingRatio[4] == 1)
+	{
+		ImGui::Button("Unload Scene");
+	}
+	else
+	{
+		ImGui::Text("");
+	}
+
+	ImGui::Separator();
 
 	ImGui::Text("Scene 5");
-	ImGui::ProgressBar(1.0f);
+	ImGui::ProgressBar(GameObjectManager::getInstance()->SceneLoadingRatio[5]);
 	if (ImGui::Button("View Scene"))
 	{
-		
+		if (GameObjectManager::getInstance()->SceneLoadingRatio[5] == 1)
+		{
+
+		}
+		else
+		{
+			//show bigger loading bar
+		}
 	}
 
-	ImGui::Text("");
+	if (GameObjectManager::getInstance()->SceneLoadingRatio[5] == 1)
+	{
+		ImGui::Button("Unload Scene");
+	}
+	else
+	{
+		ImGui::Text("");
+	}
+
+	ImGui::Separator();
 
 	if (ImGui::Button("View All Scenes"))
 	{

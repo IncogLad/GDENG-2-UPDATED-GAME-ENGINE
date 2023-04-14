@@ -23,11 +23,11 @@ void LoadingWorkerAction::onStartTask()
 {
 	IETThread::sleep(500);
 	
-	GameObjectManager::getInstance()->initializeMesh(this->name, this->sceneNum);
+	Mesh* mesh = GameObjectManager::getInstance()->initializeSceneMesh(this->name, this->sceneNum);
 	
 	UISystem::getInstance()->UpdateDebugWindow("[GameObjectManager] Loaded " + this->name + " model!");
 
-	this->execution_event_->onFinishedExecution(sceneNum);
+	this->execution_event_->onFinishedExecution(sceneNum, mesh);
 	delete this;
 
 }
