@@ -20,6 +20,7 @@
 #include "PlaybackScreen.h"
 #include "ActionsScreen.h"
 #include "ObjectSpawnPanel.h"
+#include "GDPARCMScreen.h"
 
 UISystem* UISystem::sharedInstance = nullptr;
 
@@ -115,6 +116,9 @@ void UISystem::initImGUI(HWND hwnd)
     uiTable[uiNames.DEBUG_WINDOW] = console;
     uiList.push_back(console);
 
+    GDPARCMScreen* parcm_screen = new GDPARCMScreen();
+	uiTable[uiNames.OBJECT_SPAWN_PANEL] = parcm_screen;
+    uiList.push_back(parcm_screen);
 }
 
 void UISystem::updateNewFrame()

@@ -259,13 +259,18 @@
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClCompile>
     <ClCompile Include="ActionHistory.cpp" />
-    <ClCompile Include="ActionsScreen.cpp" />
     <ClCompile Include="EditorAction.cpp" />
     <ClCompile Include="DebugWindow.cpp">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClCompile>
     <ClCompile Include="TextureLibrary.cpp">
       <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionsScreen.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="GDPARCMScreen.cpp">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -463,13 +468,18 @@
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClInclude>
     <ClInclude Include="ActionHistory.h" />
-    <ClInclude Include="ActionsScreen.h" />
     <ClInclude Include="EditorAction.h" />
     <ClInclude Include="DebugWindow.h">
       <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClInclude>
     <ClInclude Include="TextureLibrary.h">
       <Filter>GameEngine\GraphicsEngine\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionsScreen.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="GDPARCMScreen.h">
+      <Filter>GameEngine\UISystem\UIScreen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
