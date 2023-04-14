@@ -3,7 +3,7 @@
 class IExecutionEvent
 {
 public:
-	virtual void onFinishedExecution() = 0;
+	virtual void onFinishedExecution(int num) = 0;
 
 };
 

@@ -5,8 +5,11 @@
 #include "Quads.h"
 #include "Cube.h"
 #include "Mesh.h"
+#include "IExecutionEvent.h"
+#include "Semaphore.h"
+#include "ThreadPool.h"
 
-class GameObjectManager
+class GameObjectManager :public IExecutionEvent
 {
 public:
 	GameObjectManager();
@@ -53,6 +56,14 @@ public:
 
 	void updateAll();
 
+	//GDPARCM METHODS
+	void initialize_threading_necessities();
+	void declareSceneMeshes();
+	void LoadSceneMeshes(int sceneNumber); // func for the buttons
+	Mesh* initializeSceneMesh(std::string name, int sceneNumber);
+	void LoadAllScenes();
+	void onFinishedExecution(int num) override;
+
 	std::wstring string_to_wide_string(const std::string& string)
 	{
 		if (string.empty())
@@ -95,6 +106,18 @@ private:
 	std::list<Cube*> cubeList;
 	std::list<Mesh*> meshList;
 
+	std::list<Mesh*> scene1MeshList;
+	std::list<Mesh*> scene2MeshList;
+	std::list<Mesh*> scene3MeshList;
+	std::list<Mesh*> scene4MeshList;
+	std::list<Mesh*> scene5MeshList;
+
+	std::vector<std::string> scene1MeshNames = std::vector<std::string>();
+	std::vector<std::string> scene2MeshNames = std::vector<std::string>();
+	std::vector<std::string> scene3MeshNames = std::vector<std::string>();
+	std::vector<std::string> scene4MeshNames = std::vector<std::string>();
+	std::vector<std::string> scene5MeshNames = std::vector<std::string>();
+
 	std::list<AGameObject*> gameObjectList;
 	std::unordered_map<std::string, AGameObject*> gameObjectTable;
 
@@ -104,7 +127,9 @@ private:
 
 	GameObjectManager(GameObjectManager const&) {};
 	GameObjectManager& operator=(GameObjectManager const&) {};
-	
+
+	ThreadPool* thread_pool;
+	//Semaphore* mutex;
 
 };
 

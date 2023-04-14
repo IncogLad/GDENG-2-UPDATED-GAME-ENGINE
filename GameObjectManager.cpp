@@ -7,6 +7,7 @@
 #include "RenderTexture.h"
 #include "UISystem.h"
 #include "Mesh.h"
+#include "LoadingWorkerAction.h"
 
 
 GameObjectManager* GameObjectManager::sharedInstance = nullptr;
@@ -19,6 +20,7 @@ GameObjectManager* GameObjectManager::getInstance()
 void GameObjectManager::initialize()
 {
     sharedInstance = new GameObjectManager();
+
 }
 
 void GameObjectManager::destroy()
@@ -29,6 +31,8 @@ void GameObjectManager::destroy()
 	}
     
 }
+
+
 
 void GameObjectManager::initializeQuads(std::string name)
 {
@@ -373,6 +377,118 @@ void GameObjectManager::updateAll()
 	}
 }
 
+void GameObjectManager::initialize_threading_necessities()
+{
+	thread_pool = new ThreadPool("thread_pool", 1);
+	thread_pool->startScheduler();
+	//mutex = new Semaphore(1);
+}
+
+void GameObjectManager::declareSceneMeshes()
+{
+	scene1MeshNames.emplace_back("statue");
+	scene1MeshNames.emplace_back("monitor");
+	scene1MeshNames.emplace_back("bunny");
+
+	scene2MeshNames.emplace_back("spaceship");
+	scene2MeshNames.emplace_back("suzanne");
+	scene2MeshNames.emplace_back("torus");
+
+	scene3MeshNames.emplace_back("sphere");
+	scene3MeshNames.emplace_back("scene");
+	scene3MeshNames.emplace_back("torus");
+
+	scene4MeshNames.emplace_back("asteroid");
+	scene4MeshNames.emplace_back("teapot");
+	scene4MeshNames.emplace_back("sphere_hq");
+	scene4MeshNames.emplace_back("sponza_basic");
+
+	scene5MeshNames.emplace_back("armadillo");
+	scene5MeshNames.emplace_back("box");
+	scene5MeshNames.emplace_back("capsule");
+	scene5MeshNames.emplace_back("terrain");
+}
+
+void GameObjectManager::LoadSceneMeshes(int sceneNumber)
+{
+	switch (sceneNumber)
+	{
+		case 1:
+			for (int i = 0; i < scene1MeshNames.size(); i++)
+			{
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene1MeshNames[i], 1, this);
+				this->thread_pool->scheduleTask(loading_worker_action);
+			}
+		break;
+		case 2:
+			for (int i = 0; i < scene2MeshNames.size(); i++)
+			{
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene2MeshNames[i], 2, this);
+				this->thread_pool->scheduleTask(loading_worker_action);
+			}
+		break;
+		case 3:
+			for (int i = 0; i < scene3MeshNames.size(); i++)
+			{
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene3MeshNames[i], 3, this);
+				this->thread_pool->scheduleTask(loading_worker_action);
+			}
+		break;
+		case 4:
+			for (int i = 0; i < scene4MeshNames.size(); i++)
+			{
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene4MeshNames[i], 4, this);
+				this->thread_pool->scheduleTask(loading_worker_action);
+			}
+		break;
+		case 5:
+			for (int i = 0; i < scene5MeshNames.size(); i++)
+			{
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene5MeshNames[i], 5, this);
+				this->thread_pool->scheduleTask(loading_worker_action);
+			}
+		break;
+
+		default: return;
+	}
+
+		
+
+}
+
+Mesh* GameObjectManager::initializeSceneMesh(std::string name, int sceneNumber)
+{
+	std::string temp_string = "Assets\\Meshes\\" + name + ".obj";
+	std::wstring temp2 = std::wstring(temp_string.begin(), temp_string.end());
+	const wchar_t* path = temp2.c_str();
+
+	Mesh* mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(path);
+	mesh->initialize(name + std::to_string(sceneNumber));
+
+	return mesh;
+
+	/*meshList.push_back(mesh);
+	meshTable[name + std::to_string(sceneNumber)] = mesh;
+
+	gameObjectList.push_back(mesh);
+	gameObjectTable[mesh->getName()] = mesh;*/
+
+}
+
+void GameObjectManager::LoadAllScenes()
+{
+	LoadSceneMeshes(1);
+	LoadSceneMeshes(2);
+	LoadSceneMeshes(3);
+	LoadSceneMeshes(4);
+	LoadSceneMeshes(5);
+}
+
+void GameObjectManager::onFinishedExecution(int sceneNum)
+{
+
+}
+
 void GameObjectManager::initializeCube(std::string name, int num = 0)
 {
 	Cube* cube = new Cube();
@@ -534,5 +650,5 @@ GameObjectManager::GameObjectManager()
 
 GameObjectManager::~GameObjectManager()
 {
-
+	thread_pool->stopScheduler();
 }

@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include "IETThread.h"
+#include "Semaphore.h"
 
 class PoolWorkerThread;
 class IWorkerAction;
@@ -40,6 +41,8 @@ private:
 	ThreadTable activeThreads;
 	ThreadQueue inactiveThreads;
 	ActionQueue pendingActions;
+
+	Semaphore* mutex;
 
 };
 

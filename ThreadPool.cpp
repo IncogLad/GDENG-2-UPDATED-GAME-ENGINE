@@ -6,10 +6,11 @@ ThreadPool::ThreadPool(String name, int numWorkers)
 {
 	this->name = name;
 	this->numWorkers = numWorkers;
+	this->mutex = new Semaphore(1);
 
 	for(int i = 0; i < this->numWorkers; i++)
 	{
-		this->inactiveThreads.push(new PoolWorkerThread(i, this));
+		this->inactiveThreads.push(new PoolWorkerThread(i, this, this->mutex));
 
 	}
 }
@@ -24,6 +25,8 @@ ThreadPool::~ThreadPool()
 		this->inactiveThreads.pop();
 
 	}
+
+	//delete this->mutex;
 }
 
 void ThreadPool::startScheduler()
@@ -74,11 +77,12 @@ void ThreadPool::run()
 
 void ThreadPool::onFinished(int threadID)
 {
+
 	if (this->activeThreads[threadID] != nullptr)
 	{
 		delete this->activeThreads[threadID];
 		this->activeThreads.erase(threadID);
 
-		this->inactiveThreads.push(new PoolWorkerThread(threadID, this));
+		this->inactiveThreads.push(new PoolWorkerThread(threadID, this, this->mutex));
 	}
 }

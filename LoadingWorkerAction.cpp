@@ -1,28 +1,33 @@
 #include "LoadingWorkerAction.h"
 #include <iostream>
+
+#include "GameObjectManager.h"
 #include "TextureManager.h"
+#include "Mesh.h"
+#include "UISystem.h"
 
 
-
-LoadingWorkerAction::LoadingWorkerAction(std::string SPath , IExecutionEvent* EE)
+LoadingWorkerAction::LoadingWorkerAction(std::string name, int sceneNum, IExecutionEvent* EE)
 {
-	this->path = SPath;
+	this->name = name;
+	this->sceneNum = sceneNum;
 	this->execution_event_ = EE;
 }
 
 LoadingWorkerAction::~LoadingWorkerAction()
 {
-	std::cout << "Destroying LoadingWorkerAction." << std::endl;
+	UISystem::getInstance()->UpdateDebugWindow("Destroying LoadingWorkerAction.");
 }
 
 void LoadingWorkerAction::onStartTask()
 {
 	IETThread::sleep(500);
-	//TextureManager::getInstance()->instantiateAsTexture(this->path, this->path, true);
 	
-	std::cout << "[TextureManager] Loaded streaming texture: " << this->path << std::endl;
+	GameObjectManager::getInstance()->initializeMesh(this->name, this->sceneNum);
+	
+	UISystem::getInstance()->UpdateDebugWindow("[GameObjectManager] Loaded " + this->name + " model!");
 
-	this->execution_event_->onFinishedExecution();
+	this->execution_event_->onFinishedExecution(sceneNum);
 	delete this;
 
 }
