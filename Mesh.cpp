@@ -163,7 +163,7 @@ void Mesh::initialize(std::string name)
 	{
 		setScale(Vector3D(0.01, 0.01, 0.01));
 	}
-	else if (name == "torus3") //replace
+	else if (name == "frog3") 
 	{
 		setScale(Vector3D(0.01, 0.01, 0.01));
 	}
@@ -186,7 +186,7 @@ void Mesh::initialize(std::string name)
 	}
 	else if (name == "sponza_basic4")
 	{
-		setScale(Vector3D(0.1, 0.1, 0.1));
+		setScale(Vector3D(0.5, 0.5, 0.5));
 	}
 
 	else if (name == "armadillo5")
@@ -197,9 +197,9 @@ void Mesh::initialize(std::string name)
 	{
 		setScale(Vector3D(3, 3, 3));
 	}
-	else if (name == "teapot5") //replace
+	else if (name == "amogus5") //replace
 	{
-		setScale(Vector3D(2, 2, 2));
+		setScale(Vector3D(0.1, 0.1, 0.1));
 	}
 	else if (name == "aris_weapon5")
 	{
