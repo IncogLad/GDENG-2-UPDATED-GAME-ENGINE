@@ -406,7 +406,7 @@ void GameObjectManager::declareSceneMeshes()
 	scene4MeshNames.emplace_back("sponza_basic");
 
 	scene5MeshNames.emplace_back("armadillo");
-	scene5MeshNames.emplace_back("scene"); //replace
+	scene5MeshNames.emplace_back("misaki_weapon"); 
 	scene5MeshNames.emplace_back("scene");//replace
 	scene5MeshNames.emplace_back("aris_weapon");
 }
@@ -418,35 +418,35 @@ void GameObjectManager::LoadSceneMeshes(int sceneNumber, bool viewImmediate)
 		case 1:
 			for (int i = 0; i < scene1MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene1MeshNames[i], 1, this, viewImmediate);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene1MeshNames[i], 1, this, randomizedScene1Positions[i], viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
 		case 2:
 			for (int i = 0; i < scene2MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene2MeshNames[i], 2, this, viewImmediate);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene2MeshNames[i], 2, this, randomizedScene2Positions[i], viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
 		case 3:
 			for (int i = 0; i < scene3MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene3MeshNames[i], 3, this, viewImmediate);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene3MeshNames[i], 3, this, randomizedScene3Positions[i], viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
 		case 4:
 			for (int i = 0; i < scene4MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene4MeshNames[i], 4, this, viewImmediate);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene4MeshNames[i], 4, this, randomizedScene4Positions[i], viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
 		case 5:
 			for (int i = 0; i < scene5MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene5MeshNames[i], 5, this, viewImmediate);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene5MeshNames[i], 5, this, randomizedScene5Positions[i], viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
