@@ -261,15 +261,27 @@ void GDPARCMScreen::drawUI()
 	{
 		for (int i = 1; i < 6; i++)
 		{
-			
-		}
-		for (bool status : currentViewingScene)
-		{
-			if (status == false)
+			if (GameObjectManager::getInstance()->SceneLoadingRatio[i] == 1)
 			{
-				
+				if (currentViewingScene[i])
+				{
+					//nothing - this means its loaded and shown
+				}
+				else
+				{
+					GameObjectManager::getInstance()->viewSceneMeshes(i);
+					currentViewingScene[i] = true;
+				}
+			}
+			else
+			{
+				GameObjectManager::getInstance()->LoadSceneMeshes(i, true);
+				currentViewingScene[i] = true;
 			}
 		}
+
+		//show big loading bar with (currently loaded items/ total items)
+		
 	}
 	
 

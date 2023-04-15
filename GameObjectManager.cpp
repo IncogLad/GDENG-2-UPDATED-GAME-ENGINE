@@ -8,6 +8,7 @@
 #include "UISystem.h"
 #include "Mesh.h"
 #include "LoadingWorkerAction.h"
+#include <random>
 
 
 GameObjectManager* GameObjectManager::sharedInstance = nullptr;
@@ -394,19 +395,20 @@ void GameObjectManager::declareSceneMeshes()
 	scene2MeshNames.emplace_back("suzanne");
 	scene2MeshNames.emplace_back("torus");
 
-	scene3MeshNames.emplace_back("bunny");
-	scene3MeshNames.emplace_back("scene");
-	scene3MeshNames.emplace_back("torus");
+	scene3MeshNames.emplace_back("duck");
+	scene3MeshNames.emplace_back("penguin");
+	scene3MeshNames.emplace_back(""); //replace
 
 	scene4MeshNames.emplace_back("asteroid");
 	scene4MeshNames.emplace_back("teapot");
 	scene4MeshNames.emplace_back("sphere_hq");
+	scene5MeshNames.emplace_back("box");
 	scene4MeshNames.emplace_back("sponza_basic");
 
 	scene5MeshNames.emplace_back("armadillo");
-	scene5MeshNames.emplace_back("box");
-	scene5MeshNames.emplace_back("monitor");
-	scene5MeshNames.emplace_back("terrain");
+	scene5MeshNames.emplace_back(""); //replace
+	scene5MeshNames.emplace_back("");//replace
+	scene5MeshNames.emplace_back("aris_weapon");
 }
 
 void GameObjectManager::LoadSceneMeshes(int sceneNumber, bool viewImmediate)
@@ -712,6 +714,12 @@ void GameObjectManager::updateLoadingStatus(int num, bool status)
 	}
 }
 
+void GameObjectManager::setRandomizedTransforms(Vector3D position, Vector3D scale)
+{
+
+
+}
+
 void GameObjectManager::initializeCube(std::string name, int num = 0)
 {
 	Cube* cube = new Cube();
@@ -868,7 +876,35 @@ std::list<Cube*> GameObjectManager::getCubeList()
 
 GameObjectManager::GameObjectManager()
 {
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 6); // distribution in range [1, 6]
 
+	std::cout << dist6(rng) << std::endl;
+	for (auto position : randomizedScene1Positions)
+	{
+		position = Vector3D(dist6(rng), dist6(rng), dist6(rng));
+	}
+
+	for (auto position : randomizedScene2Positions)
+	{
+		position = Vector3D(dist6(rng), dist6(rng), dist6(rng));
+	}
+
+	for (auto position : randomizedScene3Positions)
+	{
+		position = Vector3D(dist6(rng), dist6(rng), dist6(rng));
+	}
+
+	for (auto position : randomizedScene4Positions)
+	{
+		position = Vector3D(dist6(rng), dist6(rng), dist6(rng));
+	}
+
+	for (auto position : randomizedScene5Positions)
+	{
+		position = Vector3D(dist6(rng), dist6(rng), dist6(rng));
+	}
 }
 
 GameObjectManager::~GameObjectManager()

@@ -26,6 +26,7 @@ void LoadingWorkerAction::onStartTask()
 	
 	Mesh* mesh = GameObjectManager::getInstance()->initializeSceneMesh(this->name, this->sceneNum);
 	
+	
 	UISystem::getInstance()->UpdateDebugWindow("[GameObjectManager] Loaded " + this->name + " model!");
 
 	this->execution_event_->onFinishedExecution(sceneNum, mesh, viewImmediate);

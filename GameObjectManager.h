@@ -69,6 +69,15 @@ public:
 	void onFinishedExecution(int num, Mesh* mesh, bool viewImmediate = false) override;
 	void updateLoadingBar(int num);
 	void updateLoadingStatus(int num, bool status);
+
+	void setRandomizedTransforms(Vector3D position, Vector3D scale);
+
+	std::vector<Vector3D> randomizedScene1Positions = std::vector<Vector3D>(3);
+	std::vector<Vector3D> randomizedScene2Positions = std::vector<Vector3D>(3);
+	std::vector<Vector3D> randomizedScene3Positions = std::vector<Vector3D>(3);
+	std::vector<Vector3D> randomizedScene4Positions = std::vector<Vector3D>(5);
+	std::vector<Vector3D> randomizedScene5Positions = std::vector<Vector3D>(4);
+
 	std::list<Mesh*> scene1MeshList;
 	std::list<Mesh*> scene2MeshList;
 	std::list<Mesh*> scene3MeshList;

@@ -162,7 +162,57 @@ void ObjectSpawnPanel::drawUI()
             ObjectName = "monitor";
             GameObjectManager::getInstance()->initializeMesh(ObjectName);
         }
-    	
+        
+        if (ImGui::Button("Spawn spaceship"))
+        {
+            ObjectName = "spaceship";
+            GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
+        if (ImGui::Button("Spawn suzanne"))
+        {
+            ObjectName = "suzanne";
+            GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
+        if (ImGui::Button("Spawn torus"))
+        {
+            ObjectName = "torus";
+            GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
+        if (ImGui::Button("Spawn asteroid"))
+        {
+            ObjectName = "asteroid";
+            GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
+        if (ImGui::Button("Spawn sphere_hq"))
+        {
+            ObjectName = "sphere_hq";
+            GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
+        if (ImGui::Button("Spawn sponza_basic"))
+        {
+            ObjectName = "sponza_basic";
+            GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
+        if (ImGui::Button("Spawn box"))
+        {
+            ObjectName = "box";
+            GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
+        if (ImGui::Button("Spawn aris_weapon"))
+        {
+            ObjectName = "aris_weapon";
+            GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
+        if (ImGui::Button("Spawn duck"))
+        {
+            ObjectName = "duck";
+            GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
+        if (ImGui::Button("Spawn penguin"))
+        {
+            ObjectName = "penguin";
+            GameObjectManager::getInstance()->initializeMesh(ObjectName);
+        }
 
         ImGui::End();
     }
