@@ -9,7 +9,7 @@ class IWorkerAction;
 class LoadingWorkerAction :public IWorkerAction
 {
 public:
-	LoadingWorkerAction(std::string, int sceneNum, IExecutionEvent*);
+	LoadingWorkerAction(std::string, int sceneNum, IExecutionEvent*, bool viewImmediate = false);
 	~LoadingWorkerAction();
 
 	void onStartTask() override;
@@ -18,6 +18,7 @@ public:
 private:
 	std::string name;
 	int sceneNum;
+	bool viewImmediate;
 	IExecutionEvent* execution_event_;
 
 };

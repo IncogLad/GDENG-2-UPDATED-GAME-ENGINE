@@ -409,42 +409,42 @@ void GameObjectManager::declareSceneMeshes()
 	scene5MeshNames.emplace_back("terrain");
 }
 
-void GameObjectManager::LoadSceneMeshes(int sceneNumber)
+void GameObjectManager::LoadSceneMeshes(int sceneNumber, bool viewImmediate)
 {
 	switch (sceneNumber)
 	{
 		case 1:
 			for (int i = 0; i < scene1MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene1MeshNames[i], 1, this);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene1MeshNames[i], 1, this, viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
 		case 2:
 			for (int i = 0; i < scene2MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene2MeshNames[i], 2, this);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene2MeshNames[i], 2, this, viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
 		case 3:
 			for (int i = 0; i < scene3MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene3MeshNames[i], 3, this);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene3MeshNames[i], 3, this, viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
 		case 4:
 			for (int i = 0; i < scene4MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene4MeshNames[i], 4, this);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene4MeshNames[i], 4, this, viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
 		case 5:
 			for (int i = 0; i < scene5MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene5MeshNames[i], 5, this);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene5MeshNames[i], 5, this, viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
@@ -612,29 +612,49 @@ void GameObjectManager::unloadSceneMeshes(int sceneNum)
 	}
 }
 
-void GameObjectManager::onFinishedExecution(int sceneNum, Mesh* mesh)
+void GameObjectManager::onFinishedExecution(int sceneNum, Mesh* mesh, bool viewImmediate)
 {
 	switch (sceneNum)
 	{
 	case 1:
 		scene1MeshList.push_back(mesh);
 		SceneLoadingRatio[1] = static_cast<float>(scene1MeshList.size()) / scene1MeshNames.size();
+		if (SceneLoadingRatio[sceneNum] == 1 && viewImmediate)
+		{
+			viewSceneMeshes(sceneNum);
+		}
 		break;
 	case 2:
 		scene2MeshList.push_back(mesh);
 		SceneLoadingRatio[2] = static_cast<float>(scene2MeshList.size()) / scene2MeshNames.size();
+		if (SceneLoadingRatio[sceneNum] == 1 && viewImmediate)
+		{
+			viewSceneMeshes(sceneNum);
+		}
 		break;
 	case 3:
 		scene3MeshList.push_back(mesh);
 		SceneLoadingRatio[3] = static_cast<float>(scene3MeshList.size()) / scene3MeshNames.size();
+		if (SceneLoadingRatio[sceneNum] == 1 && viewImmediate)
+		{
+			viewSceneMeshes(sceneNum);
+		}
 		break;
 	case 4:
 		scene4MeshList.push_back(mesh);
 		SceneLoadingRatio[4] = static_cast<float>(scene4MeshList.size()) / scene4MeshNames.size();
+		if (SceneLoadingRatio[sceneNum] == 1 && viewImmediate)
+		{
+			viewSceneMeshes(sceneNum);
+		}
 		break;
 	case 5:
 		scene5MeshList.push_back(mesh);
 		SceneLoadingRatio[5] = static_cast<float>(scene5MeshList.size()) / scene5MeshNames.size();
+		if (SceneLoadingRatio[sceneNum] == 1 && viewImmediate)
+		{
+			viewSceneMeshes(sceneNum);
+		}
 		break;
 
 	default: return;

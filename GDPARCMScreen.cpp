@@ -45,7 +45,7 @@ void GDPARCMScreen::drawUI()
 				}
 				else
 				{
-					GameObjectManager::getInstance()->LoadSceneMeshes(1);
+					GameObjectManager::getInstance()->LoadSceneMeshes(1, true);
 				}
 			}
 		}
@@ -90,7 +90,7 @@ void GDPARCMScreen::drawUI()
 				}
 				else
 				{
-					GameObjectManager::getInstance()->LoadSceneMeshes(2);
+					GameObjectManager::getInstance()->LoadSceneMeshes(2, true);
 				}
 			}
 		}
@@ -134,7 +134,7 @@ void GDPARCMScreen::drawUI()
 				}
 				else
 				{
-					GameObjectManager::getInstance()->LoadSceneMeshes(3);
+					GameObjectManager::getInstance()->LoadSceneMeshes(3, true);
 				}
 			}
 		}
@@ -178,7 +178,7 @@ void GDPARCMScreen::drawUI()
 				}
 				else
 				{
-					GameObjectManager::getInstance()->LoadSceneMeshes(4);
+					GameObjectManager::getInstance()->LoadSceneMeshes(4, true);
 				}
 			}
 		}
@@ -222,7 +222,7 @@ void GDPARCMScreen::drawUI()
 				}
 				else
 				{
-					GameObjectManager::getInstance()->LoadSceneMeshes(5);
+					GameObjectManager::getInstance()->LoadSceneMeshes(5, true);
 				}
 			}
 		}

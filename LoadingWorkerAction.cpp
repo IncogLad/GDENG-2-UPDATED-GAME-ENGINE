@@ -7,11 +7,12 @@
 #include "UISystem.h"
 
 
-LoadingWorkerAction::LoadingWorkerAction(std::string name, int sceneNum, IExecutionEvent* EE)
+LoadingWorkerAction::LoadingWorkerAction(std::string name, int sceneNum, IExecutionEvent* EE, bool viewImmediate)
 {
 	this->name = name;
 	this->sceneNum = sceneNum;
 	this->execution_event_ = EE;
+	this->viewImmediate = viewImmediate;
 }
 
 LoadingWorkerAction::~LoadingWorkerAction()
@@ -27,7 +28,7 @@ void LoadingWorkerAction::onStartTask()
 	
 	UISystem::getInstance()->UpdateDebugWindow("[GameObjectManager] Loaded " + this->name + " model!");
 
-	this->execution_event_->onFinishedExecution(sceneNum, mesh);
+	this->execution_event_->onFinishedExecution(sceneNum, mesh, viewImmediate);
 	delete this;
 
 }

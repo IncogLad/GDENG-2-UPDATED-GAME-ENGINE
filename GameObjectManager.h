@@ -59,14 +59,14 @@ public:
 	//GDPARCM METHODS
 	void initialize_threading_necessities();
 	void declareSceneMeshes();
-	void LoadSceneMeshes(int sceneNumber); // func for the buttons
+	void LoadSceneMeshes(int sceneNumber, bool viewImmediate = false); // func for the buttons
 	Mesh* initializeSceneMesh(std::string name, int sceneNumber);
 	void LoadAllScenes();
 	void viewSceneMeshes(int sceneNum);
 	void unloadSceneMeshes(int sceneNum);
 	std::vector<float> SceneLoadingRatio = std::vector<float>(6);
 	std::vector<bool> SceneIsLoading = std::vector<bool>(6);
-	void onFinishedExecution(int num, Mesh* mesh) override;
+	void onFinishedExecution(int num, Mesh* mesh, bool viewImmediate = false) override;
 	void updateLoadingBar(int num);
 	void updateLoadingStatus(int num, bool status);
 	std::list<Mesh*> scene1MeshList;
