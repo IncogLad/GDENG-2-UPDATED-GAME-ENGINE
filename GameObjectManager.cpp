@@ -615,6 +615,27 @@ void GameObjectManager::unloadSceneMeshes(int sceneNum)
 	}
 }
 
+void GameObjectManager::updateAllSceneLoadingBar()
+{
+	int CurrentLoadedScenes = 0;
+	int totalScenes = 0;
+
+	CurrentLoadedScenes += scene1MeshList.size();
+	CurrentLoadedScenes += scene2MeshList.size();
+	CurrentLoadedScenes += scene3MeshList.size();
+	CurrentLoadedScenes += scene4MeshList.size();
+	CurrentLoadedScenes += scene5MeshList.size();
+
+	totalScenes += scene1MeshNames.size();
+	totalScenes += scene2MeshNames.size();
+	totalScenes += scene3MeshNames.size();
+	totalScenes += scene4MeshNames.size();
+	totalScenes += scene5MeshNames.size();
+
+	SceneLoadingRatio[0] = static_cast<float>(CurrentLoadedScenes) / totalScenes;
+
+}
+
 void GameObjectManager::onFinishedExecution(int sceneNum, Mesh* mesh, bool viewImmediate)
 {
 	switch (sceneNum)

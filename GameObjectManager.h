@@ -66,6 +66,8 @@ public:
 	void unloadSceneMeshes(int sceneNum);
 	std::vector<float> SceneLoadingRatio = std::vector<float>(6);
 	std::vector<bool> SceneIsLoading = std::vector<bool>(6);
+	float totalSceneLoadingRatio = 0;
+	void updateAllSceneLoadingBar();
 	void onFinishedExecution(int num, Mesh* mesh, bool viewImmediate = false) override;
 	void updateLoadingBar(int num);
 	void updateLoadingStatus(int num, bool status);
@@ -125,8 +127,6 @@ private:
 	std::list<Quads*> quadList;
 	std::list<Cube*> cubeList;
 	std::list<Mesh*> meshList;
-
-	
 
 	std::vector<std::string> scene1MeshNames = std::vector<std::string>();
 	std::vector<std::string> scene2MeshNames = std::vector<std::string>();

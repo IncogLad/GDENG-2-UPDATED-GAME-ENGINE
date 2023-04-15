@@ -43,6 +43,7 @@ void GDPARCMScreen::drawUI()
 			{
 				currentViewingScene[1] = true;
 				GameObjectManager::getInstance()->viewSceneMeshes(1);
+				this->is_loading_bar_visible = false;
 			}
 			else
 			{
@@ -56,6 +57,8 @@ void GDPARCMScreen::drawUI()
 				{
 					GameObjectManager::getInstance()->LoadSceneMeshes(1, true);
 					currentViewingScene[1] = true;
+					this->is_loading_bar_visible = true;
+					this->scene_number = 1;
 				}
 			}
 		}
@@ -93,6 +96,7 @@ void GDPARCMScreen::drawUI()
 			{
 				currentViewingScene[2] = true;
 				GameObjectManager::getInstance()->viewSceneMeshes(2);
+				this->is_loading_bar_visible = false;
 			}
 			else
 			{
@@ -106,6 +110,8 @@ void GDPARCMScreen::drawUI()
 				{
 					GameObjectManager::getInstance()->LoadSceneMeshes(2, true);
 					currentViewingScene[2] = true;
+					this->is_loading_bar_visible = true;
+					this->scene_number = 2;
 				}
 			}
 		}
@@ -142,6 +148,7 @@ void GDPARCMScreen::drawUI()
 			{
 				currentViewingScene[3] = true;
 				GameObjectManager::getInstance()->viewSceneMeshes(3);
+				this->is_loading_bar_visible = false;
 			}
 			else
 			{
@@ -155,6 +162,8 @@ void GDPARCMScreen::drawUI()
 				{
 					GameObjectManager::getInstance()->LoadSceneMeshes(3, true);
 					currentViewingScene[3] = true;
+					this->is_loading_bar_visible = true;
+					this->scene_number = 3;
 				}
 			}
 		}
@@ -191,6 +200,7 @@ void GDPARCMScreen::drawUI()
 			{
 				currentViewingScene[4] = true;
 				GameObjectManager::getInstance()->viewSceneMeshes(4);
+				this->is_loading_bar_visible = false;
 			}
 			else
 			{
@@ -204,6 +214,8 @@ void GDPARCMScreen::drawUI()
 				{
 					GameObjectManager::getInstance()->LoadSceneMeshes(4, true);
 					currentViewingScene[4] = true;
+					this->is_loading_bar_visible = true;
+					this->scene_number = 4;
 				}
 			}
 		}
@@ -240,6 +252,7 @@ void GDPARCMScreen::drawUI()
 			{
 				currentViewingScene[5] = true;
 				GameObjectManager::getInstance()->viewSceneMeshes(5);
+				this->is_loading_bar_visible = false;
 			}
 			else
 			{
@@ -253,6 +266,8 @@ void GDPARCMScreen::drawUI()
 				{
 					GameObjectManager::getInstance()->LoadSceneMeshes(5, true);
 					currentViewingScene[5] = true;
+					this->is_loading_bar_visible = true;
+					this->scene_number = 5;
 				}
 			}
 		}
@@ -301,14 +316,20 @@ void GDPARCMScreen::drawUI()
 		}
 
 		//show big loading bar with (currently loaded items/ total items)
+		this->is_loading_bar_visible = true;
+		this->scene_number = 0;
 		
 	}
 
 	if (this->is_loading_bar_visible)
 	{
 		std::cout << this->scene_number << std::endl;
+		if (scene_number == 0)
+		{
+			GameObjectManager::getInstance()->updateAllSceneLoadingBar();
+		}
 
-		if (this->scene_number >= 1 && this->scene_number <= 5)
+		if (this->scene_number >= 0 && this->scene_number <= 5)
 		{
 			if (!ImGui::Begin("Loading Bar", &this->is_loading_bar_visible), ImGuiWindowFlags_NoResize)
 			{
@@ -321,6 +342,13 @@ void GDPARCMScreen::drawUI()
 				ImGui::End();
 			}
 		}
+		
+
+		if (GameObjectManager::getInstance()->SceneLoadingRatio[this->scene_number] == 1)
+		{
+			this->is_loading_bar_visible = false;
+		}
+		
 	}
 
 	ImGui::End();
