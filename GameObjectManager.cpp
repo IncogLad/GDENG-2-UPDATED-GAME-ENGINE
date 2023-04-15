@@ -477,11 +477,19 @@ Mesh* GameObjectManager::initializeSceneMesh(std::string name, int sceneNumber)
 
 void GameObjectManager::LoadAllScenes()
 {
-	LoadSceneMeshes(1);
-	LoadSceneMeshes(2);
-	LoadSceneMeshes(3);
+
+	updateLoadingStatus(1, true);
+	updateLoadingStatus(2, true);
+	updateLoadingStatus(3, true);
+	updateLoadingStatus(4, true);
+	updateLoadingStatus(5, true);
+
 	LoadSceneMeshes(4);
+	LoadSceneMeshes(2);
 	LoadSceneMeshes(5);
+	LoadSceneMeshes(3);
+	LoadSceneMeshes(1);
+
 }
 
 void GameObjectManager::viewSceneMeshes(int sceneNum)
@@ -554,7 +562,8 @@ void GameObjectManager::unloadSceneMeshes(int sceneNum)
 		{
 			deleteObject(mesh);
 			scene1MeshList.remove(mesh);
-			updateLoadingBar(1);
+			updateLoadingBar(sceneNum);
+			updateLoadingStatus(sceneNum, false);
 			break;
 		}
 		break;
@@ -563,7 +572,8 @@ void GameObjectManager::unloadSceneMeshes(int sceneNum)
 		{
 			deleteObject(mesh);
 			scene2MeshList.remove(mesh);
-			updateLoadingBar(2);
+			updateLoadingBar(sceneNum);
+			updateLoadingStatus(sceneNum, false);
 			break;
 		}
 		break;
@@ -572,7 +582,8 @@ void GameObjectManager::unloadSceneMeshes(int sceneNum)
 		{
 			deleteObject(mesh);
 			scene3MeshList.remove(mesh);
-			updateLoadingBar(3);
+			updateLoadingBar(sceneNum);
+			updateLoadingStatus(sceneNum, false);
 			break;
 		}
 		break;
@@ -581,7 +592,8 @@ void GameObjectManager::unloadSceneMeshes(int sceneNum)
 		{
 			deleteObject(mesh);
 			scene4MeshList.remove(mesh);
-			updateLoadingBar(4);
+			updateLoadingBar(sceneNum);
+			updateLoadingStatus(sceneNum, false);
 			break;
 		}
 		break;
@@ -590,7 +602,8 @@ void GameObjectManager::unloadSceneMeshes(int sceneNum)
 		{
 			deleteObject(mesh);
 			scene5MeshList.remove(mesh);
-			updateLoadingBar(5);
+			updateLoadingBar(sceneNum);
+			updateLoadingStatus(sceneNum, false);
 			break;
 		}
 		break;
@@ -647,6 +660,31 @@ void GameObjectManager::updateLoadingBar(int num)
 		break;
 	case 5:
 		SceneLoadingRatio[5] = static_cast<float>(scene5MeshList.size()) / scene5MeshNames.size();
+		break;
+
+	default: return;
+
+	}
+}
+
+void GameObjectManager::updateLoadingStatus(int num, bool status)
+{
+	switch (num)
+	{
+	case 1:
+		SceneIsLoading[1] = status;
+		break;
+	case 2:
+		SceneIsLoading[2] = status;
+		break;
+	case 3:
+		SceneIsLoading[3] = status;
+		break;
+	case 4:
+		SceneIsLoading[4] = status;
+		break;
+	case 5:
+		SceneIsLoading[5] = status;
 		break;
 
 	default: return;

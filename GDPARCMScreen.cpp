@@ -35,12 +35,18 @@ void GDPARCMScreen::drawUI()
 			if (GameObjectManager::getInstance()->SceneLoadingRatio[1] == 1)
 			{
 				currentlyViewingScene = 1;
-				
 				GameObjectManager::getInstance()->viewSceneMeshes(1);
 			}
 			else
 			{
-				//show bigger loading bar
+				if (GameObjectManager::getInstance()->SceneIsLoading[1])
+				{
+					//show bigger loading bar
+				}
+				else
+				{
+					GameObjectManager::getInstance()->LoadSceneMeshes(1);
+				}
 			}
 		}
 	}
@@ -78,7 +84,14 @@ void GDPARCMScreen::drawUI()
 			}
 			else
 			{
-				//show bigger loading bar
+				if (GameObjectManager::getInstance()->SceneIsLoading[2])
+				{
+					//show bigger loading bar
+				}
+				else
+				{
+					GameObjectManager::getInstance()->LoadSceneMeshes(2);
+				}
 			}
 		}
 	}
@@ -115,7 +128,14 @@ void GDPARCMScreen::drawUI()
 			}
 			else
 			{
-				//show bigger loading bar
+				if (GameObjectManager::getInstance()->SceneIsLoading[3])
+				{
+					//show bigger loading bar
+				}
+				else
+				{
+					GameObjectManager::getInstance()->LoadSceneMeshes(3);
+				}
 			}
 		}
 	}
@@ -152,7 +172,14 @@ void GDPARCMScreen::drawUI()
 			}
 			else
 			{
-				//show bigger loading bar
+				if (GameObjectManager::getInstance()->SceneIsLoading[4])
+				{
+					//show bigger loading bar
+				}
+				else
+				{
+					GameObjectManager::getInstance()->LoadSceneMeshes(4);
+				}
 			}
 		}
 	}
@@ -189,7 +216,14 @@ void GDPARCMScreen::drawUI()
 			}
 			else
 			{
-				//show bigger loading bar
+				if (GameObjectManager::getInstance()->SceneIsLoading[5])
+				{
+					//show bigger loading bar
+				}
+				else
+				{
+					GameObjectManager::getInstance()->LoadSceneMeshes(5);
+				}
 			}
 		}
 	}

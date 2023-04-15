@@ -68,6 +68,7 @@ public:
 	std::vector<bool> SceneIsLoading = std::vector<bool>(6);
 	void onFinishedExecution(int num, Mesh* mesh) override;
 	void updateLoadingBar(int num);
+	void updateLoadingStatus(int num, bool status);
 	std::list<Mesh*> scene1MeshList;
 	std::list<Mesh*> scene2MeshList;
 	std::list<Mesh*> scene3MeshList;
