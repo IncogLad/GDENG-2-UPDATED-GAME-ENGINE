@@ -7,13 +7,14 @@
 #include "UISystem.h"
 
 
-LoadingWorkerAction::LoadingWorkerAction(std::string name, int sceneNum, IExecutionEvent* EE, Vector3D position, bool viewImmediate)
+LoadingWorkerAction::LoadingWorkerAction(std::string name, int sceneNum, IExecutionEvent* EE, Vector3D position, Semaphore* sceneMutex, bool viewImmediate)
 {
 	this->name = name;
 	this->sceneNum = sceneNum;
 	this->execution_event_ = EE;
 	this->viewImmediate = viewImmediate;
 	this->position = position;
+	this->sceneMutex = sceneMutex;
 }
 
 LoadingWorkerAction::~LoadingWorkerAction()

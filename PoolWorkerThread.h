@@ -7,11 +7,13 @@ class IFinishedTask;
 class PoolWorkerThread: public IETThread
 {
 public:
-	PoolWorkerThread(int id, IFinishedTask* finishedTask, Semaphore* mutex);
+	PoolWorkerThread(int id, IFinishedTask* finishedTask);
 	~PoolWorkerThread();
 
 	int getThreadID();
 	void assignTask(IWorkerAction* action);
+	IWorkerAction* getTask();
+	void set_scene_based_mutex(Semaphore* mutex);
 
 private:
 	void run() override;
@@ -19,7 +21,7 @@ private:
 	int id;
 	IWorkerAction* action;
 	IFinishedTask* finishedTask;
-	Semaphore* mutex;
+	Semaphore* sceneMutex;
 	
 };
 

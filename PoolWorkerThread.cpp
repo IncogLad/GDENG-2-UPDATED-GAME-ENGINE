@@ -3,11 +3,11 @@
 #include "IWorkerAction.h"
 #include "ThreadPool.h"
 
-PoolWorkerThread::PoolWorkerThread(int id, IFinishedTask* finishedTask, Semaphore* mutex)
+PoolWorkerThread::PoolWorkerThread(int id, IFinishedTask* finishedTask)
 {
 	this->id = id;
 	this->finishedTask = finishedTask;
-	this->mutex = mutex;
+	
 }
 
 PoolWorkerThread::~PoolWorkerThread()
@@ -25,11 +25,21 @@ void PoolWorkerThread::assignTask(IWorkerAction* action)
 	this->action = action;
 }
 
+IWorkerAction* PoolWorkerThread::getTask()
+{
+	return action;
+}
+
+void PoolWorkerThread::set_scene_based_mutex(Semaphore* mutex)
+{
+	this->sceneMutex = mutex;
+}
+
 void PoolWorkerThread::run()
 {
-	this->mutex->acquire();
+	this->sceneMutex->acquire();
 	this->action->onStartTask();
-	this->mutex->release();
+	this->sceneMutex->release();
 	this->finishedTask->onFinished(id);
 	
 }

@@ -139,33 +139,33 @@ void Mesh::initialize(std::string name)
 	}
 	else if (name == "statue1")
 	{
-		setScale(Vector3D(10, 10, 10));
+		setScale(Vector3D(5, 5, 5));
 	}
 
 	else if (name == "spaceship2")
 	{
-		setScale(Vector3D(1, 1, 1));
+		setScale(Vector3D(0.5, 0.5, 0.5));
 	}
 	else if (name == "suzanne2")
 	{
-		setScale(Vector3D(1, 1, 1));
+		setScale(Vector3D(5, 5, 5));
 	}
 	else if (name == "torus2")
 	{
-		setScale(Vector3D(1, 1, 1));
+		setScale(Vector3D(7.5, 7.5, 7.5));
 	}
 
 	else if (name == "penguin3")
 	{
-		setScale(Vector3D(0.01, 0.01, 0.01));
+		setScale(Vector3D(0.02, 0.02, 0.02));
 	}
 	else if (name == "duck3")
 	{
-		setScale(Vector3D(0.01, 0.01, 0.01));
+		setScale(Vector3D(0.02, 0.02, 0.02));
 	}
 	else if (name == "frog3") 
 	{
-		setScale(Vector3D(0.01, 0.01, 0.01));
+		setScale(Vector3D(0.02, 0.02, 0.02));
 	}
 
 	else if (name == "asteroid4")
@@ -174,32 +174,32 @@ void Mesh::initialize(std::string name)
 	}
 	else if (name == "teapot4")
 	{
-		setScale(Vector3D(2, 2, 2));
+		setScale(Vector3D(4, 4, 4));
 	}
 	else if (name == "sphere_hq4")
 	{
-		setScale(Vector3D(2, 2, 2));
+		setScale(Vector3D(3, 3, 3));
 	}
 	else if (name == "box4")
 	{
-		setScale(Vector3D(3, 3, 3));
+		setScale(Vector3D(3.5, 3.5, 3.5));
 	}
 	else if (name == "sponza_basic4")
 	{
-		setScale(Vector3D(0.5, 0.5, 0.5));
+		setScale(Vector3D(0.55, 0.55, 0.55));
 	}
 
 	else if (name == "armadillo5")
 	{
-		setScale(Vector3D(10, 10, 10));
+		setScale(Vector3D(5, 5, 5));
 	}
-	else if (name == "box5")
+	else if (name == "misaki_weapon5")
 	{
 		setScale(Vector3D(3, 3, 3));
 	}
 	else if (name == "amogus5") //replace
 	{
-		setScale(Vector3D(0.1, 0.1, 0.1));
+		setScale(Vector3D(0.05, 0.05, 0.05));
 	}
 	else if (name == "aris_weapon5")
 	{

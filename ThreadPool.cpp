@@ -1,16 +1,21 @@
 #include "ThreadPool.h"
 
+#include "IWorkerAction.h"
 #include "PoolWorkerThread.h"
 
 ThreadPool::ThreadPool(String name, int numWorkers)
 {
 	this->name = name;
 	this->numWorkers = numWorkers;
-	this->mutex = new Semaphore(1);
+	for (int i = 0; i < 5; i++)
+	{
+		this->sceneMutexList.emplace_back( new Semaphore(1));
+	}
+	
 
 	for(int i = 0; i < this->numWorkers; i++)
 	{
-		this->inactiveThreads.push(new PoolWorkerThread(i, this, this->mutex));
+		this->inactiveThreads.push(new PoolWorkerThread(i, this));
 
 	}
 }
@@ -46,6 +51,11 @@ void ThreadPool::scheduleTask(IWorkerAction* action)
 	this->pendingActions.push(action);
 }
 
+Semaphore* ThreadPool::getSceneMutex(int index)
+{
+	return this->sceneMutexList[index];
+}
+
 void ThreadPool::run()
 {
 	while(running)
@@ -59,6 +69,7 @@ void ThreadPool::run()
 				this->activeThreads[worker_thread->getThreadID()] = worker_thread;
 
 				worker_thread->assignTask(this->pendingActions.front());
+				worker_thread->set_scene_based_mutex(worker_thread->getTask()->sceneMutex);
 				worker_thread->start();
 				this->pendingActions.pop();
 
@@ -83,6 +94,6 @@ void ThreadPool::onFinished(int threadID)
 		delete this->activeThreads[threadID];
 		this->activeThreads.erase(threadID);
 
-		this->inactiveThreads.push(new PoolWorkerThread(threadID, this, this->mutex));
+		this->inactiveThreads.push(new PoolWorkerThread(threadID, this));
 	}
 }

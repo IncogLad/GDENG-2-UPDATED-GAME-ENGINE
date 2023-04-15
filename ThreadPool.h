@@ -29,7 +29,7 @@ public:
 	void startScheduler();
 	void stopScheduler();
 	void scheduleTask(IWorkerAction* action);
-
+	Semaphore* getSceneMutex(int index);
 
 private:
 	void run() override;
@@ -42,7 +42,7 @@ private:
 	ThreadQueue inactiveThreads;
 	ActionQueue pendingActions;
 
-	Semaphore* mutex;
+	std::vector<Semaphore*> sceneMutexList = std::vector<Semaphore*>();
 
 };
 
