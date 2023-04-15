@@ -21,4 +21,6 @@ private:
 
 	int total_numerator;
 	int total_denominator;
+
+	bool view_allClicked = false;
 };

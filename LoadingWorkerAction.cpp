@@ -15,6 +15,8 @@ LoadingWorkerAction::LoadingWorkerAction(std::string name, int sceneNum, IExecut
 	this->viewImmediate = viewImmediate;
 	this->position = position;
 	this->sceneMutex = sceneMutex;
+
+	
 }
 
 LoadingWorkerAction::~LoadingWorkerAction()

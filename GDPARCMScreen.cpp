@@ -294,32 +294,48 @@ void GDPARCMScreen::drawUI()
 
 	if (ImGui::Button("View All Scenes"))
 	{
+		view_allClicked = true;
 		for (int i = 1; i < 6; i++)
 		{
 			if (GameObjectManager::getInstance()->SceneLoadingRatio[i] == 1)
 			{
 				if (currentViewingScene[i])
 				{
-					//nothing - this means its loaded and shown
+					this->is_loading_bar_visible = false;
 				}
 				else
 				{
 					GameObjectManager::getInstance()->viewSceneMeshes(i);
 					currentViewingScene[i] = true;
+					this->is_loading_bar_visible = false;
 				}
 			}
 			else
 			{
-				GameObjectManager::getInstance()->LoadSceneMeshes(i, true);
+				GameObjectManager::getInstance()->LoadSceneMeshesLocked(i, true);
+				GameObjectManager::getInstance()->updateLoadingStatus(i, true);
 				currentViewingScene[i] = true;
+				
 			}
 		}
 
-		//show big loading bar with (currently loaded items/ total items)
-		this->is_loading_bar_visible = true;
-		this->scene_number = 0;
-		
+		if (GameObjectManager::getInstance()->SceneIsLoading[1] || GameObjectManager::getInstance()->SceneIsLoading[2] || GameObjectManager::getInstance()->SceneIsLoading[3]
+			|| GameObjectManager::getInstance()->SceneIsLoading[4] || GameObjectManager::getInstance()->SceneIsLoading[5])
+		{
+			//show big loading bar with (currently loaded items/ total items)
+			this->is_loading_bar_visible = true;
+			this->scene_number = 0;
+		}
 	}
+
+	for (int i = 1; i < 6; i++)
+	{
+		if (GameObjectManager::getInstance()->SceneLoadingRatio[i] == 1)
+		{
+			GameObjectManager::getInstance()->updateLoadingStatus(i, false);
+		}
+	}
+
 
 	if (this->is_loading_bar_visible)
 	{

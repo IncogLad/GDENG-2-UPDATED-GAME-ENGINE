@@ -14,7 +14,7 @@ public:
 	void assignTask(IWorkerAction* action);
 	IWorkerAction* getTask();
 	void set_scene_based_mutex(Semaphore* mutex);
-
+	void set_global_mutex(Semaphore* mutex);
 private:
 	void run() override;
 
@@ -22,6 +22,6 @@ private:
 	IWorkerAction* action;
 	IFinishedTask* finishedTask;
 	Semaphore* sceneMutex;
-	
+	Semaphore* globalMutex;
 };
 

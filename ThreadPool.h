@@ -44,5 +44,7 @@ private:
 
 	std::vector<Semaphore*> sceneMutexList = std::vector<Semaphore*>();
 
+	Semaphore* Mutex = new Semaphore(1);
+
 };
 

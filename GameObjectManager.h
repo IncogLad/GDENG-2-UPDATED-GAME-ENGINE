@@ -8,6 +8,7 @@
 #include "IExecutionEvent.h"
 #include "Semaphore.h"
 #include "ThreadPool.h"
+#include <mutex>
 
 class GameObjectManager :public IExecutionEvent
 {
@@ -59,7 +60,8 @@ public:
 	//GDPARCM METHODS
 	void initialize_threading_necessities();
 	void declareSceneMeshes();
-	void LoadSceneMeshes(int sceneNumber, bool viewImmediate = false); // func for the buttons
+	void LoadSceneMeshes(int sceneNumber, bool viewImmediate = false); 
+	void LoadSceneMeshesLocked(int sceneNumber, bool viewImmediate = false);
 	Mesh* initializeSceneMesh(std::string name, int sceneNumber);
 	void LoadAllScenes();
 	void viewSceneMeshes(int sceneNum);
@@ -145,7 +147,7 @@ private:
 	GameObjectManager& operator=(GameObjectManager const&) {};
 
 	ThreadPool* thread_pool;
-	//Semaphore* mutex;
-
+	Semaphore* GOListMutex;
+	
 };
 

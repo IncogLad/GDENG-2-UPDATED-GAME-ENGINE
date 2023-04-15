@@ -35,11 +35,22 @@ void PoolWorkerThread::set_scene_based_mutex(Semaphore* mutex)
 	this->sceneMutex = mutex;
 }
 
+void PoolWorkerThread::set_global_mutex(Semaphore* mutex)
+{
+	this->globalMutex = mutex;
+}
+
 void PoolWorkerThread::run()
 {
+	
 	this->sceneMutex->acquire();
+	if (globalMutex != nullptr)
+		this->globalMutex->acquire();
 	this->action->onStartTask();
+	if (globalMutex != nullptr)
+		this->globalMutex->release();
 	this->sceneMutex->release();
+	
 	this->finishedTask->onFinished(id);
 	
 }

@@ -7,5 +7,6 @@ class IWorkerAction
 public:
 	virtual void onStartTask() = 0;
 	Semaphore* sceneMutex;
+	Semaphore* globalMutex;
 };
 

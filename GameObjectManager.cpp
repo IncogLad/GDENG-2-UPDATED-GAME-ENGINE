@@ -380,7 +380,8 @@ void GameObjectManager::updateAll()
 
 void GameObjectManager::initialize_threading_necessities()
 {
-	thread_pool = new ThreadPool("thread_pool", 10);
+	
+	thread_pool = new ThreadPool("thread_pool", 5);
 	thread_pool->startScheduler();
 	
 }
@@ -439,7 +440,6 @@ void GameObjectManager::LoadSceneMeshes(int sceneNumber, bool viewImmediate)
 		case 4:
 			for (int i = 0; i < scene4MeshNames.size(); i++)
 			{
-				std::cout << "asdsada" << randomizedScene4Positions->at(i).m_x << std::endl;
 				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene4MeshNames[i], 4, this, randomizedScene4Positions->at(i), thread_pool->getSceneMutex(3) , viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
@@ -454,9 +454,55 @@ void GameObjectManager::LoadSceneMeshes(int sceneNumber, bool viewImmediate)
 
 		default: return;
 	}
+}
 
-		
+void GameObjectManager::LoadSceneMeshesLocked(int sceneNumber, bool viewImmediate)
+{
+	switch (sceneNumber)
+	{
+	case 1:
+		for (int i = 0; i < scene1MeshNames.size(); i++)
+		{
+			LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene1MeshNames[i], 1, this, randomizedScene1Positions->at(i), thread_pool->getSceneMutex(0), viewImmediate);
+			loading_worker_action->globalMutex = GOListMutex;
+			this->thread_pool->scheduleTask(loading_worker_action);
+		}
+		break;
+	case 2:
+		for (int i = 0; i < scene2MeshNames.size(); i++)
+		{
+			LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene2MeshNames[i], 2, this, randomizedScene2Positions->at(i), thread_pool->getSceneMutex(1), viewImmediate);
+			loading_worker_action->globalMutex = GOListMutex;
+			this->thread_pool->scheduleTask(loading_worker_action);
+		}
+		break;
+	case 3:
+		for (int i = 0; i < scene3MeshNames.size(); i++)
+		{
+			LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene3MeshNames[i], 3, this, randomizedScene3Positions->at(i), thread_pool->getSceneMutex(2), viewImmediate);
+			loading_worker_action->globalMutex = GOListMutex;
+			this->thread_pool->scheduleTask(loading_worker_action);
+		}
+		break;
+	case 4:
+		for (int i = 0; i < scene4MeshNames.size(); i++)
+		{
+			LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene4MeshNames[i], 4, this, randomizedScene4Positions->at(i), thread_pool->getSceneMutex(3), viewImmediate);
+			loading_worker_action->globalMutex = GOListMutex;
+			this->thread_pool->scheduleTask(loading_worker_action);
+		}
+		break;
+	case 5:
+		for (int i = 0; i < scene5MeshNames.size(); i++)
+		{
+			LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene5MeshNames[i], 5, this, randomizedScene5Positions->at(i), thread_pool->getSceneMutex(4), viewImmediate);
+			loading_worker_action->globalMutex = GOListMutex;
+			this->thread_pool->scheduleTask(loading_worker_action);
+		}
+		break;
 
+	default: return;
+	}
 }
 
 Mesh* GameObjectManager::initializeSceneMesh(std::string name, int sceneNumber)
@@ -497,6 +543,7 @@ void GameObjectManager::LoadAllScenes()
 
 void GameObjectManager::viewSceneMeshes(int sceneNum)
 {
+	
 	switch (sceneNum)
 	{
 	case 1:
@@ -552,7 +599,6 @@ void GameObjectManager::viewSceneMeshes(int sceneNum)
 
 	default: return;
 	}
-	
 	
 }
 
@@ -684,6 +730,7 @@ void GameObjectManager::onFinishedExecution(int sceneNum, Mesh* mesh, bool viewI
 	default: return;
 	
 	}
+
 }
 
 void GameObjectManager::updateLoadingBar(int num)
@@ -898,6 +945,8 @@ std::list<Cube*> GameObjectManager::getCubeList()
 
 GameObjectManager::GameObjectManager()
 {
+	
+	GOListMutex = new Semaphore(1);
 	std::random_device rd;
 	std::mt19937 e2(rd());
 	std::uniform_real_distribution<> dist(-5, 5);

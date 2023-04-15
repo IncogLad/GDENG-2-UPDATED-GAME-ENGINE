@@ -60,6 +60,7 @@ void ThreadPool::run()
 {
 	while(running)
 	{
+		Mutex->acquire();
 		if (pendingActions.empty() == false)
 		{
 			if (inactiveThreads.empty() == false)
@@ -70,6 +71,7 @@ void ThreadPool::run()
 
 				worker_thread->assignTask(this->pendingActions.front());
 				worker_thread->set_scene_based_mutex(worker_thread->getTask()->sceneMutex);
+				worker_thread->set_global_mutex(worker_thread->getTask()->globalMutex);
 				worker_thread->start();
 				this->pendingActions.pop();
 
@@ -83,17 +85,20 @@ void ThreadPool::run()
 		{
 			
 		}
+		Mutex->release();
 	}
 }
 
 void ThreadPool::onFinished(int threadID)
 {
-
+	Mutex->acquire();
 	if (this->activeThreads[threadID] != nullptr)
 	{
 		delete this->activeThreads[threadID];
 		this->activeThreads.erase(threadID);
 
 		this->inactiveThreads.push(new PoolWorkerThread(threadID, this));
+
 	}
+	Mutex->release();
 }
