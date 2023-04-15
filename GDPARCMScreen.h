@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include <vector>
+
 #include "AUIScreen.h"
 
 class GDPARCMScreen : public AUIScreen
@@ -10,4 +12,7 @@ public:
 	~GDPARCMScreen();
 
 	void drawUI() override;
+
+private:
+	std::vector<bool> currentViewingScene = std::vector<bool>(6);
 };

@@ -69,6 +69,9 @@ void AppWindow::onCreate()
 	//ShaderLibrary::initialize();
 	
 	GameObjectManager::initialize();
+	GameObjectManager::getInstance()->initialize_threading_necessities();
+	GameObjectManager::getInstance()->declareSceneMeshes();
+
 	ShaderLibrary::initialize();
 
 	GraphicsEngine::getInstance()->createRenderTexture(rc.right - rc.left, rc.bottom - rc.top);
@@ -78,6 +81,7 @@ void AppWindow::onCreate()
 	//GameObjectManager::getInstance()->initializeCube("cubetest2", 0);
 
 	GameObjectManager::getInstance()->initializeCube("planetest", 1);
+	GameObjectManager::getInstance()->LoadAllScenes();
 	//GameObjectManager::getInstance()->initializeMesh();
 
 	//GameObjectManager::getInstance()->populateObjectList();

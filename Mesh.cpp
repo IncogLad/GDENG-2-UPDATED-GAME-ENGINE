@@ -1,8 +1,8 @@
 #include "Mesh.h"
-
 #define TINYOBJLOADER_IMPLEMENTATION
-#include <tiny_obj_loader.h>
 
+#include <tiny_obj_loader.h>
+#include <Windows.h>
 #include <locale>
 #include <codecvt>
 
@@ -16,6 +16,8 @@
 #include "TextureLibrary.h"
 #include "TextureManager.h"
 
+
+
 Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 {
 	tinyobj::attrib_t attribs;
@@ -25,7 +27,8 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 	std::string warn;
 	std::string err;
 
-	std::string inputfile = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(full_path);
+	std::string inputfile = wide_string_to_string(full_path);
+	//inputfile = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(full_path);
 
 	bool res = tinyobj::LoadObj(&attribs, &shapes, &materials, &warn, &err, inputfile.c_str());
 
@@ -125,17 +128,82 @@ void Mesh::initialize(std::string name)
 	setDedicatedTexture("brick");
 	translation = getLocalPosition();
 	scaling = getLocalScale();
-	if (name == "bunny")
+	
+	if (name == "bunny1")
 	{
-		setPosition(Vector3D(5, 0, 0));
 		setScale( Vector3D(10, 10, 10));
 	}
-	if (name == "armadillo")
+	else if (name == "monitor1")
 	{
-		setPosition(Vector3D(-5, 0, 0));
-	}
-	if (name == "teapot") {
 		setScale(Vector3D(2, 2, 2));
+	}
+	else if (name == "statue1")
+	{
+		setScale(Vector3D(10, 10, 10));
+	}
+
+	else if (name == "spaceship2")
+	{
+		setScale(Vector3D(1, 1, 1));
+	}
+	else if (name == "suzanne2")
+	{
+		setScale(Vector3D(1, 1, 1));
+	}
+	else if (name == "torus2")
+	{
+		setScale(Vector3D(1, 1, 1));
+	}
+
+	else if (name == "penguin3")
+	{
+		setScale(Vector3D(0.01, 0.01, 0.01));
+	}
+	else if (name == "duck3")
+	{
+		setScale(Vector3D(0.01, 0.01, 0.01));
+	}
+	else if (name == "torus3") //replace
+	{
+		setScale(Vector3D(0.01, 0.01, 0.01));
+	}
+
+	else if (name == "asteroid4")
+	{
+		setScale(Vector3D(1, 1, 1));
+	}
+	else if (name == "teapot4")
+	{
+		setScale(Vector3D(2, 2, 2));
+	}
+	else if (name == "sphere_hq4")
+	{
+		setScale(Vector3D(2, 2, 2));
+	}
+	else if (name == "box4")
+	{
+		setScale(Vector3D(3, 3, 3));
+	}
+	else if (name == "sponza_basic4")
+	{
+		setScale(Vector3D(0.1, 0.1, 0.1));
+	}
+
+	else if (name == "armadillo5")
+	{
+		setScale(Vector3D(10, 10, 10));
+	}
+	else if (name == "box5")
+	{
+		setScale(Vector3D(3, 3, 3));
+	}
+	else if (name == "teapot5") //replace
+	{
+		setScale(Vector3D(2, 2, 2));
+	}
+	else if (name == "aris_weapon5")
+	{
+		setScale(Vector3D(10, 10, 10));
 	}
 	
 	

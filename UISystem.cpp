@@ -117,7 +117,7 @@ void UISystem::initImGUI(HWND hwnd)
     uiList.push_back(console);
 
     GDPARCMScreen* parcm_screen = new GDPARCMScreen();
-	uiTable[uiNames.OBJECT_SPAWN_PANEL] = parcm_screen;
+	uiTable[uiNames.GDPARCM_SCREEN] = parcm_screen;
     uiList.push_back(parcm_screen);
 }
 
