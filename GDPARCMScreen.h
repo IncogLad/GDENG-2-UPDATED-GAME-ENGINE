@@ -15,4 +15,10 @@ public:
 
 private:
 	std::vector<bool> currentViewingScene = std::vector<bool>(6);
+
+	bool is_loading_bar_visible;
+	int scene_number;
+
+	int total_numerator;
+	int total_denominator;
 };
