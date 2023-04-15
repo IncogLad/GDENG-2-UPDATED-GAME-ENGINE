@@ -394,7 +394,7 @@ void GameObjectManager::declareSceneMeshes()
 	scene2MeshNames.emplace_back("suzanne");
 	scene2MeshNames.emplace_back("torus");
 
-	scene3MeshNames.emplace_back("sphere");
+	scene3MeshNames.emplace_back("bunny");
 	scene3MeshNames.emplace_back("scene");
 	scene3MeshNames.emplace_back("torus");
 
@@ -405,7 +405,7 @@ void GameObjectManager::declareSceneMeshes()
 
 	scene5MeshNames.emplace_back("armadillo");
 	scene5MeshNames.emplace_back("box");
-	scene5MeshNames.emplace_back("capsule");
+	scene5MeshNames.emplace_back("monitor");
 	scene5MeshNames.emplace_back("terrain");
 }
 
@@ -484,6 +484,121 @@ void GameObjectManager::LoadAllScenes()
 	LoadSceneMeshes(5);
 }
 
+void GameObjectManager::viewSceneMeshes(int sceneNum)
+{
+	switch (sceneNum)
+	{
+	case 1:
+		for (auto mesh : scene1MeshList)
+		{
+			meshList.push_back(mesh);
+			meshTable[mesh->getName() + std::to_string(sceneNum)] = mesh;
+
+			gameObjectList.push_back(mesh);
+			gameObjectTable[mesh->getName()] = mesh;
+		}
+		break;
+	case 2:
+		for (auto mesh : scene2MeshList)
+		{
+			meshList.push_back(mesh);
+			meshTable[mesh->getName() + std::to_string(sceneNum)] = mesh;
+
+			gameObjectList.push_back(mesh);
+			gameObjectTable[mesh->getName()] = mesh;
+		}
+		break;
+	case 3:
+		for (auto mesh : scene3MeshList)
+		{
+			meshList.push_back(mesh);
+			meshTable[mesh->getName() + std::to_string(sceneNum)] = mesh;
+
+			gameObjectList.push_back(mesh);
+			gameObjectTable[mesh->getName()] = mesh;
+		}
+		break;
+	case 4:
+		for (auto mesh : scene4MeshList)
+		{
+			meshList.push_back(mesh);
+			meshTable[mesh->getName() + std::to_string(sceneNum)] = mesh;
+
+			gameObjectList.push_back(mesh);
+			gameObjectTable[mesh->getName()] = mesh;
+		}
+		break;
+	case 5:
+		for (auto mesh : scene5MeshList)
+		{
+			meshList.push_back(mesh);
+			meshTable[mesh->getName() + std::to_string(sceneNum)] = mesh;
+
+			gameObjectList.push_back(mesh);
+			gameObjectTable[mesh->getName()] = mesh;
+		}
+		break;
+
+	default: return;
+	}
+	
+	
+}
+
+void GameObjectManager::unloadSceneMeshes(int sceneNum)
+{
+	switch (sceneNum)
+	{
+	case 1:
+		for (auto mesh : scene1MeshList)
+		{
+			deleteObject(mesh);
+			scene1MeshList.remove(mesh);
+			updateLoadingBar(1);
+			break;
+		}
+		break;
+	case 2:
+		for (auto mesh : scene2MeshList)
+		{
+			deleteObject(mesh);
+			scene2MeshList.remove(mesh);
+			updateLoadingBar(2);
+			break;
+		}
+		break;
+	case 3:
+		for (auto mesh : scene3MeshList)
+		{
+			deleteObject(mesh);
+			scene3MeshList.remove(mesh);
+			updateLoadingBar(3);
+			break;
+		}
+		break;
+	case 4:
+		for (auto mesh : scene4MeshList)
+		{
+			deleteObject(mesh);
+			scene4MeshList.remove(mesh);
+			updateLoadingBar(4);
+			break;
+		}
+		break;
+	case 5:
+		for (auto mesh : scene5MeshList)
+		{
+			deleteObject(mesh);
+			scene5MeshList.remove(mesh);
+			updateLoadingBar(5);
+			break;
+		}
+		break;
+
+	default: return;
+	}
+}
+
 void GameObjectManager::onFinishedExecution(int sceneNum, Mesh* mesh)
 {
 	switch (sceneNum)
@@ -511,6 +626,31 @@ void GameObjectManager::onFinishedExecution(int sceneNum, Mesh* mesh)
 
 	default: return;
 	
+	}
+}
+
+void GameObjectManager::updateLoadingBar(int num)
+{
+	switch (num)
+	{
+	case 1:
+		SceneLoadingRatio[1] = static_cast<float>(scene1MeshList.size()) / scene1MeshNames.size();
+		break;
+	case 2:
+		SceneLoadingRatio[2] = static_cast<float>(scene2MeshList.size()) / scene2MeshNames.size();
+		break;
+	case 3:
+		SceneLoadingRatio[3] = static_cast<float>(scene3MeshList.size()) / scene3MeshNames.size();
+		break;
+	case 4:
+		SceneLoadingRatio[4] = static_cast<float>(scene4MeshList.size()) / scene4MeshNames.size();
+		break;
+	case 5:
+		SceneLoadingRatio[5] = static_cast<float>(scene5MeshList.size()) / scene5MeshNames.size();
+		break;
+
+	default: return;
+
 	}
 }
 

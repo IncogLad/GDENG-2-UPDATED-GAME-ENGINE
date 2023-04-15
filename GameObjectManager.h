@@ -62,8 +62,17 @@ public:
 	void LoadSceneMeshes(int sceneNumber); // func for the buttons
 	Mesh* initializeSceneMesh(std::string name, int sceneNumber);
 	void LoadAllScenes();
+	void viewSceneMeshes(int sceneNum);
+	void unloadSceneMeshes(int sceneNum);
 	std::vector<float> SceneLoadingRatio = std::vector<float>(6);
+	std::vector<bool> SceneIsLoading = std::vector<bool>(6);
 	void onFinishedExecution(int num, Mesh* mesh) override;
+	void updateLoadingBar(int num);
+	std::list<Mesh*> scene1MeshList;
+	std::list<Mesh*> scene2MeshList;
+	std::list<Mesh*> scene3MeshList;
+	std::list<Mesh*> scene4MeshList;
+	std::list<Mesh*> scene5MeshList;
 
 	std::wstring string_to_wide_string(const std::string& string)
 	{
@@ -107,11 +116,7 @@ private:
 	std::list<Cube*> cubeList;
 	std::list<Mesh*> meshList;
 
-	std::list<Mesh*> scene1MeshList;
-	std::list<Mesh*> scene2MeshList;
-	std::list<Mesh*> scene3MeshList;
-	std::list<Mesh*> scene4MeshList;
-	std::list<Mesh*> scene5MeshList;
+	
 
 	std::vector<std::string> scene1MeshNames = std::vector<std::string>();
 	std::vector<std::string> scene2MeshNames = std::vector<std::string>();
