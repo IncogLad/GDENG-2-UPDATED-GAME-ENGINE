@@ -418,35 +418,36 @@ void GameObjectManager::LoadSceneMeshes(int sceneNumber, bool viewImmediate)
 		case 1:
 			for (int i = 0; i < scene1MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene1MeshNames[i], 1, this, randomizedScene1Positions[i], viewImmediate);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene1MeshNames[i], 1, this, randomizedScene1Positions->at(i), viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
 		case 2:
 			for (int i = 0; i < scene2MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene2MeshNames[i], 2, this, randomizedScene2Positions[i], viewImmediate);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene2MeshNames[i], 2, this, randomizedScene2Positions->at(i), viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
 		case 3:
 			for (int i = 0; i < scene3MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene3MeshNames[i], 3, this, randomizedScene3Positions[i], viewImmediate);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene3MeshNames[i], 3, this, randomizedScene3Positions->at(i), viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
 		case 4:
 			for (int i = 0; i < scene4MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene4MeshNames[i], 4, this, randomizedScene4Positions[i], viewImmediate);
+				std::cout << "asdsada" << randomizedScene4Positions->at(i).m_x << std::endl;
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene4MeshNames[i], 4, this, randomizedScene4Positions->at(i), viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
 		case 5:
 			for (int i = 0; i < scene5MeshNames.size(); i++)
 			{
-				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene5MeshNames[i], 5, this, randomizedScene5Positions[i], viewImmediate);
+				LoadingWorkerAction* loading_worker_action = new LoadingWorkerAction(scene5MeshNames[i], 5, this, randomizedScene5Positions->at(i), viewImmediate);
 				this->thread_pool->scheduleTask(loading_worker_action);
 			}
 		break;
@@ -876,34 +877,49 @@ std::list<Cube*> GameObjectManager::getCubeList()
 
 GameObjectManager::GameObjectManager()
 {
-	std::random_device dev;
-	std::mt19937 rng(dev());
-	std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 6); // distribution in range [1, 6]
+	std::random_device rd;
+	std::mt19937 e2(rd());
+	std::uniform_real_distribution<> dist(-5, 5);
 
-	std::cout << dist6(rng) << std::endl;
-	for (auto position : randomizedScene1Positions)
+	for (int i = 0; i < 3; i++)
 	{
-		position = Vector3D(dist6(rng), dist6(rng), dist6(rng));
+		float x = dist(rd);
+		float y = dist(rd);
+		float z = dist(rd);
+
+		randomizedScene1Positions->push_back(Vector3D(x, y, z));
 	}
-
-	for (auto position : randomizedScene2Positions)
+	for (int i = 0; i < 3; i++)
 	{
-		position = Vector3D(dist6(rng), dist6(rng), dist6(rng));
+		float x = dist(rd);
+		float y = dist(rd);
+		float z = dist(rd);
+
+		randomizedScene2Positions->push_back(Vector3D(x, y, z));
 	}
-
-	for (auto position : randomizedScene3Positions)
+	for (int i = 0; i < 3; i++)
 	{
-		position = Vector3D(dist6(rng), dist6(rng), dist6(rng));
+		float x = dist(rd);
+		float y = dist(rd);
+		float z = dist(rd);
+
+		randomizedScene3Positions->push_back(Vector3D(x, y, z));
 	}
-
-	for (auto position : randomizedScene4Positions)
+	for (int i = 0; i < 5; i++)
 	{
-		position = Vector3D(dist6(rng), dist6(rng), dist6(rng));
+		float x = dist(rd);
+		float y = dist(rd);
+		float z = dist(rd);
+
+		randomizedScene4Positions->push_back(Vector3D(x, y, z));
 	}
-
-	for (auto position : randomizedScene5Positions)
+	for (int i = 0; i < 4; i++)
 	{
-		position = Vector3D(dist6(rng), dist6(rng), dist6(rng));
+		float x = dist(rd);
+		float y = dist(rd);
+		float z = dist(rd);
+
+		randomizedScene5Positions->push_back(Vector3D(x, y, z));
 	}
 }
 

@@ -26,6 +26,7 @@ void LoadingWorkerAction::onStartTask()
 	IETThread::sleep(500);
 	
 	Mesh* mesh = GameObjectManager::getInstance()->initializeSceneMesh(this->name, this->sceneNum);
+
 	mesh->setPosition(position);
 	
 	UISystem::getInstance()->UpdateDebugWindow("[GameObjectManager] Loaded " + this->name + " model!");
