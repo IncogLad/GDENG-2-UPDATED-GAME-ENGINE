@@ -397,7 +397,7 @@ void GameObjectManager::declareSceneMeshes()
 
 	scene3MeshNames.emplace_back("duck");
 	scene3MeshNames.emplace_back("penguin");
-	scene3MeshNames.emplace_back("scene"); //replace
+	scene3MeshNames.emplace_back("frog"); 
 
 	scene4MeshNames.emplace_back("asteroid");
 	scene4MeshNames.emplace_back("teapot");
@@ -407,7 +407,7 @@ void GameObjectManager::declareSceneMeshes()
 
 	scene5MeshNames.emplace_back("armadillo");
 	scene5MeshNames.emplace_back("misaki_weapon"); 
-	scene5MeshNames.emplace_back("scene");//replace
+	scene5MeshNames.emplace_back("amogus");
 	scene5MeshNames.emplace_back("aris_weapon");
 }
 
