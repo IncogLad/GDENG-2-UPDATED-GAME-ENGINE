@@ -397,17 +397,17 @@ void GameObjectManager::declareSceneMeshes()
 
 	scene3MeshNames.emplace_back("duck");
 	scene3MeshNames.emplace_back("penguin");
-	scene3MeshNames.emplace_back(""); //replace
+	scene3MeshNames.emplace_back("scene"); //replace
 
 	scene4MeshNames.emplace_back("asteroid");
 	scene4MeshNames.emplace_back("teapot");
 	scene4MeshNames.emplace_back("sphere_hq");
-	scene5MeshNames.emplace_back("box");
+	scene4MeshNames.emplace_back("box");
 	scene4MeshNames.emplace_back("sponza_basic");
 
 	scene5MeshNames.emplace_back("armadillo");
-	scene5MeshNames.emplace_back(""); //replace
-	scene5MeshNames.emplace_back("");//replace
+	scene5MeshNames.emplace_back("scene"); //replace
+	scene5MeshNames.emplace_back("scene");//replace
 	scene5MeshNames.emplace_back("aris_weapon");
 }
 
