@@ -10,6 +10,9 @@ GDPARCMScreen::GDPARCMScreen() : AUIScreen("GDPARCM_SCREEN")
 	{
 		status = false;
 	}
+
+	this->is_loading_bar_visible = false;
+	this->scene_number = 0;
 }
 
 GDPARCMScreen::~GDPARCMScreen()
@@ -26,8 +29,9 @@ void GDPARCMScreen::drawUI()
 
 	ImGui::Text("FPS: %f", fps);
 
-	ImGui::Text("");
+	ImGui::Separator();
 
+#pragma region Scene 1
 	ImGui::Text("Scene 1");
 	ImGui::ProgressBar(GameObjectManager::getInstance()->SceneLoadingRatio[1]);
 	
@@ -45,6 +49,8 @@ void GDPARCMScreen::drawUI()
 				if (GameObjectManager::getInstance()->SceneIsLoading[1])
 				{
 					//show bigger loading bar
+					this->is_loading_bar_visible = true;
+					this->scene_number = 1;
 				}
 				else
 				{
@@ -71,9 +77,11 @@ void GDPARCMScreen::drawUI()
 	{
 		ImGui::Text("");
 	}
+#pragma endregion
 
 	ImGui::Separator();
 
+#pragma region Scene 2
 	ImGui::Text("Scene 2");
 	ImGui::ProgressBar(GameObjectManager::getInstance()->SceneLoadingRatio[2]);
 	
@@ -91,6 +99,8 @@ void GDPARCMScreen::drawUI()
 				if (GameObjectManager::getInstance()->SceneIsLoading[2])
 				{
 					//show bigger loading bar
+					this->is_loading_bar_visible = true;
+					this->scene_number = 2;
 				}
 				else
 				{
@@ -116,9 +126,11 @@ void GDPARCMScreen::drawUI()
 	{
 		ImGui::Text("");
 	}
+#pragma endregion
 
 	ImGui::Separator();
 
+#pragma region Scene 3
 	ImGui::Text("Scene 3");
 	ImGui::ProgressBar(GameObjectManager::getInstance()->SceneLoadingRatio[3]);
 
@@ -136,6 +148,8 @@ void GDPARCMScreen::drawUI()
 				if (GameObjectManager::getInstance()->SceneIsLoading[3])
 				{
 					//show bigger loading bar
+					this->is_loading_bar_visible = true;
+					this->scene_number = 3;
 				}
 				else
 				{
@@ -161,9 +175,11 @@ void GDPARCMScreen::drawUI()
 	{
 		ImGui::Text("");
 	}
+#pragma endregion
 
 	ImGui::Separator();
 
+#pragma region Scene 4
 	ImGui::Text("Scene 4");
 	ImGui::ProgressBar(GameObjectManager::getInstance()->SceneLoadingRatio[4]);
 
@@ -181,6 +197,8 @@ void GDPARCMScreen::drawUI()
 				if (GameObjectManager::getInstance()->SceneIsLoading[4])
 				{
 					//show bigger loading bar
+					this->is_loading_bar_visible = true;
+					this->scene_number = 4;
 				}
 				else
 				{
@@ -206,9 +224,11 @@ void GDPARCMScreen::drawUI()
 	{
 		ImGui::Text("");
 	}
+#pragma endregion
 
 	ImGui::Separator();
 
+#pragma region Scene 5
 	ImGui::Text("Scene 5");
 	ImGui::ProgressBar(GameObjectManager::getInstance()->SceneLoadingRatio[5]);
 
@@ -226,6 +246,8 @@ void GDPARCMScreen::drawUI()
 				if (GameObjectManager::getInstance()->SceneIsLoading[5])
 				{
 					//show bigger loading bar
+					this->is_loading_bar_visible = true;
+					this->scene_number = 5;
 				}
 				else
 				{
@@ -251,11 +273,9 @@ void GDPARCMScreen::drawUI()
 	{
 		ImGui::Text("");
 	}
-	
+#pragma endregion
 
 	ImGui::Separator();
-
-	
 
 	if (ImGui::Button("View All Scenes"))
 	{
@@ -283,7 +303,25 @@ void GDPARCMScreen::drawUI()
 		//show big loading bar with (currently loaded items/ total items)
 		
 	}
-	
+
+	if (this->is_loading_bar_visible)
+	{
+		std::cout << this->scene_number << std::endl;
+
+		if (this->scene_number >= 1 && this->scene_number <= 5)
+		{
+			if (!ImGui::Begin("Loading Bar", &this->is_loading_bar_visible), ImGuiWindowFlags_NoResize)
+			{
+				ImGui::SetWindowSize(ImVec2(700, 55));
+				ImGui::ProgressBar(GameObjectManager::getInstance()->SceneLoadingRatio[this->scene_number]);
+				ImGui::End();
+			}
+			else
+			{
+				ImGui::End();
+			}
+		}
+	}
 
 	ImGui::End();
 }
